@@ -88,7 +88,6 @@ async function generateEventEmoji(title, description = "") {
 async function generateEmojisForEvents(events, delay = 100) {
   const eventsWithEmojis = [];
 
-  console.log(events);
 
   for (const event of events) {
     try {

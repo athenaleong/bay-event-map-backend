@@ -10,13 +10,43 @@ const { generateEmojisForEvents } = require("./emojiGenerator");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Trust proxy for Vercel
+app.set("trust proxy", 1);
+
 // Cache for 1 hour (3600 seconds)
 const cache = new NodeCache({ stdTTL: 3600 });
 const scraper = new FuncheapScraper();
 const enhancedScraper = new EnhancedFuncheapScraper();
 
+// CORS configuration for production
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // Allow all origins in development
+    if (process.env.NODE_ENV !== "production") {
+      return callback(null, true);
+    }
+
+    // In production, you can specify allowed origins
+    const allowedOrigins = [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "https://bay-event-map.vercel.app",
+      // Add your actual frontend URLs here
+    ];
+
+    // For now, allow all origins (you can restrict this later)
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Helper function to convert date formats
@@ -432,6 +462,9 @@ app.get("/health", (req, res) => {
     success: true,
     message: "Server is running",
     timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || "development",
+    version: "1.0.0",
+    anthropicApiConfigured: !!process.env.ANTHROPIC_API_KEY,
   });
 });
 
