@@ -1,7 +1,11 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const NodeCache = require("node-cache");
 const { FuncheapScraper } = require("./scraper");
+const { EnhancedFuncheapScraper } = require("./enhancedFuncheapScraper");
+const { generateEmojisForEvents } = require("./emojiGenerator");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -9,6 +13,7 @@ const PORT = process.env.PORT || 3001;
 // Cache for 1 hour (3600 seconds)
 const cache = new NodeCache({ stdTTL: 3600 });
 const scraper = new FuncheapScraper();
+const enhancedScraper = new EnhancedFuncheapScraper();
 
 // Middleware
 app.use(cors());
@@ -189,11 +194,261 @@ app.delete("/api/cache", (req, res) => {
   });
 });
 
+// Enhanced routes with detailed event information
+
+// Get events with detailed information for a specific date
+app.get("/api/enhanced/events/:date", async (req, res) => {
+  const { date } = req.params; // Expected format: YYYY-MM-DD
+  const {
+    includeDetails = "false",
+    maxDetailRequests = "5",
+    categories = "",
+    excludeSponsored = "false",
+    titleKeywords = "",
+    costFilter = "",
+    hasImages = "false",
+  } = req.query;
+
+  const cacheKey = `enhanced-events-${date}-${includeDetails}-${maxDetailRequests}`;
+
+  try {
+    // Check cache first
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      return res.json({
+        success: true,
+        events: cached,
+        cached: true,
+        date: date,
+        count: cached.length,
+        enhanced: includeDetails === "true",
+      });
+    }
+
+    console.log(`Enhanced scraping events for ${date}...`);
+
+    // Convert date format
+    const funcheapDate = formatDateForFuncheap(date);
+
+    // Build options
+    const options = {
+      includeDetails: includeDetails === "true",
+      maxDetailRequests: parseInt(maxDetailRequests) || 5,
+    };
+
+    // Add detail filter if specified
+    if (
+      categories ||
+      excludeSponsored === "true" ||
+      titleKeywords ||
+      costFilter ||
+      hasImages === "true"
+    ) {
+      const filterOptions = {
+        categories: categories
+          ? categories.split(",").map((c) => c.trim())
+          : [],
+        excludeSponsored: excludeSponsored === "true",
+        titleKeywords: titleKeywords
+          ? titleKeywords.split(",").map((k) => k.trim())
+          : [],
+        costFilter: costFilter || null,
+        hasImages: hasImages === "true",
+      };
+      options.detailFilter =
+        EnhancedFuncheapScraper.createDetailFilter(filterOptions);
+    }
+
+    // Add progress callback
+    options.onProgress = (progress) => {
+      console.log(
+        `  Progress: ${progress.step} - ${progress.completed}/${
+          progress.total
+        }${progress.currentEvent ? ` (${progress.currentEvent})` : ""}`
+      );
+    };
+
+    const events = await enhancedScraper.getEventsWithDetails(
+      funcheapDate,
+      options
+    );
+
+    // Generate emojis for events if we have detailed information
+    let eventsWithEmojis = events;
+    if (options.includeDetails && events.length > 0) {
+      console.log(`Generating emojis for ${events.length} events...`);
+      try {
+        eventsWithEmojis = await generateEmojisForEvents(events, 200); // 200ms delay between API calls
+        console.log(
+          `Generated emojis for ${
+            eventsWithEmojis.filter((e) => e.emoji).length
+          } events`
+        );
+      } catch (error) {
+        console.error("Error generating emojis:", error);
+        // Continue with original events if emoji generation fails
+        eventsWithEmojis = events;
+      }
+    }
+
+    // Cache the results (shorter TTL for detailed data due to size)
+    cache.set(cacheKey, eventsWithEmojis, 3600); // an hour
+
+    res.json({
+      success: true,
+      events: eventsWithEmojis,
+      cached: false,
+      date: date,
+      count: eventsWithEmojis.length,
+      enhanced: options.includeDetails,
+      detailRequestsUsed: Math.min(
+        eventsWithEmojis.filter((e) => e.hasDetailedInfo).length,
+        options.maxDetailRequests
+      ),
+      emojisGenerated: options.includeDetails
+        ? eventsWithEmojis.filter((e) => e.emoji).length
+        : 0,
+    });
+  } catch (error) {
+    console.error(`Error in enhanced scraping for ${date}:`, error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch enhanced events",
+      message: error.message,
+    });
+  }
+});
+
+// Get enhanced events for a date range
+app.get("/api/enhanced/events", async (req, res) => {
+  const {
+    start = new Date().toISOString().split("T")[0],
+    days = 3, // Lower default for enhanced scraping
+    includeDetails = "false",
+    maxDetailRequests = "3", // Lower default per day
+    categories = "",
+    excludeSponsored = "false",
+    titleKeywords = "",
+    costFilter = "",
+    hasImages = "false",
+  } = req.query;
+
+  const cacheKey = `enhanced-range-${start}-${days}-${includeDetails}-${maxDetailRequests}`;
+
+  try {
+    // Check cache first
+    const cached = cache.get(cacheKey);
+    if (cached) {
+      return res.json({
+        ...cached,
+        cached: true,
+      });
+    }
+
+    console.log(`Enhanced scraping event range: ${start} for ${days} days...`);
+
+    // Build options
+    const options = {
+      includeDetails: includeDetails === "true",
+      maxDetailRequests: parseInt(maxDetailRequests) || 3,
+    };
+
+    // Add detail filter if specified
+    if (
+      categories ||
+      excludeSponsored === "true" ||
+      titleKeywords ||
+      costFilter ||
+      hasImages === "true"
+    ) {
+      const filterOptions = {
+        categories: categories
+          ? categories.split(",").map((c) => c.trim())
+          : [],
+        excludeSponsored: excludeSponsored === "true",
+        titleKeywords: titleKeywords
+          ? titleKeywords.split(",").map((k) => k.trim())
+          : [],
+        costFilter: costFilter || null,
+        hasImages: hasImages === "true",
+      };
+      options.detailFilter =
+        EnhancedFuncheapScraper.createDetailFilter(filterOptions);
+    }
+
+    const result = await enhancedScraper.getEventsWithDetailsForDateRange(
+      start,
+      parseInt(days),
+      options
+    );
+
+    // Generate emojis for events if we have detailed information
+    let eventsWithEmojis = result.events;
+    let emojisGenerated = 0;
+    if (options.includeDetails && result.events.length > 0) {
+      console.log(
+        `Generating emojis for ${result.events.length} events in date range...`
+      );
+      try {
+        eventsWithEmojis = await generateEmojisForEvents(result.events, 200); // 200ms delay between API calls
+        emojisGenerated = eventsWithEmojis.filter((e) => e.emoji).length;
+        console.log(`Generated emojis for ${emojisGenerated} events`);
+      } catch (error) {
+        console.error("Error generating emojis for date range:", error);
+        // Continue with original events if emoji generation fails
+        eventsWithEmojis = result.events;
+      }
+    }
+
+    const response = {
+      success: true,
+      events: eventsWithEmojis,
+      dateRange: { start, days: parseInt(days) },
+      count: eventsWithEmojis.length,
+      enhanced: options.includeDetails,
+      summary: result.summary,
+      errors: result.errors,
+      cached: false,
+      emojisGenerated: emojisGenerated,
+    };
+
+    // Cache the results (shorter TTL for detailed data)
+    cache.set(cacheKey, response, 1800); // 30 minutes
+
+    res.json(response);
+  } catch (error) {
+    console.error("Error in enhanced date range scraping:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch enhanced event range",
+      message: error.message,
+    });
+  }
+});
+
 // Health check
 app.get("/health", (req, res) => {
   res.json({
     success: true,
     message: "Server is running",
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Root route for Vercel
+app.get("/", (req, res) => {
+  res.json({
+    success: true,
+    message: "Bay Event Map Backend API",
+    endpoints: {
+      health: "/health",
+      events: "/api/events",
+      eventsByDate: "/api/events/:date",
+      enhancedEvents: "/api/enhanced/events",
+      enhancedEventsByDate: "/api/enhanced/events/:date",
+      cacheStats: "/api/cache/stats",
+      clearCache: "DELETE /api/cache",
+    },
     timestamp: new Date().toISOString(),
   });
 });
@@ -215,8 +470,14 @@ app.use((req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`Health check: http://localhost:${PORT}/health`);
-  console.log(`API docs: http://localhost:${PORT}/api/events`);
-});
+// Export the app for Vercel
+module.exports = app;
+
+// Only start the server if this file is run directly (not imported)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/health`);
+    console.log(`API docs: http://localhost:${PORT}/api/events`);
+  });
+}
