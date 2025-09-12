@@ -3,9 +3,9 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const NodeCache = require("node-cache");
-const { FuncheapScraper } = require("./scraper");
-const { EnhancedFuncheapScraper } = require("./enhancedFuncheapScraper");
-const { generateEmojisForEvents } = require("./emojiGenerator");
+const { FuncheapScraper } = require("../scraper");
+const { EnhancedFuncheapScraper } = require("../enhancedFuncheapScraper");
+const { generateEmojisForEvents } = require("../emojiGenerator");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -444,8 +444,6 @@ app.get("/api/enhanced/events", async (req, res) => {
 
     // Cache the results (shorter TTL for detailed data)
     cache.set(cacheKey, response, 1800); // 30 minutes
-
-    console.log(eventsWithEmojis)
 
     res.json(response);
   } catch (error) {
