@@ -439,6 +439,9 @@ async function getNearbyPlaces(latitude, longitude, radiusMeters) {
       ),
     }));
 
+    console.log(
+      placesWithDistance
+    )
     return {
       success: true,
       places: placesWithDistance,

@@ -1,0 +1,1337 @@
+{
+  "query_time": "14:30",
+  "query_day": "Monday",
+  "total_places": 116,
+  "open_places_count": 64,
+  "open_places": [
+    {
+      "id": "287660",
+      "lat": 37.7892205,
+      "lon": -122.4099444,
+      "name": "The Parthenon",
+      "detailed_description": [
+        "authentic",
+        "greek",
+        "mediterranean",
+        "elegant",
+        "relaxed",
+        "fine dining",
+        "special occasion",
+        "inviting",
+        "sophisticated"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 17.606023763861465
+    },
+    {
+      "id": "149512",
+      "lat": 37.7890595,
+      "lon": -122.4091699,
+      "name": "Fanoos Grills",
+      "detailed_description": [
+        "middle eastern",
+        "shawarma",
+        "cozy",
+        "affordable",
+        "quick bite",
+        "takeaway",
+        "small",
+        "casual"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 62.41358732582939
+    },
+    {
+      "id": "127089",
+      "lat": 37.7887173,
+      "lon": -122.410018,
+      "name": "Akiko's Sushi Bar",
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "intimate",
+        "comfortable",
+        "date night",
+        "special occasion",
+        "tiny",
+        "limited seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 70.46398623376896
+    },
+    {
+      "id": "14247",
+      "lat": 37.7888656,
+      "lon": -122.4105218,
+      "name": "Cesario's",
+      "detailed_description": [
+        "italian",
+        "cozy",
+        "quaint",
+        "celebration",
+        "vacation",
+        "small",
+        "tight seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 81.85248824512796
+    },
+    {
+      "id": "457988",
+      "lat": 37.7893902,
+      "lon": -122.4088042,
+      "name": "Lori's Diner",
+      "detailed_description": [
+        "authentic",
+        "american",
+        "diner",
+        "retro",
+        "nostalgic",
+        "casual dining",
+        "comfort food cravings",
+        "1950s memorabilia",
+        "brightly lit"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 87.3576160181658
+    },
+    {
+      "id": "404967",
+      "lat": 37.7896492,
+      "lon": -122.4088438,
+      "name": "Maru Sushi",
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "ramen",
+        "friendly",
+        "welcoming",
+        "quick bite",
+        "casual dining",
+        "clean",
+        "basic"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 90.9840037513491
+    },
+    {
+      "id": "609294",
+      "lat": 37.7901405,
+      "lon": -122.4102139,
+      "name": "Aliment",
+      "detailed_description": [
+        "modern",
+        "american",
+        "gastropub",
+        "inviting",
+        "friendly",
+        "happy hour",
+        "casual dining",
+        "clean",
+        "spacious"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 97.76298251227465
+    },
+    {
+      "id": "8601",
+      "lat": 37.7902,
+      "lon": -122.4093389,
+      "name": "BeanStalk Cafe",
+      "detailed_description": [
+        "cafe",
+        "intimate",
+        "relaxing",
+        "exposed brick walls",
+        "multi color seating",
+        "light breakfast",
+        "coffee with friends",
+        "pastries",
+        "sandwiches",
+        "coffee drinks"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 105.12436437909655
+    },
+    {
+      "id": "541195",
+      "lat": 37.7887938,
+      "lon": -122.4087411,
+      "name": "Sears Fine Food",
+      "detailed_description": [
+        "authentic",
+        "american",
+        "diner",
+        "nostalgic",
+        "warm",
+        "holiday tradition",
+        "casual meal",
+        "classic",
+        "cozy"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 109.90342678891604
+    },
+    {
+      "id": "658318",
+      "lat": 37.7883467,
+      "lon": -122.4094366,
+      "name": "San Francisco Playhouse",
+      "detailed_description": [
+        "theater",
+        "intimate",
+        "impactful",
+        "charming rustic setting",
+        "art deco design",
+        "non profit organization",
+        "thought provoking productions",
+        "affordable tickets",
+        "cultural experience",
+        "community engagement"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 113.35613467146351
+    },
+    {
+      "id": "835290",
+      "lat": 37.7882259,
+      "lon": -122.4097245,
+      "name": "Cafe Encore: Coffee, Breakfast, and Lunch Delights",
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "friendly",
+        "tiny",
+        "simple",
+        "morning coffee run",
+        "light lunch",
+        "breakfast sandwiches",
+        "salads",
+        "sandwiches",
+        "pecan pie"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 122.48231473352897
+    },
+    {
+      "id": "774377",
+      "lat": 37.7900504,
+      "lon": -122.4108637,
+      "name": "Bush Market",
+      "detailed_description": [
+        "grocery store",
+        "convenience store",
+        "welcoming",
+        "local",
+        "small",
+        "clean",
+        "organic options",
+        "craft beer",
+        "cheese selection",
+        "fresh produce",
+        "wine"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 123.7230876542062
+    },
+    {
+      "id": "96011",
+      "lat": 37.7902566,
+      "lon": -122.408999,
+      "name": "Uncle Vito's Pizza",
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "pizza",
+        "lively",
+        "casual",
+        "dinner with friends",
+        "weekend lunch",
+        "exposed brick walls",
+        "open kitchen"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 124.9011905224772
+    },
+    {
+      "id": "127336",
+      "lat": 37.7900744,
+      "lon": -122.4086692,
+      "name": "Roxanne Cafe",
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "romantic",
+        "cute",
+        "interesting decor",
+        "date",
+        "brunch",
+        "breakfast",
+        "italian",
+        "sandwiches"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 129.27499507930256
+    },
+    {
+      "id": "15033",
+      "lat": 37.7886963,
+      "lon": -122.4115393,
+      "name": "Matador",
+      "detailed_description": [
+        "mexican",
+        "tacos",
+        "fun",
+        "lively",
+        "date night",
+        "dinner with friends",
+        "modern",
+        "cultural accents"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 168.51473788642446
+    },
+    {
+      "id": "107104",
+      "lat": 37.7896952,
+      "lon": -122.4078356,
+      "name": "Sieber Plastic Surgery - David Sieber M.D.",
+      "detailed_description": [
+        "plastic surgery clinic",
+        "surgical skill and expertise of dr. david sieber",
+        "commitment to patient satisfaction",
+        "professional",
+        "attentive"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 177.00628218377207
+    },
+    {
+      "id": "132346",
+      "lat": 37.7880757,
+      "lon": -122.4110514,
+      "name": "The Olympic Club",
+      "detailed_description": [
+        "social",
+        "athletic",
+        "spacious",
+        "beautiful facilities",
+        "basketball courts",
+        "swimming pools",
+        "squash courts",
+        "rooftop fitness center"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 177.53291801542116
+    },
+    {
+      "id": "544629",
+      "lat": 37.7889373,
+      "lon": -122.4117908,
+      "name": "Parrot Pizzeria & Rotisserie",
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "pizzeria",
+        "cozy",
+        "casual",
+        "late night dining",
+        "pre drinks meal",
+        "downtownsy",
+        "quiet interior"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 180.62661050882326
+    },
+    {
+      "id": "112960",
+      "lat": 37.7878332,
+      "lon": -122.4107721,
+      "name": "PLS on Post",
+      "detailed_description": [
+        "american",
+        "burgers",
+        "fun",
+        "relaxed",
+        "happy hour",
+        "casual dinner",
+        "clean",
+        "comfortable"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 186.88402371300606
+    },
+    {
+      "id": "125046",
+      "lat": 37.7898818,
+      "lon": -122.4118101,
+      "name": "Fresh Brew Coffee",
+      "detailed_description": [
+        "cafe",
+        "charming",
+        "warm",
+        "small",
+        "unassuming",
+        "quick bite",
+        "breakfast",
+        "sandwiches",
+        "bagels",
+        "coffee",
+        "breakfast bites"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 187.54928277770145
+    },
+    {
+      "id": "65507",
+      "lat": 37.7895966,
+      "lon": -122.4075812,
+      "name": "Mr.Charlie's TMS",
+      "detailed_description": [
+        "fast food",
+        "vegetarian",
+        "trendy",
+        "quirky",
+        "something new",
+        "grab and go",
+        "bright",
+        "playful"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 196.848190491189
+    },
+    {
+      "id": "94153",
+      "lat": 37.7874582,
+      "lon": -122.4098148,
+      "name": "Rae Studios | San Francisco Dance & Fitness Studio",
+      "detailed_description": [
+        "dance studio",
+        "welcoming",
+        "friendly",
+        "bright",
+        "pint sized",
+        "variety of dance styles",
+        "classes for all levels",
+        "take adult dance classes",
+        "perform"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 207.69717198784167
+    },
+    {
+      "id": "183317",
+      "lat": 37.7889228,
+      "lon": -122.4121485,
+      "name": "Sutter Pub & Restaurant",
+      "detailed_description": [
+        "pub",
+        "english pub",
+        "cozy",
+        "genuine",
+        "watching sports",
+        "beers",
+        "high bar counter",
+        "high ceilings"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 211.61570763382733
+    },
+    {
+      "id": "67291",
+      "lat": 37.7889012,
+      "lon": -122.4122173,
+      "name": "Sanraku",
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "casual",
+        "authentic",
+        "quick bite",
+        "everyday dining",
+        "minimalist",
+        "cozy"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 218.03570231164286
+    },
+    {
+      "id": "66686",
+      "lat": 37.7873155,
+      "lon": -122.4097414,
+      "name": "Corzetti",
+      "detailed_description": [
+        "italian",
+        "chic",
+        "friendly",
+        "inviting",
+        "excellent",
+        "date night",
+        "weeknight dinner",
+        "great pizza",
+        "extensive wine list"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 223.60701287198484
+    },
+    {
+      "id": "87430",
+      "lat": 37.7898947,
+      "lon": -122.4122996,
+      "name": "Yoki Sushi",
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "fun",
+        "intimate",
+        "visiting from out of town",
+        "modern"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 228.99272867622267
+    },
+    {
+      "id": "64963",
+      "lat": 37.7877649,
+      "lon": -122.4115037,
+      "name": "Honey Honey Cafe & Crepery",
+      "detailed_description": [
+        "cafe",
+        "cheery",
+        "casual",
+        "open",
+        "inviting",
+        "breakfast",
+        "brunch",
+        "crepes",
+        "cafe fare"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 229.51642443490238
+    },
+    {
+      "id": "108583",
+      "lat": 37.7877915,
+      "lon": -122.4080348,
+      "name": "Miller & Lux Provisions Cafe",
+      "detailed_description": [
+        "cafe",
+        "elegant",
+        "inviting",
+        "beautiful",
+        "feast for the eyes",
+        "after ice skating",
+        "visitors and locals",
+        "pastries",
+        "light bites"
+      ],
+      "tags": [
+        "bakery"
+      ],
+      "distance": 230.30238198242165
+    },
+    {
+      "id": "3632",
+      "lat": 37.7899533,
+      "lon": -122.4072915,
+      "name": "Boba Guys Union Square",
+      "detailed_description": [
+        "cafe",
+        "trendy",
+        "instagrammable",
+        "minimalist",
+        "modern",
+        "catch up with friends",
+        "dessert",
+        "milk tea",
+        "coffee",
+        "matcha"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 230.7848632208719
+    },
+    {
+      "id": "768769",
+      "lat": 37.7874883,
+      "lon": -122.4085223,
+      "name": "Nintendo SAN FRANCISCO",
+      "detailed_description": [
+        "shop",
+        "video game store",
+        "nintendo official store",
+        "exciting",
+        "colorful",
+        "two level store",
+        "interactive game stations",
+        "nintendo merchandise",
+        "switch 2 demo experience",
+        "themed sections",
+        "qr code sticker souvenir"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 232.94609916890985
+    },
+    {
+      "id": "20277",
+      "lat": 37.7881959,
+      "lon": -122.4120379,
+      "name": "Ryoko's Japanese Restaurant & Bar",
+      "detailed_description": [
+        "authentic",
+        "japanese",
+        "sushi",
+        "lively",
+        "intimate",
+        "date night",
+        "special occasion",
+        "woodsy",
+        "cozy"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 233.74516353820246
+    },
+    {
+      "id": "9804",
+      "lat": 37.7902509,
+      "lon": -122.4073542,
+      "name": "Bouche",
+      "detailed_description": [
+        "french",
+        "intimate",
+        "romantic",
+        "date night",
+        "special occasions",
+        "cozy",
+        "elegant"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 237.86375941867405
+    },
+    {
+      "id": "56116",
+      "lat": 37.7872036,
+      "lon": -122.4103361,
+      "name": "The ThongLor SF - Thai Restaurant",
+      "detailed_description": [
+        "thai",
+        "cozy",
+        "bustling",
+        "pre theater dinner",
+        "craving thai food",
+        "small",
+        "open kitchen"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 240.7425708380983
+    },
+    {
+      "id": "594007",
+      "lat": 37.7886897,
+      "lon": -122.4071735,
+      "name": "Apple Union Square",
+      "detailed_description": [
+        "electronics store",
+        "apple store",
+        "sleek",
+        "high tech",
+        "two story",
+        "clean and classy interior",
+        "iphones",
+        "ipads",
+        "vision pro goggles",
+        "window shopping",
+        "testing new devices"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 240.983209668895
+    },
+    {
+      "id": "899843",
+      "lat": 37.7872111,
+      "lon": -122.4104224,
+      "name": "Bento Taro",
+      "detailed_description": [
+        "authentic",
+        "chinese",
+        "casual dining",
+        "friendly",
+        "welcoming",
+        "casual meal",
+        "group dining",
+        "cozy",
+        "casual"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 241.542446960146
+    },
+    {
+      "id": "14656",
+      "lat": 37.7879358,
+      "lon": -122.4075139,
+      "name": "Union Square",
+      "detailed_description": [
+        "shopping",
+        "outdoor shopping plaza",
+        "lively",
+        "iconic",
+        "beautiful landscaping",
+        "holiday decor",
+        "department stores",
+        "ice skating"
+      ],
+      "tags": [
+        "nature"
+      ],
+      "distance": 253.13356608362673
+    },
+    {
+      "id": "155001",
+      "lat": 37.7870443,
+      "lon": -122.4100294,
+      "name": "Pinecrest Diner",
+      "detailed_description": [
+        "diner",
+        "old school",
+        "lively",
+        "authentic",
+        "standby restaurant",
+        "open 24/7 some days",
+        "late night dinner",
+        "breakfast"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 254.54822346530813
+    },
+    {
+      "id": "2434",
+      "lat": 37.7877291,
+      "lon": -122.4120039,
+      "name": "Joy's Place",
+      "detailed_description": [
+        "cafe",
+        "chill",
+        "relaxed",
+        "cute",
+        "little",
+        "quick bite",
+        "coffee break",
+        "sandwiches",
+        "paninis",
+        "desserts",
+        "shaved ice"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 263.07328910019515
+    },
+    {
+      "id": "89597",
+      "lat": 37.7869427,
+      "lon": -122.4095967,
+      "name": "Mastro's Steakhouse",
+      "detailed_description": [
+        "american",
+        "upscale",
+        "romantic",
+        "date night",
+        "special occasions",
+        "elegant",
+        "dimly lit"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 265.58315993316796
+    },
+    {
+      "id": "668365",
+      "lat": 37.7879023,
+      "lon": -122.4122936,
+      "name": "FINO",
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "traditional",
+        "cozy",
+        "quaint",
+        "date night",
+        "pre theater dinner",
+        "mahogany bar",
+        "fireplace"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 270.6839449567662
+    },
+    {
+      "id": "14257",
+      "lat": 37.7917489,
+      "lon": -122.4102387,
+      "name": "Top of the Mark",
+      "detailed_description": [
+        "cocktail bar",
+        "rooftop bar",
+        "classy",
+        "iconic",
+        "special celebrations",
+        "romantic dates",
+        "panoramic views",
+        "360 degree city views",
+        "logo stamped ice cubes",
+        "live music"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 272.2207712563807
+    },
+    {
+      "id": "154968",
+      "lat": 37.7868544,
+      "lon": -122.4106186,
+      "name": "The Curran Theatre",
+      "detailed_description": [
+        "music and theater venue",
+        "elegant",
+        "throwback",
+        "good visibility",
+        "accessible",
+        "runs like a well oiled machine",
+        "attentive staff",
+        "seeing musicals",
+        "date night"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 284.19924266284335
+    },
+    {
+      "id": "248384",
+      "lat": 37.7868823,
+      "lon": -122.4108404,
+      "name": "Arya Derm",
+      "detailed_description": [
+        "dermatology clinic",
+        "professional",
+        "luxurious",
+        "gorgeous office",
+        "immaculately kept",
+        "free samples",
+        "detailed explanations with drawings",
+        "evidence based recommendations",
+        "skin cancer screenings",
+        "scalp issues treatment"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 286.8357522549443
+    },
+    {
+      "id": "155005",
+      "lat": 37.7866546,
+      "lon": -122.4096731,
+      "name": "Mason Diner (Cafe Mason)",
+      "detailed_description": [
+        "cafe",
+        "charming",
+        "welcoming",
+        "colorful",
+        "retro",
+        "morning ritual",
+        "breakfast",
+        "pancakes",
+        "diner fare"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 297.2392118586949
+    },
+    {
+      "id": "86565",
+      "lat": 37.7905681,
+      "lon": -122.4067515,
+      "name": "Nomu Skewers",
+      "detailed_description": [
+        "japanese",
+        "birthdays",
+        "group dining",
+        "warm",
+        "intimate",
+        "sushi",
+        "trendy",
+        "upscale"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 301.0000957189086
+    },
+    {
+      "id": "246329",
+      "lat": 37.7888921,
+      "lon": -122.4063311,
+      "name": "Gump's San Francisco",
+      "detailed_description": [
+        "department store",
+        "furniture",
+        "gifts",
+        "housewares",
+        "jewelry",
+        "clothing",
+        "high end",
+        "legendary",
+        "large",
+        "famed holiday window",
+        "memorable items",
+        "unique gifts"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 308.1874346619011
+    },
+    {
+      "id": "884330",
+      "lat": 37.7888921,
+      "lon": -122.4063311,
+      "name": "ZARA",
+      "detailed_description": null,
+      "tags": [
+        "shop"
+      ],
+      "distance": 308.1874346619011
+    },
+    {
+      "id": "56536",
+      "lat": 37.7866665,
+      "lon": -122.408801,
+      "name": "Bartlett Hall",
+      "detailed_description": [
+        "brewery",
+        "lively",
+        "chatty",
+        "beer tasting",
+        "watching sports",
+        "dark woods",
+        "open layout"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 308.3532958687542
+    },
+    {
+      "id": "96534",
+      "lat": 37.7872434,
+      "lon": -122.4074588,
+      "name": "The Cheesecake Factory",
+      "detailed_description": [
+        "american",
+        "lively",
+        "indulgent",
+        "spacious",
+        "elegant decor",
+        "cheesecake desserts",
+        "large menu selection",
+        "celebrations",
+        "group dining"
+      ],
+      "tags": [
+        "restaurant",
+        "bakery"
+      ],
+      "distance": 309.4711317646928
+    },
+    {
+      "id": "686310",
+      "lat": 37.7897602,
+      "lon": -122.406309,
+      "name": "Scheuer Linens - Linen Society",
+      "detailed_description": [
+        "retail store",
+        "bedding",
+        "linens",
+        "luxurious",
+        "upscale",
+        "chic",
+        "heaven like",
+        "high quality sheets",
+        "custom bedspreads",
+        "towels",
+        "napkins"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 310.10907171415573
+    },
+    {
+      "id": "4031",
+      "lat": 37.7865034,
+      "lon": -122.409232,
+      "name": "Gong Cha",
+      "detailed_description": [
+        "boba shop",
+        "cute",
+        "bright",
+        "clean",
+        "big beautiful kiosks",
+        "casual drink",
+        "new flavors"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 317.73419615125357
+    },
+    {
+      "id": "53568",
+      "lat": 37.7871475,
+      "lon": -122.407402,
+      "name": "Macy's",
+      "detailed_description": [
+        "shopping",
+        "department store",
+        "spacious",
+        "holiday atmosphere",
+        "well decorated",
+        "many floors",
+        "major brands",
+        "toys",
+        "restaurants"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 320.77915950611055
+    },
+    {
+      "id": "849019",
+      "lat": 37.7863884,
+      "lon": -122.4094996,
+      "name": "Union Square Pizza & Kitchen",
+      "detailed_description": [
+        "modern",
+        "italian",
+        "pizza",
+        "casual",
+        "welcoming",
+        "quick dinner",
+        "takeout",
+        "clean",
+        "counter seating"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 327.67604898932666
+    },
+    {
+      "id": "901818",
+      "lat": 37.7866413,
+      "lon": -122.407902,
+      "name": "POPMART Union Square",
+      "detailed_description": null,
+      "tags": [
+        "shop"
+      ],
+      "distance": 341.7440034498902
+    },
+    {
+      "id": "230854",
+      "lat": 37.7884955,
+      "lon": -122.4060496,
+      "name": "Meyerovich Gallery",
+      "detailed_description": null,
+      "tags": [
+        "culture"
+      ],
+      "distance": 341.83505100054265
+    },
+    {
+      "id": "16879",
+      "lat": 37.7878492,
+      "lon": -122.4132306,
+      "name": "Lapisara Eatery",
+      "detailed_description": [
+        "thai fusion",
+        "trendy",
+        "lively",
+        "brunch",
+        "dinner with friends",
+        "beautiful interior",
+        "outdoor seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 343.6728409457921
+    },
+    {
+      "id": "271239",
+      "lat": 37.7868822,
+      "lon": -122.407329,
+      "name": "Starbucks",
+      "detailed_description": [
+        "coffee shop",
+        "busy",
+        "convenient",
+        "view of union square",
+        "limited seating",
+        "quick coffee break",
+        "casual meetup",
+        "wifi",
+        "light bites"
+      ],
+      "tags": [
+        "cafe"
+      ],
+      "distance": 347.56411314519033
+    },
+    {
+      "id": "98998",
+      "lat": 37.7874614,
+      "lon": -122.4063598,
+      "name": "Neiman Marcus",
+      "detailed_description": [
+        "department store",
+        "luxury",
+        "glamorous",
+        "palatial",
+        "beautiful",
+        "extravagant",
+        "jewelry",
+        "handbags",
+        "perfume"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 366.2129020649115
+    },
+    {
+      "id": "20047",
+      "lat": 37.7878162,
+      "lon": -122.4136593,
+      "name": "Pearl's Deluxe Burgers",
+      "detailed_description": [
+        "american",
+        "burgers",
+        "classic",
+        "no frills",
+        "quick bite",
+        "comfort food",
+        "cozy",
+        "small"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 378.8078107237551
+    },
+    {
+      "id": "3397",
+      "lat": 37.787414,
+      "lon": -122.4061801,
+      "name": "The Rotunda",
+      "detailed_description": [
+        "cafe",
+        "elegant",
+        "luxurious",
+        "intimate",
+        "stained glass ceiling",
+        "afternoon tea",
+        "date spot",
+        "tea",
+        "popovers",
+        "sandwiches"
+      ],
+      "tags": [
+        "bar",
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 382.241222141778
+    },
+    {
+      "id": "96422",
+      "lat": 37.7922657,
+      "lon": -122.4121403,
+      "name": "Huntington Park",
+      "detailed_description": [
+        "park",
+        "peaceful",
+        "scenic",
+        "open",
+        "green",
+        "historic fountain",
+        "next to grace cathedral",
+        "people watching",
+        "taking a break"
+      ],
+      "tags": [
+        "nature"
+      ],
+      "distance": 386.42211043897436
+    },
+    {
+      "id": "130011",
+      "lat": 37.7911157,
+      "lon": -122.4136056,
+      "name": "Osso Steakhouse",
+      "detailed_description": [
+        "american",
+        "steakhouse",
+        "warm",
+        "welcoming",
+        "date night",
+        "celebration",
+        "art deco",
+        "private booths"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 389.5209996769513
+    },
+    {
+      "id": "86889",
+      "lat": 37.7881152,
+      "lon": -122.4055909,
+      "name": "City Laser Clinic",
+      "detailed_description": [
+        "medical clinic",
+        "professional",
+        "welcoming",
+        "convenient location",
+        "lovely street",
+        "great services like botox",
+        "fillers",
+        "laser hair removal",
+        "cosmetic treatments",
+        "medical procedures"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 393.2020579562673
+    },
+    {
+      "id": "1833",
+      "lat": 37.7902836,
+      "lon": -122.4054164,
+      "name": "Amorino Gelato - San Francisco",
+      "detailed_description": [
+        "cafe",
+        "artisanal",
+        "gourmet",
+        "cozy",
+        "clean",
+        "dessert treat",
+        "exploring the city",
+        "gelato",
+        "macarons",
+        "pastries",
+        "gelato served in flower petal shapes",
+        "organic and vegan options",
+        "unlimited flavor sampling"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 399.2243099075933
+    }
+  ]
+}

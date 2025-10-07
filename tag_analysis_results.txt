@@ -1,0 +1,23 @@
+TAG ANALYSIS RESULTS
+============================================================
+Total places: 145
+Places with tags: 145
+Places without tags: 0
+Total tag instances: 190
+Unique tags: 13
+
+TAG FREQUENCY (sorted by count):
+----------------------------------------
+restaurant                    69 ( 36.3%)
+bar                           41 ( 21.6%)
+lodging                       13 (  6.8%)
+destination                   13 (  6.8%)
+night_club                    12 (  6.3%)
+shop                          12 (  6.3%)
+cafe                          11 (  5.8%)
+health                         6 (  3.2%)
+selfcare                       5 (  2.6%)
+bakery                         3 (  1.6%)
+nature                         2 (  1.1%)
+culture                        2 (  1.1%)
+book_store                     1 (  0.5%)

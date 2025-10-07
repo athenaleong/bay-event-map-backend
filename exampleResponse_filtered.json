@@ -1,0 +1,3317 @@
+{
+  "success": true,
+  "places": [
+    {
+      "id": "57006",
+      "lat": 37.7892025,
+      "lon": -122.4098192,
+      "name": "Bluestone Lane Theatre District Coffee Shop",
+      "hours": [
+        "Monday: 6:00 AM – 2:00 PM",
+        "Tuesday: 6:00 AM – 2:00 PM",
+        "Wednesday: 6:00 AM – 2:00 PM",
+        "Thursday: 6:00 AM – 2:00 PM",
+        "Friday: 6:00 AM – 2:00 PM",
+        "Saturday: 6:00 AM – 2:00 PM",
+        "Sunday: 6:00 AM – 2:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "australian",
+        "urban",
+        "small",
+        "limited seating",
+        "breakfast",
+        "coffee break",
+        "croissants",
+        "toast",
+        "light bites"
+      ],
+      "tags": [
+        "cafe"
+      ],
+      "distance": 13.896250980210974
+    },
+    {
+      "id": "287660",
+      "lat": 37.7892205,
+      "lon": -122.4099444,
+      "name": "The Parthenon",
+      "hours": [
+        "Monday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Tuesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Wednesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Thursday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 11:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "greek",
+        "mediterranean",
+        "elegant",
+        "relaxed",
+        "fine dining",
+        "special occasion",
+        "inviting",
+        "sophisticated"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 17.606023763861465
+    },
+    {
+      "id": "15476",
+      "lat": 37.7894294,
+      "lon": -122.4095652,
+      "name": "Pacific Cocktail Haven",
+      "hours": [
+        "Monday: 5:00 PM – 12:00 AM",
+        "Tuesday: 5:00 PM – 12:00 AM",
+        "Wednesday: 5:00 PM – 12:00 AM",
+        "Thursday: 5:00 PM – 12:00 AM",
+        "Friday: 5:00 PM – 12:00 AM",
+        "Saturday: 5:00 PM – 12:00 AM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "fun",
+        "laid back",
+        "first dates",
+        "wrapping up the week",
+        "open",
+        "festive decor"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 23.23720572860874
+    },
+    {
+      "id": "149512",
+      "lat": 37.7890595,
+      "lon": -122.4091699,
+      "name": "Fanoos Grills",
+      "hours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 11:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "middle eastern",
+        "shawarma",
+        "cozy",
+        "affordable",
+        "quick bite",
+        "takeaway",
+        "small",
+        "casual"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 62.41358732582939
+    },
+    {
+      "id": "127089",
+      "lat": 37.7887173,
+      "lon": -122.410018,
+      "name": "Akiko's Sushi Bar",
+      "hours": [
+        "Monday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM",
+        "Tuesday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM",
+        "Wednesday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM",
+        "Thursday: 11:00 AM – 3:00 PM, 4:15 – 10:00 PM",
+        "Friday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM",
+        "Saturday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM",
+        "Sunday: 11:00 AM – 2:45 PM, 4:15 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "intimate",
+        "comfortable",
+        "date night",
+        "special occasion",
+        "tiny",
+        "limited seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 70.46398623376896
+    },
+    {
+      "id": "75114",
+      "lat": 37.7889636,
+      "lon": -122.4091222,
+      "name": "Cheaper Than Therapy",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 7:00 – 9:30 PM",
+        "Thursday: 7:00 – 9:30 PM",
+        "Friday: 7:00 – 11:30 PM",
+        "Saturday: 7:00 – 11:30 PM",
+        "Sunday: 7:00 – 9:30 PM"
+      ],
+      "detailed_description": [
+        "comedy club",
+        "fun",
+        "hilarious",
+        "intimate",
+        "charming",
+        "5 comedians",
+        "no drink minimum",
+        "date night",
+        "night out with friends"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 71.54879045528568
+    },
+    {
+      "id": "14247",
+      "lat": 37.7888656,
+      "lon": -122.4105218,
+      "name": "Cesario's",
+      "hours": [
+        "Monday: 11:30 AM – 10:00 PM",
+        "Tuesday: 11:30 AM – 10:00 PM",
+        "Wednesday: 11:30 AM – 10:00 PM",
+        "Thursday: 11:30 AM – 10:00 PM",
+        "Friday: 11:30 AM – 10:00 PM",
+        "Saturday: 11:30 AM – 10:00 PM",
+        "Sunday: 11:30 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "italian",
+        "cozy",
+        "quaint",
+        "celebration",
+        "vacation",
+        "small",
+        "tight seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 81.85248824512796
+    },
+    {
+      "id": "457988",
+      "lat": 37.7893902,
+      "lon": -122.4088042,
+      "name": "Lori's Diner",
+      "hours": [
+        "Monday: 7:00 AM – 10:00 PM",
+        "Tuesday: 7:00 AM – 10:00 PM",
+        "Wednesday: 7:00 AM – 10:00 PM",
+        "Thursday: 7:00 AM – 10:00 PM",
+        "Friday: 7:00 AM – 10:00 PM",
+        "Saturday: 7:00 AM – 10:00 PM",
+        "Sunday: 7:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "american",
+        "diner",
+        "retro",
+        "nostalgic",
+        "casual dining",
+        "comfort food cravings",
+        "1950s memorabilia",
+        "brightly lit"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 87.3576160181658
+    },
+    {
+      "id": "404967",
+      "lat": 37.7896492,
+      "lon": -122.4088438,
+      "name": "Maru Sushi",
+      "hours": [
+        "Monday: 11:00 AM – 10:00 PM",
+        "Tuesday: 11:00 AM – 10:00 PM",
+        "Wednesday: 11:00 AM – 10:00 PM",
+        "Thursday: 11:00 AM – 10:00 PM",
+        "Friday: 11:00 AM – 10:00 PM",
+        "Saturday: 11:00 AM – 10:00 PM",
+        "Sunday: 11:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "ramen",
+        "friendly",
+        "welcoming",
+        "quick bite",
+        "casual dining",
+        "clean",
+        "basic"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 90.9840037513491
+    },
+    {
+      "id": "99281",
+      "lat": 37.7898483,
+      "lon": -122.4105987,
+      "name": "The Summer Place",
+      "hours": [
+        "Monday: 2:00 PM – 2:00 AM",
+        "Tuesday: 2:00 PM – 2:00 AM",
+        "Wednesday: 2:00 PM – 2:00 AM",
+        "Thursday: 2:00 PM – 2:00 AM",
+        "Friday: 2:00 PM – 2:00 AM",
+        "Saturday: 12:00 PM – 2:00 AM",
+        "Sunday: 12:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "friendly",
+        "festive",
+        "detailed decor",
+        "memorable",
+        "meet people",
+        "relax",
+        "rotating cocktails",
+        "holiday decorations"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 91.43688165110245
+    },
+    {
+      "id": "117883",
+      "lat": 37.79,
+      "lon": -122.4091667,
+      "name": "Jeanne D'Arc Event Space",
+      "hours": [],
+      "detailed_description": [
+        "french",
+        "romantic",
+        "charming",
+        "date night",
+        "special occasion",
+        "intricate",
+        "quirky decor"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 93.08628978291947
+    },
+    {
+      "id": "609294",
+      "lat": 37.7901405,
+      "lon": -122.4102139,
+      "name": "Aliment",
+      "hours": [
+        "Monday: 12:00 – 9:30 PM",
+        "Tuesday: 12:00 – 9:30 PM",
+        "Wednesday: 12:00 – 9:30 PM",
+        "Thursday: 12:00 – 9:30 PM",
+        "Friday: 12:00 – 10:00 PM",
+        "Saturday: 12:00 – 10:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "modern",
+        "american",
+        "gastropub",
+        "inviting",
+        "friendly",
+        "happy hour",
+        "casual dining",
+        "clean",
+        "spacious"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 97.76298251227465
+    },
+    {
+      "id": "150807",
+      "lat": 37.7889738,
+      "lon": -122.4086849,
+      "name": "Golden Gate Tap Room",
+      "hours": [
+        "Monday: 4:00 PM – 12:00 AM",
+        "Tuesday: 4:00 PM – 12:00 AM",
+        "Wednesday: 4:00 PM – 12:00 AM",
+        "Thursday: 4:00 PM – 12:00 AM",
+        "Friday: 12:00 PM – 2:00 AM",
+        "Saturday: 12:00 PM – 2:00 AM",
+        "Sunday: 12:00 PM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "brewery",
+        "casual",
+        "fun",
+        "quick drink",
+        "grab a bite",
+        "cool tap room",
+        "arcade games"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 105.1168450689216
+    },
+    {
+      "id": "8601",
+      "lat": 37.7902,
+      "lon": -122.4093389,
+      "name": "BeanStalk Cafe",
+      "hours": [
+        "Monday: 7:30 AM – 2:30 PM",
+        "Tuesday: 7:30 AM – 2:30 PM",
+        "Wednesday: 7:30 AM – 2:30 PM",
+        "Thursday: 7:30 AM – 3:00 PM",
+        "Friday: 7:30 AM – 3:00 PM",
+        "Saturday: 7:30 AM – 3:00 PM",
+        "Sunday: 7:30 AM – 3:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "intimate",
+        "relaxing",
+        "exposed brick walls",
+        "multi color seating",
+        "light breakfast",
+        "coffee with friends",
+        "pastries",
+        "sandwiches",
+        "coffee drinks"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 105.12436437909655
+    },
+    {
+      "id": "541195",
+      "lat": 37.7887938,
+      "lon": -122.4087411,
+      "name": "Sears Fine Food",
+      "hours": [
+        "Monday: 7:00 AM – 9:00 PM",
+        "Tuesday: 7:00 AM – 9:00 PM",
+        "Wednesday: 7:00 AM – 9:00 PM",
+        "Thursday: 7:00 AM – 9:00 PM",
+        "Friday: 7:00 AM – 9:00 PM",
+        "Saturday: 7:00 AM – 9:00 PM",
+        "Sunday: 7:00 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "american",
+        "diner",
+        "nostalgic",
+        "warm",
+        "holiday tradition",
+        "casual meal",
+        "classic",
+        "cozy"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 109.90342678891604
+    },
+    {
+      "id": "658318",
+      "lat": 37.7883467,
+      "lon": -122.4094366,
+      "name": "San Francisco Playhouse",
+      "hours": [
+        "Monday: 12:00 – 9:00 PM",
+        "Tuesday: 12:00 – 9:00 PM",
+        "Wednesday: 12:00 – 9:00 PM",
+        "Thursday: 12:00 – 9:00 PM",
+        "Friday: 12:00 – 9:00 PM",
+        "Saturday: 12:00 – 9:00 PM",
+        "Sunday: 12:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "theater",
+        "intimate",
+        "impactful",
+        "charming rustic setting",
+        "art deco design",
+        "non profit organization",
+        "thought provoking productions",
+        "affordable tickets",
+        "cultural experience",
+        "community engagement"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 113.35613467146351
+    },
+    {
+      "id": "63494",
+      "lat": 37.7902449,
+      "lon": -122.409088,
+      "name": "Sons & Daughters",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 6:00 – 8:00 PM",
+        "Wednesday: 6:00 – 8:00 PM",
+        "Thursday: 6:00 – 8:00 PM",
+        "Friday: 5:00 – 8:30 PM",
+        "Saturday: 5:00 – 8:30 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "american",
+        "tasting menu",
+        "intimate",
+        "romantic",
+        "date night",
+        "special occasion",
+        "cozy",
+        "open kitchen"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 119.58194787983805
+    },
+    {
+      "id": "835290",
+      "lat": 37.7882259,
+      "lon": -122.4097245,
+      "name": "Cafe Encore: Coffee, Breakfast, and Lunch Delights",
+      "hours": [
+        "Monday: 7:00 AM – 6:00 PM",
+        "Tuesday: 7:00 AM – 6:00 PM",
+        "Wednesday: 7:00 AM – 6:00 PM",
+        "Thursday: 7:00 AM – 6:00 PM",
+        "Friday: 7:00 AM – 6:00 PM",
+        "Saturday: 6:30 AM – 3:00 PM",
+        "Sunday: 7:00 AM – 3:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "friendly",
+        "tiny",
+        "simple",
+        "morning coffee run",
+        "light lunch",
+        "breakfast sandwiches",
+        "salads",
+        "sandwiches",
+        "pecan pie"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 122.48231473352897
+    },
+    {
+      "id": "774377",
+      "lat": 37.7900504,
+      "lon": -122.4108637,
+      "name": "Bush Market",
+      "hours": [
+        "Monday: 8:00 AM – 10:00 PM",
+        "Tuesday: 8:00 AM – 10:00 PM",
+        "Wednesday: 8:00 AM – 10:00 PM",
+        "Thursday: 8:00 AM – 10:00 PM",
+        "Friday: 8:00 AM – 10:00 PM",
+        "Saturday: 8:00 AM – 10:00 PM",
+        "Sunday: 8:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "grocery store",
+        "convenience store",
+        "welcoming",
+        "local",
+        "small",
+        "clean",
+        "organic options",
+        "craft beer",
+        "cheese selection",
+        "fresh produce",
+        "wine"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 123.7230876542062
+    },
+    {
+      "id": "96011",
+      "lat": 37.7902566,
+      "lon": -122.408999,
+      "name": "Uncle Vito's Pizza",
+      "hours": [
+        "Monday: 5:00 – 10:00 PM",
+        "Tuesday: 5:00 – 10:00 PM",
+        "Wednesday: 5:00 – 10:00 PM",
+        "Thursday: 5:00 – 10:00 PM",
+        "Friday: 5:00 – 11:00 PM",
+        "Saturday: 5:00 – 11:00 PM",
+        "Sunday: 5:00 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "pizza",
+        "lively",
+        "casual",
+        "dinner with friends",
+        "weekend lunch",
+        "exposed brick walls",
+        "open kitchen"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 124.9011905224772
+    },
+    {
+      "id": "127336",
+      "lat": 37.7900744,
+      "lon": -122.4086692,
+      "name": "Roxanne Cafe",
+      "hours": [
+        "Monday: 7:00 AM – 3:00 PM, 4:00 – 9:00 PM",
+        "Tuesday: 7:00 AM – 3:00 PM, 4:00 – 9:00 PM",
+        "Wednesday: 7:00 AM – 3:00 PM, 4:00 – 9:00 PM",
+        "Thursday: 7:00 AM – 3:00 PM, 4:00 – 9:00 PM",
+        "Friday: 7:00 AM – 3:00 PM, 4:00 – 10:00 PM",
+        "Saturday: 7:00 AM – 10:00 PM",
+        "Sunday: 7:00 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "romantic",
+        "cute",
+        "interesting decor",
+        "date",
+        "brunch",
+        "breakfast",
+        "italian",
+        "sandwiches"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 129.27499507930256
+    },
+    {
+      "id": "394560",
+      "lat": 37.7899597,
+      "lon": -122.4085332,
+      "name": "Last Drop Tavern",
+      "hours": [
+        "Monday: 4:00 PM – 2:00 AM",
+        "Tuesday: 4:00 PM – 2:00 AM",
+        "Wednesday: 4:00 PM – 2:00 AM",
+        "Thursday: 4:00 PM – 2:00 AM",
+        "Friday: 4:00 PM – 2:00 AM",
+        "Saturday: 11:00 AM – 2:00 AM",
+        "Sunday: 11:00 AM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "tavern",
+        "cocktail bar",
+        "cozy",
+        "old world",
+        "casual dining",
+        "happy hour",
+        "quaint",
+        "english style"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 131.37474822787223
+    },
+    {
+      "id": "2672",
+      "lat": 37.7896829,
+      "lon": -122.41137,
+      "name": "Del Popolo",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 5:30 – 9:00 PM",
+        "Wednesday: 5:30 – 9:00 PM",
+        "Thursday: 5:30 – 9:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 5:00 – 10:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "italian",
+        "pizza",
+        "casual",
+        "cozy",
+        "date night",
+        "dinner with friends",
+        "intimate",
+        "rustic"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 143.97846957241842
+    },
+    {
+      "id": "2564",
+      "lat": 37.7900163,
+      "lon": -122.4113662,
+      "name": "Key Klub",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 4:00 – 11:00 PM",
+        "Wednesday: 4:00 – 11:00 PM",
+        "Thursday: 4:00 – 11:00 PM",
+        "Friday: 4:00 PM – 12:00 AM",
+        "Saturday: 4:00 PM – 12:00 AM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "natural wine bar",
+        "chill",
+        "dark and lively",
+        "came here with some friends",
+        "date night",
+        "exposed brick",
+        "japanese design elements"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 157.96907180256238
+    },
+    {
+      "id": "553459",
+      "lat": 37.789047,
+      "lon": -122.4079463,
+      "name": "Apollo",
+      "hours": [],
+      "detailed_description": null,
+      "tags": [
+        "destination"
+      ],
+      "distance": 165.38854896085766
+    },
+    {
+      "id": "44",
+      "lat": 37.7886674,
+      "lon": -122.4115129,
+      "name": "Persona",
+      "hours": [
+        "Monday: 5:00 PM – 2:00 AM",
+        "Tuesday: 5:00 PM – 2:00 AM",
+        "Wednesday: 5:00 PM – 2:00 AM",
+        "Thursday: 5:00 PM – 2:00 AM",
+        "Friday: 5:00 PM – 2:00 AM",
+        "Saturday: 5:00 PM – 2:00 AM",
+        "Sunday: 5:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "trendy",
+        "lowkey",
+        "date night",
+        "large group gatherings",
+        "basement",
+        "spacious"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 167.7849076354371
+    },
+    {
+      "id": "15033",
+      "lat": 37.7886963,
+      "lon": -122.4115393,
+      "name": "Matador",
+      "hours": [
+        "Monday: 12:00 – 10:00 PM",
+        "Tuesday: 12:00 – 10:00 PM",
+        "Wednesday: 12:00 – 10:00 PM",
+        "Thursday: 12:00 – 10:00 PM",
+        "Friday: 12:00 – 11:00 PM",
+        "Saturday: 12:00 – 11:00 PM",
+        "Sunday: 12:00 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "mexican",
+        "tacos",
+        "fun",
+        "lively",
+        "date night",
+        "dinner with friends",
+        "modern",
+        "cultural accents"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 168.51473788642446
+    },
+    {
+      "id": "107104",
+      "lat": 37.7896952,
+      "lon": -122.4078356,
+      "name": "Sieber Plastic Surgery - David Sieber M.D.",
+      "hours": [
+        "Monday: 9:00 AM – 5:00 PM",
+        "Tuesday: 9:00 AM – 5:00 PM",
+        "Wednesday: 9:00 AM – 5:00 PM",
+        "Thursday: 9:00 AM – 5:00 PM",
+        "Friday: 9:00 AM – 3:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "plastic surgery clinic",
+        "surgical skill and expertise of dr. david sieber",
+        "commitment to patient satisfaction",
+        "professional",
+        "attentive"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 177.00628218377207
+    },
+    {
+      "id": "132346",
+      "lat": 37.7880757,
+      "lon": -122.4110514,
+      "name": "The Olympic Club",
+      "hours": [
+        "Monday: 5:00 AM – 11:00 PM",
+        "Tuesday: 5:00 AM – 11:00 PM",
+        "Wednesday: 5:00 AM – 11:00 PM",
+        "Thursday: 5:00 AM – 11:00 PM",
+        "Friday: 5:00 AM – 11:00 PM",
+        "Saturday: 6:00 AM – 10:00 PM",
+        "Sunday: 6:00 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "social",
+        "athletic",
+        "spacious",
+        "beautiful facilities",
+        "basketball courts",
+        "swimming pools",
+        "squash courts",
+        "rooftop fitness center"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 177.53291801542116
+    },
+    {
+      "id": "544629",
+      "lat": 37.7889373,
+      "lon": -122.4117908,
+      "name": "Parrot Pizzeria & Rotisserie",
+      "hours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 11:30 PM",
+        "Saturday: 11:00 AM – 11:30 PM",
+        "Sunday: 11:00 AM – 11:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "pizzeria",
+        "cozy",
+        "casual",
+        "late night dining",
+        "pre drinks meal",
+        "downtownsy",
+        "quiet interior"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 180.62661050882326
+    },
+    {
+      "id": "112960",
+      "lat": 37.7878332,
+      "lon": -122.4107721,
+      "name": "PLS on Post",
+      "hours": [
+        "Monday: 4:00 – 10:00 PM",
+        "Tuesday: 4:00 – 10:00 PM",
+        "Wednesday: 4:00 – 10:00 PM",
+        "Thursday: 4:00 – 10:00 PM",
+        "Friday: 4:00 – 10:00 PM",
+        "Saturday: 4:00 – 10:00 PM",
+        "Sunday: 4:00 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "american",
+        "burgers",
+        "fun",
+        "relaxed",
+        "happy hour",
+        "casual dinner",
+        "clean",
+        "comfortable"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 186.88402371300606
+    },
+    {
+      "id": "125046",
+      "lat": 37.7898818,
+      "lon": -122.4118101,
+      "name": "Fresh Brew Coffee",
+      "hours": [
+        "Monday: 7:00 AM – 3:00 PM",
+        "Tuesday: 7:00 AM – 3:00 PM",
+        "Wednesday: 7:00 AM – 3:00 PM",
+        "Thursday: 7:00 AM – 3:00 PM",
+        "Friday: 7:00 AM – 3:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "charming",
+        "warm",
+        "small",
+        "unassuming",
+        "quick bite",
+        "breakfast",
+        "sandwiches",
+        "bagels",
+        "coffee",
+        "breakfast bites"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 187.54928277770145
+    },
+    {
+      "id": "16796",
+      "lat": 37.790161,
+      "lon": -122.4079184,
+      "name": "Chelsea Place",
+      "hours": [
+        "Monday: 4:00 PM – 2:00 AM",
+        "Tuesday: 4:00 PM – 2:00 AM",
+        "Wednesday: 4:00 PM – 2:00 AM",
+        "Thursday: 1:00 PM – 2:00 AM",
+        "Friday: 1:00 PM – 2:00 AM",
+        "Saturday: 1:00 PM – 2:00 AM",
+        "Sunday: 1:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "pub",
+        "chill",
+        "fun",
+        "cozy",
+        "lively",
+        "hang out with friends",
+        "have drinks"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 189.24533492670537
+    },
+    {
+      "id": "21893",
+      "lat": 37.7896352,
+      "lon": -122.4119186,
+      "name": "Stookey's Club Moderne",
+      "hours": [
+        "Monday: 5:00 PM – 2:00 AM",
+        "Tuesday: 5:00 PM – 2:00 AM",
+        "Wednesday: 5:00 PM – 2:00 AM",
+        "Thursday: 5:00 PM – 2:00 AM",
+        "Friday: 5:00 PM – 2:00 AM",
+        "Saturday: 5:00 PM – 2:00 AM",
+        "Sunday: 5:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "retro bar",
+        "nostalgic",
+        "transportive",
+        "art deco",
+        "1930s style",
+        "date night",
+        "after dinner drinks"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 189.74952620656765
+    },
+    {
+      "id": "65507",
+      "lat": 37.7895966,
+      "lon": -122.4075812,
+      "name": "Mr.Charlie's TMS",
+      "hours": [
+        "Monday: 9:00 AM – 10:00 PM",
+        "Tuesday: 9:00 AM – 10:00 PM",
+        "Wednesday: 9:00 AM – 10:00 PM",
+        "Thursday: 9:00 AM – 10:00 PM",
+        "Friday: 9:00 AM – 12:00 AM",
+        "Saturday: 9:00 AM – 12:00 AM",
+        "Sunday: 9:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "fast food",
+        "vegetarian",
+        "trendy",
+        "quirky",
+        "something new",
+        "grab and go",
+        "bright",
+        "playful"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 196.848190491189
+    },
+    {
+      "id": "740212",
+      "lat": 37.7897952,
+      "lon": -122.4075384,
+      "name": "Maritime Boat Club",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 5:30 – 9:00 PM",
+        "Wednesday: 5:30 – 9:00 PM",
+        "Thursday: 5:30 – 9:00 PM",
+        "Friday: 5:30 – 10:00 PM",
+        "Saturday: 5:30 – 10:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "modern",
+        "seafood",
+        "american",
+        "fine dining",
+        "intimate",
+        "exciting",
+        "special dinner",
+        "date night",
+        "warm",
+        "well appointed"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 205.0442824102897
+    },
+    {
+      "id": "598319",
+      "lat": 37.7897952,
+      "lon": -122.4075384,
+      "name": "Bar Maritime",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 4:00 – 11:00 PM",
+        "Wednesday: 4:00 – 11:00 PM",
+        "Thursday: 4:00 – 11:00 PM",
+        "Friday: 4:00 PM – 12:00 AM",
+        "Saturday: 2:00 PM – 12:00 AM",
+        "Sunday: 4:00 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "coastal charm",
+        "urban sophistication",
+        "casual gatherings",
+        "date night",
+        "inviting",
+        "relaxed",
+        "fresh oysters",
+        "unique cocktails",
+        "seafood dishes"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 205.0442824102897
+    },
+    {
+      "id": "94153",
+      "lat": 37.7874582,
+      "lon": -122.4098148,
+      "name": "Rae Studios | San Francisco Dance & Fitness Studio",
+      "hours": [
+        "Monday: 9:00 AM – 9:00 PM",
+        "Tuesday: 9:00 AM – 9:00 PM",
+        "Wednesday: 9:00 AM – 9:00 PM",
+        "Thursday: 9:00 AM – 9:00 PM",
+        "Friday: 9:00 AM – 9:00 PM",
+        "Saturday: 10:00 AM – 3:00 PM",
+        "Sunday: 10:00 AM – 3:00 PM"
+      ],
+      "detailed_description": [
+        "dance studio",
+        "welcoming",
+        "friendly",
+        "bright",
+        "pint sized",
+        "variety of dance styles",
+        "classes for all levels",
+        "take adult dance classes",
+        "perform"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 207.69717198784167
+    },
+    {
+      "id": "183317",
+      "lat": 37.7889228,
+      "lon": -122.4121485,
+      "name": "Sutter Pub & Restaurant",
+      "hours": [
+        "Monday: 8:00 AM – 10:30 PM",
+        "Tuesday: 8:00 AM – 10:30 PM",
+        "Wednesday: 8:00 AM – 10:30 PM",
+        "Thursday: 8:00 AM – 10:30 PM",
+        "Friday: 8:00 AM – 11:00 PM",
+        "Saturday: 8:00 AM – 11:00 PM",
+        "Sunday: 8:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "pub",
+        "english pub",
+        "cozy",
+        "genuine",
+        "watching sports",
+        "beers",
+        "high bar counter",
+        "high ceilings"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 211.61570763382733
+    },
+    {
+      "id": "67291",
+      "lat": 37.7889012,
+      "lon": -122.4122173,
+      "name": "Sanraku",
+      "hours": [
+        "Monday: 11:30 AM – 9:00 PM",
+        "Tuesday: 11:30 AM – 9:00 PM",
+        "Wednesday: 11:30 AM – 9:00 PM",
+        "Thursday: 11:30 AM – 9:00 PM",
+        "Friday: 11:30 AM – 10:00 PM",
+        "Saturday: 11:30 AM – 10:00 PM",
+        "Sunday: 11:30 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "casual",
+        "authentic",
+        "quick bite",
+        "everyday dining",
+        "minimalist",
+        "cozy"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 218.03570231164286
+    },
+    {
+      "id": "112986",
+      "lat": 37.7877891,
+      "lon": -122.4113817,
+      "name": "Lost Cat Bar & Bites",
+      "hours": [
+        "Monday: 4:00 PM – 2:00 AM",
+        "Tuesday: 4:00 PM – 2:00 AM",
+        "Wednesday: 4:00 PM – 2:00 AM",
+        "Thursday: 4:00 PM – 2:00 AM",
+        "Friday: 4:00 PM – 2:00 AM",
+        "Saturday: 4:00 PM – 2:00 AM",
+        "Sunday: 4:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "chill",
+        "welcoming",
+        "relaxing after work",
+        "casual drinks",
+        "cozy",
+        "whimsical cat theme"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 220.55899678196405
+    },
+    {
+      "id": "697684",
+      "lat": 37.7873315,
+      "lon": -122.4097298,
+      "name": "The Valley Club",
+      "hours": [
+        "Monday: 5:00 AM – 12:00 AM",
+        "Tuesday: 5:00 PM – 12:00 AM",
+        "Wednesday: 5:00 PM – 12:00 AM",
+        "Thursday: 5:00 PM – 12:00 AM",
+        "Friday: 5:00 PM – 1:00 AM",
+        "Saturday: 5:00 PM – 1:00 AM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "speakeasy",
+        "cocktail bar",
+        "intimate",
+        "retro",
+        "after work drinks",
+        "date night",
+        "80s style interior",
+        "hidden entrance"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 221.8522767247822
+    },
+    {
+      "id": "66686",
+      "lat": 37.7873155,
+      "lon": -122.4097414,
+      "name": "Corzetti",
+      "hours": [
+        "Monday: 11:30 AM – 9:00 PM",
+        "Tuesday: 11:30 AM – 9:00 PM",
+        "Wednesday: 11:30 AM – 9:00 PM",
+        "Thursday: 11:30 AM – 9:00 PM",
+        "Friday: 11:30 AM – 10:00 PM",
+        "Saturday: 11:30 AM – 10:00 PM",
+        "Sunday: 11:30 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "italian",
+        "chic",
+        "friendly",
+        "inviting",
+        "excellent",
+        "date night",
+        "weeknight dinner",
+        "great pizza",
+        "extensive wine list"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 223.60701287198484
+    },
+    {
+      "id": "20346",
+      "lat": 37.788554,
+      "lon": -122.412149,
+      "name": "707 Sutter",
+      "hours": [
+        "Monday: 11:30 AM – 12:00 AM",
+        "Tuesday: 11:30 AM – 12:00 AM",
+        "Wednesday: 11:30 AM – 12:00 AM",
+        "Thursday: 11:30 AM – 12:00 AM",
+        "Friday: 11:30 AM – 1:00 AM",
+        "Saturday: 11:30 AM – 1:00 AM",
+        "Sunday: 5:00 – 11:00 PM"
+      ],
+      "detailed_description": [
+        "korean",
+        "restaurant",
+        "fun",
+        "lively",
+        "late night eats",
+        "groups",
+        "chic decor",
+        "dark tables"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 223.96084356579922
+    },
+    {
+      "id": "87430",
+      "lat": 37.7898947,
+      "lon": -122.4122996,
+      "name": "Yoki Sushi",
+      "hours": [
+        "Monday: 5:00 – 9:00 PM",
+        "Tuesday: 5:00 – 9:00 PM",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 4:00 – 10:00 PM",
+        "Saturday: 4:00 – 10:00 PM",
+        "Sunday: 4:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "sushi",
+        "fun",
+        "intimate",
+        "visiting from out of town",
+        "modern"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 228.99272867622267
+    },
+    {
+      "id": "64963",
+      "lat": 37.7877649,
+      "lon": -122.4115037,
+      "name": "Honey Honey Cafe & Crepery",
+      "hours": [
+        "Monday: 8:00 AM – 3:00 PM",
+        "Tuesday: 8:00 AM – 3:00 PM",
+        "Wednesday: 8:00 AM – 3:00 PM",
+        "Thursday: 8:00 AM – 3:00 PM",
+        "Friday: 7:30 AM – 3:00 PM",
+        "Saturday: 7:30 AM – 3:00 PM",
+        "Sunday: 7:30 AM – 3:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "cheery",
+        "casual",
+        "open",
+        "inviting",
+        "breakfast",
+        "brunch",
+        "crepes",
+        "cafe fare"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 229.51642443490238
+    },
+    {
+      "id": "108583",
+      "lat": 37.7877915,
+      "lon": -122.4080348,
+      "name": "Miller & Lux Provisions Cafe",
+      "hours": [
+        "Monday: 5:00 – 9:00 PM",
+        "Tuesday: 5:00 – 9:00 PM",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 5:00 – 10:00 PM",
+        "Sunday: 5:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "elegant",
+        "inviting",
+        "beautiful",
+        "feast for the eyes",
+        "after ice skating",
+        "visitors and locals",
+        "pastries",
+        "light bites"
+      ],
+      "tags": [
+        "bakery"
+      ],
+      "distance": 230.30238198242165
+    },
+    {
+      "id": "3632",
+      "lat": 37.7899533,
+      "lon": -122.4072915,
+      "name": "Boba Guys Union Square",
+      "hours": [
+        "Monday: 11:00 AM – 7:00 PM",
+        "Tuesday: 11:00 AM – 7:00 PM",
+        "Wednesday: 11:00 AM – 7:00 PM",
+        "Thursday: 11:00 AM – 7:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "trendy",
+        "instagrammable",
+        "minimalist",
+        "modern",
+        "catch up with friends",
+        "dessert",
+        "milk tea",
+        "coffee",
+        "matcha"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 230.7848632208719
+    },
+    {
+      "id": "746801",
+      "lat": 37.7877542,
+      "lon": -122.4080546,
+      "name": "b. patisserie",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 8:00 AM – 4:00 PM",
+        "Thursday: 8:00 AM – 4:00 PM",
+        "Friday: 8:00 AM – 4:00 PM",
+        "Saturday: 8:00 AM – 4:00 PM",
+        "Sunday: 8:00 AM – 4:00 PM"
+      ],
+      "detailed_description": [
+        "bakery",
+        "cozy",
+        "bustling",
+        "outdoor seating",
+        "union square location",
+        "breakfast",
+        "people watching",
+        "kouign amann",
+        "croissants",
+        "seasonal pastries",
+        "baked goods"
+      ],
+      "tags": [
+        "bakery"
+      ],
+      "distance": 232.24246894740074
+    },
+    {
+      "id": "768769",
+      "lat": 37.7874883,
+      "lon": -122.4085223,
+      "name": "Nintendo SAN FRANCISCO",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 6:00 PM"
+      ],
+      "detailed_description": [
+        "shop",
+        "video game store",
+        "nintendo official store",
+        "exciting",
+        "colorful",
+        "two level store",
+        "interactive game stations",
+        "nintendo merchandise",
+        "switch 2 demo experience",
+        "themed sections",
+        "qr code sticker souvenir"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 232.94609916890985
+    },
+    {
+      "id": "20277",
+      "lat": 37.7881959,
+      "lon": -122.4120379,
+      "name": "Ryoko's Japanese Restaurant & Bar",
+      "hours": [
+        "Monday: 6:00 – 11:30 PM",
+        "Tuesday: 6:00 – 11:30 PM",
+        "Wednesday: 6:00 – 11:30 PM",
+        "Thursday: 6:00 – 11:30 PM",
+        "Friday: 6:00 PM – 12:30 AM",
+        "Saturday: 6:00 PM – 12:30 AM",
+        "Sunday: 6:00 – 10:30 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "japanese",
+        "sushi",
+        "lively",
+        "intimate",
+        "date night",
+        "special occasion",
+        "woodsy",
+        "cozy"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 233.74516353820246
+    },
+    {
+      "id": "9804",
+      "lat": 37.7902509,
+      "lon": -122.4073542,
+      "name": "Bouche",
+      "hours": [
+        "Monday: 5:00 – 9:30 PM",
+        "Tuesday: 5:00 – 9:30 PM",
+        "Wednesday: 5:00 – 9:30 PM",
+        "Thursday: 5:00 – 9:30 PM",
+        "Friday: 5:00 – 10:30 PM",
+        "Saturday: 9:00 AM – 2:00 PM, 5:00 – 10:30 PM",
+        "Sunday: 9:00 AM – 2:00 PM, 5:00 – 9:30 PM"
+      ],
+      "detailed_description": [
+        "french",
+        "intimate",
+        "romantic",
+        "date night",
+        "special occasions",
+        "cozy",
+        "elegant"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 237.86375941867405
+    },
+    {
+      "id": "155003",
+      "lat": 37.7872123,
+      "lon": -122.410372,
+      "name": "Tonton Restaurant",
+      "hours": [
+        "Monday: 11:45 AM – 12:00 AM",
+        "Tuesday: 11:45 AM – 12:00 AM",
+        "Wednesday: 11:45 AM – 12:00 AM",
+        "Thursday: 11:45 AM – 12:00 AM",
+        "Friday: 11:45 AM – 12:00 AM",
+        "Saturday: 11:45 AM – 12:00 AM",
+        "Sunday: 11:45 AM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "ramen",
+        "cozy",
+        "friendly",
+        "casual dinner",
+        "late night eats",
+        "small",
+        "hole in the wall"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 240.43974566667075
+    },
+    {
+      "id": "56116",
+      "lat": 37.7872036,
+      "lon": -122.4103361,
+      "name": "The ThongLor SF - Thai Restaurant",
+      "hours": [
+        "Monday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Tuesday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Wednesday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Thursday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Friday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Saturday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM",
+        "Sunday: 11:30 AM – 3:00 PM, 4:00 – 11:00 PM"
+      ],
+      "detailed_description": [
+        "thai",
+        "cozy",
+        "bustling",
+        "pre theater dinner",
+        "craving thai food",
+        "small",
+        "open kitchen"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 240.7425708380983
+    },
+    {
+      "id": "594007",
+      "lat": 37.7886897,
+      "lon": -122.4071735,
+      "name": "Apple Union Square",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "detailed_description": [
+        "electronics store",
+        "apple store",
+        "sleek",
+        "high tech",
+        "two story",
+        "clean and classy interior",
+        "iphones",
+        "ipads",
+        "vision pro goggles",
+        "window shopping",
+        "testing new devices"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 240.983209668895
+    },
+    {
+      "id": "1881",
+      "lat": 37.7876357,
+      "lon": -122.4115134,
+      "name": "Cocobang",
+      "hours": [
+        "Monday: 5:00 PM – 2:00 AM",
+        "Tuesday: 5:00 PM – 2:00 AM",
+        "Wednesday: 5:00 PM – 2:00 AM",
+        "Thursday: 5:00 PM – 2:00 AM",
+        "Friday: 5:00 PM – 4:00 AM",
+        "Saturday: 5:00 PM – 4:00 AM",
+        "Sunday: 5:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "korean",
+        "bbq",
+        "cozy",
+        "lively",
+        "dinner with friends",
+        "weekend night out",
+        "small",
+        "tight quarters"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 241.09861258952898
+    },
+    {
+      "id": "2555",
+      "lat": 37.7895456,
+      "lon": -122.4125292,
+      "name": "Peacekeeper",
+      "hours": [
+        "Monday: 3:00 PM – 2:00 AM",
+        "Tuesday: 3:00 PM – 2:00 AM",
+        "Wednesday: 3:00 PM – 2:00 AM",
+        "Thursday: 3:00 PM – 2:00 AM",
+        "Friday: 3:00 PM – 2:00 AM",
+        "Saturday: 1:00 PM – 2:00 AM",
+        "Sunday: 1:00 PM – 2:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "trendy",
+        "lively",
+        "night out",
+        "date night",
+        "modern",
+        "open"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 241.50217491269518
+    },
+    {
+      "id": "899843",
+      "lat": 37.7872111,
+      "lon": -122.4104224,
+      "name": "Bento Taro",
+      "hours": [
+        "Monday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Tuesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Wednesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Thursday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Friday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Saturday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+        "Sunday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "chinese",
+        "casual dining",
+        "friendly",
+        "welcoming",
+        "casual meal",
+        "group dining",
+        "cozy",
+        "casual"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 241.542446960146
+    },
+    {
+      "id": "14656",
+      "lat": 37.7879358,
+      "lon": -122.4075139,
+      "name": "Union Square",
+      "hours": [
+        "Monday: Open 24 hours",
+        "Tuesday: Open 24 hours",
+        "Wednesday: Open 24 hours",
+        "Thursday: Open 24 hours",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: Open 24 hours"
+      ],
+      "detailed_description": [
+        "shopping",
+        "outdoor shopping plaza",
+        "lively",
+        "iconic",
+        "beautiful landscaping",
+        "holiday decor",
+        "department stores",
+        "ice skating"
+      ],
+      "tags": [
+        "nature"
+      ],
+      "distance": 253.13356608362673
+    },
+    {
+      "id": "155001",
+      "lat": 37.7870443,
+      "lon": -122.4100294,
+      "name": "Pinecrest Diner",
+      "hours": [
+        "Monday: 7:00 AM – 11:00 PM",
+        "Tuesday: 7:00 AM – 11:00 PM",
+        "Wednesday: 7:00 AM – 11:00 PM",
+        "Thursday: 7:00 AM – 12:00 AM",
+        "Friday: Open 24 hours",
+        "Saturday: Open 24 hours",
+        "Sunday: 12:00 AM – 11:00 PM"
+      ],
+      "detailed_description": [
+        "diner",
+        "old school",
+        "lively",
+        "authentic",
+        "standby restaurant",
+        "open 24/7 some days",
+        "late night dinner",
+        "breakfast"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 254.54822346530813
+    },
+    {
+      "id": "2434",
+      "lat": 37.7877291,
+      "lon": -122.4120039,
+      "name": "Joy's Place",
+      "hours": [
+        "Monday: 8:00 AM – 8:00 PM",
+        "Tuesday: 8:00 AM – 8:00 PM",
+        "Wednesday: 8:00 AM – 8:00 PM",
+        "Thursday: 8:00 AM – 8:00 PM",
+        "Friday: 8:00 AM – 8:00 PM",
+        "Saturday: 8:00 AM – 6:00 PM",
+        "Sunday: 8:00 AM – 6:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "chill",
+        "relaxed",
+        "cute",
+        "little",
+        "quick bite",
+        "coffee break",
+        "sandwiches",
+        "paninis",
+        "desserts",
+        "shaved ice"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 263.07328910019515
+    },
+    {
+      "id": "89597",
+      "lat": 37.7869427,
+      "lon": -122.4095967,
+      "name": "Mastro's Steakhouse",
+      "hours": [
+        "Monday: 5:00 – 9:00 PM",
+        "Tuesday: 5:00 – 9:00 PM",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 5:00 – 10:00 PM",
+        "Sunday: 5:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "american",
+        "upscale",
+        "romantic",
+        "date night",
+        "special occasions",
+        "elegant",
+        "dimly lit"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 265.58315993316796
+    },
+    {
+      "id": "668365",
+      "lat": 37.7879023,
+      "lon": -122.4122936,
+      "name": "FINO",
+      "hours": [
+        "Monday: 5:00 – 9:30 PM",
+        "Tuesday: 5:00 – 9:30 PM",
+        "Wednesday: 5:00 – 9:30 PM",
+        "Thursday: 5:00 – 9:30 PM",
+        "Friday: 5:00 – 9:30 PM",
+        "Saturday: 5:00 – 9:30 PM",
+        "Sunday: 5:00 – 9:30 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "traditional",
+        "cozy",
+        "quaint",
+        "date night",
+        "pre theater dinner",
+        "mahogany bar",
+        "fireplace"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 270.6839449567662
+    },
+    {
+      "id": "14257",
+      "lat": 37.7917489,
+      "lon": -122.4102387,
+      "name": "Top of the Mark",
+      "hours": [
+        "Monday: 4:00 – 11:00 PM",
+        "Tuesday: 4:00 – 11:00 PM",
+        "Wednesday: 4:00 – 11:00 PM",
+        "Thursday: 4:00 – 11:00 PM",
+        "Friday: 3:00 PM – 12:30 AM",
+        "Saturday: 3:00 PM – 12:30 AM",
+        "Sunday: 4:00 – 11:00 PM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "rooftop bar",
+        "classy",
+        "iconic",
+        "special celebrations",
+        "romantic dates",
+        "panoramic views",
+        "360 degree city views",
+        "logo stamped ice cubes",
+        "live music"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 272.2207712563807
+    },
+    {
+      "id": "294579",
+      "lat": 37.7890965,
+      "lon": -122.4065745,
+      "name": "Bombay Brasserie",
+      "hours": [],
+      "detailed_description": null,
+      "tags": [
+        "destination"
+      ],
+      "distance": 284.1466728922657
+    },
+    {
+      "id": "539044",
+      "lat": 37.7890965,
+      "lon": -122.4065745,
+      "name": "Bombay Brasserie",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 5:00 – 10:00 PM",
+        "Wednesday: 5:00 – 10:00 PM",
+        "Thursday: 5:00 – 10:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 5:00 – 10:00 PM",
+        "Sunday: 11:30 AM – 2:00 PM"
+      ],
+      "detailed_description": [
+        "modern",
+        "indian",
+        "fusion",
+        "fine dining",
+        "elegant",
+        "sophisticated",
+        "special occasions",
+        "celebrations",
+        "upscale",
+        "refined"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 284.1466728922657
+    },
+    {
+      "id": "154968",
+      "lat": 37.7868544,
+      "lon": -122.4106186,
+      "name": "The Curran Theatre",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 12:00 – 6:00 PM",
+        "Sunday: 12:00 – 6:00 PM"
+      ],
+      "detailed_description": [
+        "music and theater venue",
+        "elegant",
+        "throwback",
+        "good visibility",
+        "accessible",
+        "runs like a well oiled machine",
+        "attentive staff",
+        "seeing musicals",
+        "date night"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 284.19924266284335
+    },
+    {
+      "id": "248384",
+      "lat": 37.7868823,
+      "lon": -122.4108404,
+      "name": "Arya Derm",
+      "hours": [
+        "Monday: 8:30 AM – 5:00 PM",
+        "Tuesday: 8:30 AM – 5:00 PM",
+        "Wednesday: 8:30 AM – 5:00 PM",
+        "Thursday: 8:30 AM – 5:00 PM",
+        "Friday: 8:30 AM – 5:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "dermatology clinic",
+        "professional",
+        "luxurious",
+        "gorgeous office",
+        "immaculately kept",
+        "free samples",
+        "detailed explanations with drawings",
+        "evidence based recommendations",
+        "skin cancer screenings",
+        "scalp issues treatment"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 286.8357522549443
+    },
+    {
+      "id": "155005",
+      "lat": 37.7866546,
+      "lon": -122.4096731,
+      "name": "Mason Diner (Cafe Mason)",
+      "hours": [
+        "Monday: 6:30 AM – 2:30 PM",
+        "Tuesday: 6:30 AM – 2:30 PM",
+        "Wednesday: 6:30 AM – 2:30 PM",
+        "Thursday: 6:30 AM – 2:30 PM",
+        "Friday: 6:30 AM – 2:30 PM",
+        "Saturday: 6:30 AM – 2:30 PM",
+        "Sunday: 6:30 AM – 2:30 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "charming",
+        "welcoming",
+        "colorful",
+        "retro",
+        "morning ritual",
+        "breakfast",
+        "pancakes",
+        "diner fare"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 297.2392118586949
+    },
+    {
+      "id": "154997",
+      "lat": 37.7876093,
+      "lon": -122.4124152,
+      "name": "ZZAN Korean Restaurant",
+      "hours": [
+        "Monday: 4:00 PM – 1:00 AM",
+        "Tuesday: 4:00 PM – 1:00 AM",
+        "Wednesday: 4:00 PM – 1:00 AM",
+        "Thursday: 4:00 PM – 1:00 AM",
+        "Friday: 4:00 PM – 1:00 AM",
+        "Saturday: 4:00 PM – 1:00 AM",
+        "Sunday: 4:00 PM – 1:00 AM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "korean",
+        "bbq",
+        "casual",
+        "late night",
+        "after events",
+        "late night snacks",
+        "quaint",
+        "small"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 299.08758688233496
+    },
+    {
+      "id": "86565",
+      "lat": 37.7905681,
+      "lon": -122.4067515,
+      "name": "Nomu Skewers",
+      "hours": [
+        "Monday: 4:00 – 10:00 PM",
+        "Tuesday: 4:00 – 10:00 PM",
+        "Wednesday: 4:00 – 10:00 PM",
+        "Thursday: 4:00 – 10:00 PM",
+        "Friday: 4:00 – 10:00 PM",
+        "Saturday: 4:00 – 10:00 PM",
+        "Sunday: 4:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "birthdays",
+        "group dining",
+        "warm",
+        "intimate",
+        "sushi",
+        "trendy",
+        "upscale"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 301.0000957189086
+    },
+    {
+      "id": "246329",
+      "lat": 37.7888921,
+      "lon": -122.4063311,
+      "name": "Gump's San Francisco",
+      "hours": [
+        "Monday: 11:00 AM – 5:00 PM",
+        "Tuesday: 11:00 AM – 5:00 PM",
+        "Wednesday: 11:00 AM – 5:00 PM",
+        "Thursday: 11:00 AM – 5:00 PM",
+        "Friday: 11:00 AM – 5:00 PM",
+        "Saturday: 11:00 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "department store",
+        "furniture",
+        "gifts",
+        "housewares",
+        "jewelry",
+        "clothing",
+        "high end",
+        "legendary",
+        "large",
+        "famed holiday window",
+        "memorable items",
+        "unique gifts"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 308.1874346619011
+    },
+    {
+      "id": "884330",
+      "lat": 37.7888921,
+      "lon": -122.4063311,
+      "name": "ZARA",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "detailed_description": null,
+      "tags": [
+        "shop"
+      ],
+      "distance": 308.1874346619011
+    },
+    {
+      "id": "56536",
+      "lat": 37.7866665,
+      "lon": -122.408801,
+      "name": "Bartlett Hall",
+      "hours": [
+        "Monday: 3:00 – 11:00 PM",
+        "Tuesday: 3:00 – 11:00 PM",
+        "Wednesday: 3:00 – 11:00 PM",
+        "Thursday: 3:00 – 11:00 PM",
+        "Friday: 3:00 – 11:00 PM",
+        "Saturday: 3:00 – 11:00 PM",
+        "Sunday: 5:00 – 11:00 PM"
+      ],
+      "detailed_description": [
+        "brewery",
+        "lively",
+        "chatty",
+        "beer tasting",
+        "watching sports",
+        "dark woods",
+        "open layout"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 308.3532958687542
+    },
+    {
+      "id": "96534",
+      "lat": 37.7872434,
+      "lon": -122.4074588,
+      "name": "The Cheesecake Factory",
+      "hours": [
+        "Monday: 11:00 AM – 10:00 PM",
+        "Tuesday: 11:00 AM – 10:00 PM",
+        "Wednesday: 11:00 AM – 10:00 PM",
+        "Thursday: 11:00 AM – 10:00 PM",
+        "Friday: 11:00 AM – 11:00 PM",
+        "Saturday: 11:00 AM – 11:00 PM",
+        "Sunday: 10:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "american",
+        "lively",
+        "indulgent",
+        "spacious",
+        "elegant decor",
+        "cheesecake desserts",
+        "large menu selection",
+        "celebrations",
+        "group dining"
+      ],
+      "tags": [
+        "restaurant",
+        "bakery"
+      ],
+      "distance": 309.4711317646928
+    },
+    {
+      "id": "686310",
+      "lat": 37.7897602,
+      "lon": -122.406309,
+      "name": "Scheuer Linens - Linen Society",
+      "hours": [
+        "Monday: 10:00 AM – 6:00 PM",
+        "Tuesday: 10:00 AM – 6:00 PM",
+        "Wednesday: 10:00 AM – 6:00 PM",
+        "Thursday: 10:00 AM – 6:00 PM",
+        "Friday: 10:00 AM – 6:00 PM",
+        "Saturday: 10:00 AM – 6:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "retail store",
+        "bedding",
+        "linens",
+        "luxurious",
+        "upscale",
+        "chic",
+        "heaven like",
+        "high quality sheets",
+        "custom bedspreads",
+        "towels",
+        "napkins"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 310.10907171415573
+    },
+    {
+      "id": "250643",
+      "lat": 37.788748,
+      "lon": -122.4132796,
+      "name": "Argonaut Book Shop",
+      "hours": [],
+      "detailed_description": [
+        "bookstore",
+        "rare books",
+        "antique books",
+        "intimate",
+        "educational",
+        "organized",
+        "museum like",
+        "western us and pacific region books",
+        "incunabula leaves",
+        "antique maps",
+        "vellum letters",
+        "vintage postcards",
+        "rare photos",
+        "book collecting",
+        "historical research"
+      ],
+      "tags": [
+        "book_store",
+        "shop"
+      ],
+      "distance": 312.8789615226403
+    },
+    {
+      "id": "4031",
+      "lat": 37.7865034,
+      "lon": -122.409232,
+      "name": "Gong Cha",
+      "hours": [
+        "Monday: 11:00 AM – 9:00 PM",
+        "Tuesday: 11:00 AM – 9:00 PM",
+        "Wednesday: 11:00 AM – 9:00 PM",
+        "Thursday: 11:00 AM – 9:00 PM",
+        "Friday: 11:00 AM – 10:00 PM",
+        "Saturday: 11:00 AM – 10:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "boba shop",
+        "cute",
+        "bright",
+        "clean",
+        "big beautiful kiosks",
+        "casual drink",
+        "new flavors"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 317.73419615125357
+    },
+    {
+      "id": "53568",
+      "lat": 37.7871475,
+      "lon": -122.407402,
+      "name": "Macy's",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "detailed_description": [
+        "shopping",
+        "department store",
+        "spacious",
+        "holiday atmosphere",
+        "well decorated",
+        "many floors",
+        "major brands",
+        "toys",
+        "restaurants"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 320.77915950611055
+    },
+    {
+      "id": "20172",
+      "lat": 37.7878464,
+      "lon": -122.412987,
+      "name": "Heist Restaurant",
+      "hours": [
+        "Monday: 7:00 AM – 2:00 PM",
+        "Tuesday: 7:00 AM – 2:00 PM",
+        "Wednesday: 7:00 AM – 2:00 PM",
+        "Thursday: 7:00 AM – 2:00 PM",
+        "Friday: 7:00 AM – 2:00 PM",
+        "Saturday: 7:00 AM – 2:00 PM",
+        "Sunday: 7:00 AM – 2:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "bright",
+        "clean",
+        "simple",
+        "breakfast",
+        "brunch",
+        "breakfast foods",
+        "sandwiches",
+        "fruit"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 325.1866631696993
+    },
+    {
+      "id": "849019",
+      "lat": 37.7863884,
+      "lon": -122.4094996,
+      "name": "Union Square Pizza & Kitchen",
+      "hours": [
+        "Monday: 11:00 AM – 11:00 PM",
+        "Tuesday: 11:00 AM – 11:00 PM",
+        "Wednesday: 11:00 AM – 11:00 PM",
+        "Thursday: 11:00 AM – 11:00 PM",
+        "Friday: 11:00 AM – 1:00 AM",
+        "Saturday: 11:00 AM – 1:00 AM",
+        "Sunday: 11:00 AM – 11:00 PM"
+      ],
+      "detailed_description": [
+        "modern",
+        "italian",
+        "pizza",
+        "casual",
+        "welcoming",
+        "quick dinner",
+        "takeout",
+        "clean",
+        "counter seating"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 327.67604898932666
+    },
+    {
+      "id": "753511",
+      "lat": 37.7864848,
+      "lon": -122.4086079,
+      "name": "Al Pastor Papi",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 11:00 AM – 3:00 PM",
+        "Wednesday: 11:00 AM – 3:00 PM",
+        "Thursday: 11:00 AM – 3:00 PM",
+        "Friday: 11:00 AM – 8:00 PM",
+        "Saturday: 11:00 AM – 8:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "authentic",
+        "mexican",
+        "tacos",
+        "casual",
+        "lively",
+        "quick lunch",
+        "casual dinner",
+        "reasonable seating",
+        "standing areas"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 332.7039993979037
+    },
+    {
+      "id": "610298",
+      "lat": 37.7864848,
+      "lon": -122.4086079,
+      "name": "Al Pastor Papi",
+      "hours": [],
+      "detailed_description": null,
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 332.7039993979037
+    },
+    {
+      "id": "146520",
+      "lat": 37.7863092,
+      "lon": -122.4104046,
+      "name": "The Halal Guys",
+      "hours": [
+        "Monday: 10:00 AM – 3:00 AM",
+        "Tuesday: 10:00 AM – 3:00 AM",
+        "Wednesday: 10:00 AM – 5:00 AM",
+        "Thursday: 10:00 AM – 5:00 AM",
+        "Friday: 10:00 AM – 5:00 AM",
+        "Saturday: 10:00 AM – 5:00 AM",
+        "Sunday: 11:00 AM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "middle eastern",
+        "platters",
+        "casual",
+        "late night",
+        "quick bite",
+        "takeout",
+        "bustling",
+        "minimal seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 339.7031932199206
+    },
+    {
+      "id": "22933",
+      "lat": 37.7921063,
+      "lon": -122.4114007,
+      "name": "James C. Flood Mansion",
+      "hours": [],
+      "detailed_description": null,
+      "tags": [
+        "destination"
+      ],
+      "distance": 339.83112721607915
+    },
+    {
+      "id": "901818",
+      "lat": 37.7866413,
+      "lon": -122.407902,
+      "name": "POPMART Union Square",
+      "hours": [
+        "Monday: 10:00 AM – 8:00 PM",
+        "Tuesday: 10:00 AM – 8:00 PM",
+        "Wednesday: 10:00 AM – 8:00 PM",
+        "Thursday: 10:00 AM – 8:00 PM",
+        "Friday: 10:00 AM – 8:00 PM",
+        "Saturday: 10:00 AM – 8:00 PM",
+        "Sunday: 11:00 AM – 7:00 PM"
+      ],
+      "detailed_description": null,
+      "tags": [
+        "shop"
+      ],
+      "distance": 341.7440034498902
+    },
+    {
+      "id": "14135",
+      "lat": 37.787552,
+      "lon": -122.4066183,
+      "name": "Union Square",
+      "hours": [],
+      "detailed_description": [
+        "shopping",
+        "high end retail",
+        "busy",
+        "lively",
+        "open air",
+        "in the heart of the city",
+        "high end brands",
+        "variety of shops"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 341.8150312451549
+    },
+    {
+      "id": "230854",
+      "lat": 37.7884955,
+      "lon": -122.4060496,
+      "name": "Meyerovich Gallery",
+      "hours": [
+        "Monday: 11:00 AM – 6:00 PM",
+        "Tuesday: 11:00 AM – 6:00 PM",
+        "Wednesday: 11:00 AM – 6:00 PM",
+        "Thursday: 11:00 AM – 6:00 PM",
+        "Friday: 11:00 AM – 6:00 PM",
+        "Saturday: 11:00 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": null,
+      "tags": [
+        "culture"
+      ],
+      "distance": 341.83505100054265
+    },
+    {
+      "id": "16879",
+      "lat": 37.7878492,
+      "lon": -122.4132306,
+      "name": "Lapisara Eatery",
+      "hours": [
+        "Monday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM",
+        "Tuesday: 8:00 AM – 2:00 PM",
+        "Wednesday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM",
+        "Thursday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM",
+        "Friday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM",
+        "Saturday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM",
+        "Sunday: 8:00 AM – 2:00 PM, 5:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "thai fusion",
+        "trendy",
+        "lively",
+        "brunch",
+        "dinner with friends",
+        "beautiful interior",
+        "outdoor seating"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 343.6728409457921
+    },
+    {
+      "id": "512166",
+      "lat": 37.7862516,
+      "lon": -122.4102995,
+      "name": "Oma Sushi",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 10:30 PM",
+        "Wednesday: 11:30 AM – 10:30 PM",
+        "Thursday: 11:30 AM – 10:30 PM",
+        "Friday: 11:30 AM – 11:00 PM",
+        "Saturday: 11:30 AM – 11:00 PM",
+        "Sunday: 11:30 AM – 10:30 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "japanese",
+        "sushi",
+        "casual",
+        "low key",
+        "quick dinner",
+        "casual date",
+        "cozy",
+        "simple"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 344.72034757963536
+    },
+    {
+      "id": "271239",
+      "lat": 37.7868822,
+      "lon": -122.407329,
+      "name": "Starbucks",
+      "hours": [
+        "Monday: 10:00 AM – 7:00 PM",
+        "Tuesday: 10:00 AM – 7:00 PM",
+        "Wednesday: 10:00 AM – 7:00 PM",
+        "Thursday: 10:00 AM – 7:00 PM",
+        "Friday: 10:00 AM – 7:00 PM",
+        "Saturday: 10:00 AM – 7:00 PM",
+        "Sunday: 11:00 AM – 6:00 PM"
+      ],
+      "detailed_description": [
+        "coffee shop",
+        "busy",
+        "convenient",
+        "view of union square",
+        "limited seating",
+        "quick coffee break",
+        "casual meetup",
+        "wifi",
+        "light bites"
+      ],
+      "tags": [
+        "cafe"
+      ],
+      "distance": 347.56411314519033
+    },
+    {
+      "id": "2525",
+      "lat": 37.792419,
+      "lon": -122.410427,
+      "name": "TONGA ROOM & HURRICANE BAR",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 – 10:00 PM",
+        "Thursday: 5:00 – 10:00 PM",
+        "Friday: 5:00 – 11:00 PM",
+        "Saturday: 5:00 – 11:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "tiki bar",
+        "fun",
+        "casual",
+        "birthday parties",
+        "nights out",
+        "loud",
+        "exciting atmosphere"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 348.38080311060503
+    },
+    {
+      "id": "3534",
+      "lat": 37.791198,
+      "lon": -122.4129823,
+      "name": "SF Masonic Auditorium",
+      "hours": [],
+      "detailed_description": [
+        "concert venue",
+        "intimate",
+        "acoustic friendly",
+        "mid century modern",
+        "theater style seating",
+        "great acoustics",
+        "balcony seating",
+        "no bad seats",
+        "live music performances",
+        "cultural events"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 348.95906215654054
+    },
+    {
+      "id": "127033",
+      "lat": 37.789696,
+      "lon": -122.40585,
+      "name": "E&O Kitchen and Bar",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 9:00 PM",
+        "Wednesday: 11:30 AM – 9:00 PM",
+        "Thursday: 11:30 AM – 9:00 PM",
+        "Friday: 12:00 – 9:00 PM",
+        "Saturday: 12:00 – 9:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "modern",
+        "asian",
+        "thai",
+        "fusion",
+        "trendy",
+        "atmospheric",
+        "date night",
+        "family dinner",
+        "soaring ceilings",
+        "beautiful decor"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 349.0946155900023
+    },
+    {
+      "id": "98573",
+      "lat": 37.7862343,
+      "lon": -122.4088197,
+      "name": "Dueling Pianos at Johnny Foleys",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 – 10:00 PM",
+        "Thursday: 5:00 – 10:00 PM",
+        "Friday: 5:00 – 10:00 PM",
+        "Saturday: 11:00 AM – 10:00 PM",
+        "Sunday: 11:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "piano bar",
+        "lively",
+        "fun",
+        "night out",
+        "visiting san francisco",
+        "quirky",
+        "crowded"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 354.3035511942921
+    },
+    {
+      "id": "13147",
+      "lat": 37.7862741,
+      "lon": -122.4085169,
+      "name": "HINODEYA Ramen Union Square",
+      "hours": [
+        "Monday: 10:00 AM – 1:30 AM",
+        "Tuesday: 10:00 AM – 1:30 AM",
+        "Wednesday: 10:00 AM – 1:30 AM",
+        "Thursday: 10:00 AM – 1:30 AM",
+        "Friday: 10:00 AM – 3:30 AM",
+        "Saturday: 10:00 AM – 3:30 AM",
+        "Sunday: 10:00 AM – 1:30 AM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "ramen",
+        "authentic",
+        "cozy",
+        "late night eats",
+        "comfort food",
+        "down to earth",
+        "bustling"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 357.4587906782465
+    },
+    {
+      "id": "150851",
+      "lat": 37.7862083,
+      "lon": -122.4087528,
+      "name": "Johnny Foley's Irish House",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 5:00 PM – 12:00 AM",
+        "Thursday: 5:00 PM – 12:00 AM",
+        "Friday: 5:00 PM – 1:30 AM",
+        "Saturday: 11:00 AM – 1:30 AM",
+        "Sunday: 11:00 AM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "irish",
+        "cozy",
+        "lively",
+        "celebrations",
+        "casual nights out",
+        "wood decor",
+        "eclectic decor"
+      ],
+      "tags": [
+        "bar",
+        "restaurant"
+      ],
+      "distance": 358.5657855097709
+    },
+    {
+      "id": "415065",
+      "lat": 37.7894321,
+      "lon": -122.4057093,
+      "name": "Lang Antique & Estate Jewelry",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 10:30 AM – 5:00 PM",
+        "Wednesday: 10:30 AM – 5:00 PM",
+        "Thursday: 10:30 AM – 5:00 PM",
+        "Friday: 10:30 AM – 5:00 PM",
+        "Saturday: 10:30 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "jewelry store",
+        "elegant",
+        "reputable",
+        "intimate setting",
+        "fine antique displays",
+        "antique and estate jewelry",
+        "colored sapphires",
+        "engagement rings",
+        "purchasing engagement rings",
+        "buying fine jewelry"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 359.22002015255816
+    },
+    {
+      "id": "145472",
+      "lat": 37.7899937,
+      "lon": -122.4057631,
+      "name": "Sool Bar and Lounge",
+      "hours": [
+        "Monday: 5:00 PM – 12:00 AM",
+        "Tuesday: 5:00 PM – 12:00 AM",
+        "Wednesday: 5:00 PM – 12:00 AM",
+        "Thursday: 5:00 PM – 12:00 AM",
+        "Friday: 5:00 PM – 2:00 AM",
+        "Saturday: 5:00 PM – 2:00 AM",
+        "Sunday: 5:00 PM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "karaoke bar",
+        "cozy",
+        "classy",
+        "birthday parties",
+        "karaoke nights",
+        "neon lights",
+        "intimate"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 361.99289356271277
+    },
+    {
+      "id": "9934",
+      "lat": 37.789617,
+      "lon": -122.4139182,
+      "name": "Gusto Pinsa Romana",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 4:00 – 9:30 PM",
+        "Wednesday: 4:00 – 9:30 PM",
+        "Thursday: 4:00 – 9:30 PM",
+        "Friday: 4:00 – 10:30 PM",
+        "Saturday: 11:00 AM – 2:30 PM, 4:00 – 10:30 PM",
+        "Sunday: 11:00 AM – 2:30 PM, 4:00 – 9:30 PM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "italian",
+        "pizza",
+        "cozy",
+        "charming",
+        "date night",
+        "dinner with friends",
+        "modern",
+        "chic"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 363.7630607910113
+    },
+    {
+      "id": "512495",
+      "lat": 37.7886593,
+      "lon": -122.413861,
+      "name": "Glass Rice",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: 1:00 – 6:00 PM",
+        "Thursday: 1:00 – 6:00 PM",
+        "Friday: 1:00 – 6:00 PM",
+        "Saturday: Closed",
+        "Sunday: Closed"
+      ],
+      "detailed_description": null,
+      "tags": [
+        "culture"
+      ],
+      "distance": 364.9067481428193
+    },
+    {
+      "id": "98998",
+      "lat": 37.7874614,
+      "lon": -122.4063598,
+      "name": "Neiman Marcus",
+      "hours": [
+        "Monday: 10:00 AM – 6:00 PM",
+        "Tuesday: 10:00 AM – 6:00 PM",
+        "Wednesday: 10:00 AM – 6:00 PM",
+        "Thursday: 10:00 AM – 6:00 PM",
+        "Friday: 10:00 AM – 6:00 PM",
+        "Saturday: 10:00 AM – 6:00 PM",
+        "Sunday: 12:00 – 6:00 PM"
+      ],
+      "detailed_description": [
+        "department store",
+        "luxury",
+        "glamorous",
+        "palatial",
+        "beautiful",
+        "extravagant",
+        "jewelry",
+        "handbags",
+        "perfume"
+      ],
+      "tags": [
+        "shop"
+      ],
+      "distance": 366.2129020649115
+    },
+    {
+      "id": "554111",
+      "lat": 37.7886826,
+      "lon": -122.4139263,
+      "name": "THE BIRDCAGE SAN FRANCISCO",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 9:00 AM – 5:00 PM",
+        "Wednesday: 9:00 AM – 3:00 PM",
+        "Thursday: 9:00 AM – 5:00 PM",
+        "Friday: 9:00 AM – 5:00 PM",
+        "Saturday: 9:00 AM – 2:00 PM",
+        "Sunday: 9:00 AM – 2:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "cozy",
+        "welcoming",
+        "bright",
+        "art filled",
+        "working remotely",
+        "relaxing",
+        "wifi",
+        "outlets",
+        "pastries"
+      ],
+      "tags": [
+        "cafe"
+      ],
+      "distance": 370.0173963977671
+    },
+    {
+      "id": "14276",
+      "lat": 37.7878404,
+      "lon": -122.4135658,
+      "name": "The Public Izakaya",
+      "hours": [
+        "Monday: 4:30 PM – 2:00 AM",
+        "Tuesday: 4:30 PM – 2:00 AM",
+        "Wednesday: 4:30 PM – 2:00 AM",
+        "Thursday: 4:30 PM – 2:00 AM",
+        "Friday: 3:30 PM – 2:00 AM",
+        "Saturday: 11:30 AM – 2:00 AM",
+        "Sunday: 11:30 AM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "japanese",
+        "izakaya",
+        "casual",
+        "chill",
+        "hang out with friends",
+        "happy hour",
+        "good vibe",
+        "lots of people"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 370.25189329903554
+    },
+    {
+      "id": "50272",
+      "lat": 37.7918754,
+      "lon": -122.4070392,
+      "name": "Solaire Terrasse",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: Closed",
+        "Wednesday: Closed",
+        "Thursday: 12:00 AM – 5:00 PM",
+        "Friday: 12:00 AM – 5:00 PM",
+        "Saturday: 12:00 AM – 5:00 PM",
+        "Sunday: 12:00 AM – 5:00 PM"
+      ],
+      "detailed_description": null,
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 372.82969551088473
+    },
+    {
+      "id": "130321",
+      "lat": 37.7918754,
+      "lon": -122.4070392,
+      "name": "The Lobby Lounge at The Ritz-Carlton",
+      "hours": [],
+      "detailed_description": [
+        "modern",
+        "american",
+        "lounge",
+        "upscale",
+        "relaxed",
+        "business lunch",
+        "cocktail hour",
+        "elegant",
+        "spacious"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 372.82969551088473
+    },
+    {
+      "id": "28472",
+      "lat": 37.7866605,
+      "lon": -122.4124094,
+      "name": "Bottle Club Pub",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 5:00 PM – 12:00 AM",
+        "Wednesday: 5:00 PM – 12:00 AM",
+        "Thursday: 5:00 PM – 2:00 AM",
+        "Friday: 5:00 PM – 2:00 AM",
+        "Saturday: 5:00 PM – 2:00 AM",
+        "Sunday: 6:00 PM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "cocktail bar",
+        "fun",
+        "nostalgic",
+        "casual drinks",
+        "night out with friends",
+        "vibey interior",
+        "extensive liquor collection"
+      ],
+      "tags": [
+        "bar"
+      ],
+      "distance": 375.0044532079197
+    },
+    {
+      "id": "20047",
+      "lat": 37.7878162,
+      "lon": -122.4136593,
+      "name": "Pearl's Deluxe Burgers",
+      "hours": [
+        "Monday: 11:00 AM – 9:00 PM",
+        "Tuesday: 11:00 AM – 9:00 PM",
+        "Wednesday: 11:00 AM – 9:00 PM",
+        "Thursday: 11:00 AM – 9:00 PM",
+        "Friday: 11:00 AM – 10:00 PM",
+        "Saturday: 11:00 AM – 10:00 PM",
+        "Sunday: 11:00 AM – 9:00 PM"
+      ],
+      "detailed_description": [
+        "american",
+        "burgers",
+        "classic",
+        "no frills",
+        "quick bite",
+        "comfort food",
+        "cozy",
+        "small"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 378.8078107237551
+    },
+    {
+      "id": "3397",
+      "lat": 37.787414,
+      "lon": -122.4061801,
+      "name": "The Rotunda",
+      "hours": [
+        "Monday: 11:00 AM – 4:00 PM",
+        "Tuesday: 11:00 AM – 4:00 PM",
+        "Wednesday: 11:00 AM – 4:00 PM",
+        "Thursday: 11:00 AM – 5:00 PM",
+        "Friday: 11:00 AM – 5:00 PM",
+        "Saturday: 11:00 AM – 5:00 PM",
+        "Sunday: 11:00 AM – 4:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "elegant",
+        "luxurious",
+        "intimate",
+        "stained glass ceiling",
+        "afternoon tea",
+        "date spot",
+        "tea",
+        "popovers",
+        "sandwiches"
+      ],
+      "tags": [
+        "bar",
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 382.241222141778
+    },
+    {
+      "id": "96422",
+      "lat": 37.7922657,
+      "lon": -122.4121403,
+      "name": "Huntington Park",
+      "hours": [
+        "Monday: 5:00 AM – 11:45 PM",
+        "Tuesday: 5:00 AM – 11:45 PM",
+        "Wednesday: 5:00 AM – 11:45 PM",
+        "Thursday: 5:00 AM – 11:45 PM",
+        "Friday: 5:00 AM – 11:45 PM",
+        "Saturday: 5:00 AM – 11:45 PM",
+        "Sunday: 5:00 AM – 11:45 PM"
+      ],
+      "detailed_description": [
+        "park",
+        "peaceful",
+        "scenic",
+        "open",
+        "green",
+        "historic fountain",
+        "next to grace cathedral",
+        "people watching",
+        "taking a break"
+      ],
+      "tags": [
+        "nature"
+      ],
+      "distance": 386.42211043897436
+    },
+    {
+      "id": "130011",
+      "lat": 37.7911157,
+      "lon": -122.4136056,
+      "name": "Osso Steakhouse",
+      "hours": [
+        "Monday: 5:00 – 9:00 PM",
+        "Tuesday: 5:00 – 9:00 PM",
+        "Wednesday: 5:00 – 9:00 PM",
+        "Thursday: 5:00 – 9:00 PM",
+        "Friday: 5:00 – 9:30 PM",
+        "Saturday: 5:00 – 9:30 PM",
+        "Sunday: 5:00 – 9:00 PM"
+      ],
+      "detailed_description": [
+        "american",
+        "steakhouse",
+        "warm",
+        "welcoming",
+        "date night",
+        "celebration",
+        "art deco",
+        "private booths"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 389.5209996769513
+    },
+    {
+      "id": "622142",
+      "lat": 37.7878113,
+      "lon": -122.4138007,
+      "name": "iThai Bangkok Street Food",
+      "hours": [
+        "Monday: 11:00 AM – 2:00 PM, 4:30 PM – 12:00 AM",
+        "Tuesday: 11:00 AM – 2:00 PM, 4:30 PM – 12:00 AM",
+        "Wednesday: 11:00 AM – 2:00 PM, 4:30 PM – 12:00 AM",
+        "Thursday: 11:00 AM – 2:00 PM, 4:30 PM – 12:00 AM",
+        "Friday: 11:00 AM – 2:00 PM, 4:30 PM – 1:00 AM",
+        "Saturday: 4:30 PM – 1:00 AM",
+        "Sunday: 4:30 PM – 12:00 AM"
+      ],
+      "detailed_description": [
+        "authentic",
+        "thai",
+        "street food",
+        "late night",
+        "cravings",
+        "sharing with friends",
+        "futuristic decor",
+        "thai music playing"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 390.2201538042548
+    },
+    {
+      "id": "86889",
+      "lat": 37.7881152,
+      "lon": -122.4055909,
+      "name": "City Laser Clinic",
+      "hours": [
+        "Monday: 9:00 AM – 7:00 PM",
+        "Tuesday: 9:00 AM – 7:00 PM",
+        "Wednesday: 9:00 AM – 8:00 PM",
+        "Thursday: 9:00 AM – 8:00 PM",
+        "Friday: 9:00 AM – 7:00 PM",
+        "Saturday: 9:00 AM – 5:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "medical clinic",
+        "professional",
+        "welcoming",
+        "convenient location",
+        "lovely street",
+        "great services like botox",
+        "fillers",
+        "laser hair removal",
+        "cosmetic treatments",
+        "medical procedures"
+      ],
+      "tags": [
+        "health"
+      ],
+      "distance": 393.2020579562673
+    },
+    {
+      "id": "149405",
+      "lat": 37.7902095,
+      "lon": -122.4054008,
+      "name": "Scott’s Chowder House",
+      "hours": [
+        "Monday: Closed",
+        "Tuesday: 11:30 AM – 4:00 PM",
+        "Wednesday: 11:30 AM – 4:00 PM",
+        "Thursday: 11:30 AM – 4:00 PM",
+        "Friday: 11:30 AM – 4:00 PM",
+        "Saturday: 11:30 AM – 4:00 PM",
+        "Sunday: Closed"
+      ],
+      "detailed_description": [
+        "seafood",
+        "lobster rolls",
+        "casual",
+        "coastal",
+        "lunch",
+        "dinner",
+        "spacious",
+        "clean"
+      ],
+      "tags": [
+        "restaurant"
+      ],
+      "distance": 398.434629172195
+    },
+    {
+      "id": "743695",
+      "lat": 37.7907,
+      "lon": -122.4056,
+      "name": "Dragon Gate",
+      "hours": [],
+      "detailed_description": [
+        "landmark",
+        "iconic",
+        "cultural",
+        "traditional chinese architecture",
+        "ornate",
+        "dragon gate entrance to chinatown",
+        "filming location for 'big trouble in little china'",
+        "marble lions",
+        "wooden plaque with sun yat sen quote",
+        "sightseeing",
+        "cultural exploration"
+      ],
+      "tags": [
+        "destination"
+      ],
+      "distance": 399.0346544860077
+    },
+    {
+      "id": "1833",
+      "lat": 37.7902836,
+      "lon": -122.4054164,
+      "name": "Amorino Gelato - San Francisco",
+      "hours": [
+        "Monday: 9:00 AM – 10:00 PM",
+        "Tuesday: 9:00 AM – 10:00 PM",
+        "Wednesday: 9:00 AM – 10:00 PM",
+        "Thursday: 9:00 AM – 10:00 PM",
+        "Friday: 9:00 AM – 10:00 PM",
+        "Saturday: 9:00 AM – 10:00 PM",
+        "Sunday: 9:00 AM – 10:00 PM"
+      ],
+      "detailed_description": [
+        "cafe",
+        "artisanal",
+        "gourmet",
+        "cozy",
+        "clean",
+        "dessert treat",
+        "exploring the city",
+        "gelato",
+        "macarons",
+        "pastries",
+        "gelato served in flower petal shapes",
+        "organic and vegan options",
+        "unlimited flavor sampling"
+      ],
+      "tags": [
+        "cafe",
+        "restaurant"
+      ],
+      "distance": 399.2243099075933
+    }
+  ]
+}
