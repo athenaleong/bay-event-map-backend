@@ -6,6 +6,14 @@ const NodeCache = require("node-cache");
 const { FuncheapScraper } = require("./scraper");
 const { EnhancedFuncheapScraper } = require("./enhancedFuncheapScraper");
 const { generateEmojisForEvents } = require("./emojiGenerator");
+const {
+  saveEventsToDatabase,
+  getEventsFromDatabase,
+  eventsExistForDate,
+  deleteEventsForDate,
+  getNearbyPlaces,
+  getAllPlaces,
+} = require("./database");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -33,6 +41,7 @@ const corsOptions = {
     const allowedOrigins = [
       "http://localhost:3000",
       "http://localhost:3001",
+      "http://localhost:8081",
       "https://bay-event-map.vercel.app",
       // Add your actual frontend URLs here
     ];
@@ -72,6 +81,150 @@ const getDateRange = (startDate, days) => {
   }
 
   return dates;
+};
+
+// Reusable function to scrape events and save to database
+const scrapeAndSaveEvents = async (date, options = {}) => {
+  const {
+    includeDetails = true,
+    categories = "",
+    excludeSponsored = false,
+    titleKeywords = "",
+    costFilter = "",
+    hasImages = false,
+    progressPrefix = "",
+  } = options;
+
+  console.log(`${progressPrefix}🚀 Scraping and saving events for ${date}...`);
+
+  // Convert date format
+  const funcheapDate = formatDateForFuncheap(date);
+
+  // Build scraping options
+  const scrapingOptions = {
+    includeDetails: includeDetails,
+  };
+
+  // Add detail filter if specified
+  if (
+    categories ||
+    excludeSponsored ||
+    titleKeywords ||
+    costFilter ||
+    hasImages
+  ) {
+    const filterOptions = {
+      categories: categories
+        ? typeof categories === "string"
+          ? categories.split(",").map((c) => c.trim())
+          : categories
+        : [],
+      excludeSponsored: excludeSponsored,
+      titleKeywords: titleKeywords
+        ? typeof titleKeywords === "string"
+          ? titleKeywords.split(",").map((k) => k.trim())
+          : titleKeywords
+        : [],
+      costFilter: costFilter || null,
+      hasImages: hasImages,
+    };
+    scrapingOptions.detailFilter =
+      EnhancedFuncheapScraper.createDetailFilter(filterOptions);
+  }
+
+  // Add progress callback
+  scrapingOptions.onProgress = (progress) => {
+    console.log(
+      `  ${progressPrefix}Progress: ${progress.step} - ${progress.completed}/${
+        progress.total
+      }${progress.currentEvent ? ` (${progress.currentEvent})` : ""}`
+    );
+  };
+
+  // Step 1: Scrape events with enhanced details
+  console.log(`${progressPrefix}📋 Scraping enhanced events for ${date}...`);
+  const events = await enhancedScraper.getEventsWithDetails(
+    funcheapDate,
+    scrapingOptions
+  );
+
+  if (!events || events.length === 0) {
+    return {
+      success: true,
+      events: [],
+      count: 0,
+      message: "No events found for this date",
+      saved: 0,
+      enhanced: includeDetails,
+      detailRequestsUsed: 0,
+      emojisGenerated: 0,
+    };
+  }
+
+  // Step 2: Generate emojis for events
+  let eventsWithEmojis = events;
+  if (includeDetails && events.length > 0) {
+    console.log(
+      `${progressPrefix}🎭 Generating emojis for ${events.length} events...`
+    );
+    try {
+      eventsWithEmojis = await generateEmojisForEvents(events, 200); // 200ms delay between API calls
+      console.log(
+        `${progressPrefix}Generated emojis for ${
+          eventsWithEmojis.filter((e) => e.emoji).length
+        } events`
+      );
+    } catch (error) {
+      console.error(`${progressPrefix}Error generating emojis:`, error);
+      // Continue with original events if emoji generation fails
+      eventsWithEmojis = events;
+    }
+  }
+
+  // Step 3: Save events to database
+  console.log(
+    `${progressPrefix}💾 Saving ${eventsWithEmojis.length} events to database...`
+  );
+  const saveResult = await saveEventsToDatabase(eventsWithEmojis);
+
+  if (!saveResult.success) {
+    console.error(
+      `${progressPrefix}Failed to save events to database:`,
+      saveResult.error
+    );
+    return {
+      success: false,
+      events: eventsWithEmojis,
+      count: eventsWithEmojis.length,
+      enhanced: includeDetails,
+      saved: 0,
+      saveError: saveResult.error,
+      message: "Events scraped but failed to save to database",
+      detailRequestsUsed: eventsWithEmojis.filter((e) => e.hasDetailedInfo)
+        .length,
+      emojisGenerated: includeDetails
+        ? eventsWithEmojis.filter((e) => e.emoji).length
+        : 0,
+    };
+  }
+
+  console.log(
+    `${progressPrefix}✅ Successfully processed ${date}: scraped ${eventsWithEmojis.length}, saved ${saveResult.saved}`
+  );
+
+  return {
+    success: true,
+    events: saveResult.events,
+    count: saveResult.saved,
+    enhanced: includeDetails,
+    detailRequestsUsed: eventsWithEmojis.filter((e) => e.hasDetailedInfo)
+      .length,
+    emojisGenerated: includeDetails
+      ? eventsWithEmojis.filter((e) => e.emoji).length
+      : 0,
+    saved: saveResult.saved,
+    message: `Successfully scraped and saved ${saveResult.saved} events`,
+  };
 };
 
 // Routes
@@ -445,7 +598,7 @@ app.get("/api/enhanced/events", async (req, res) => {
     // Cache the results (shorter TTL for detailed data)
     cache.set(cacheKey, response, 1800); // 30 minutes
 
-    console.log(eventsWithEmojis)
+    console.log(eventsWithEmojis);
 
     res.json(response);
   } catch (error) {
@@ -453,6 +606,356 @@ app.get("/api/enhanced/events", async (req, res) => {
     res.status(500).json({
       success: false,
       error: "Failed to fetch enhanced event range",
+      message: error.message,
+    });
+  }
+});
+
+// Scrape and save events to database
+app.post("/api/scrape-and-save/:date", async (req, res) => {
+  const { date } = req.params; // Expected format: YYYY-MM-DD
+  const {
+    includeDetails = "true",
+    categories = "",
+    excludeSponsored = "false",
+    titleKeywords = "",
+    costFilter = "",
+    hasImages = "false",
+    forceRescrape = "false", // Force re-scraping even if data exists
+  } = req.query;
+
+  try {
+    // Check if events already exist for this date (unless forcing rescrape)
+    if (forceRescrape !== "true") {
+      const existsInDb = await eventsExistForDate(date);
+      if (existsInDb) {
+        console.log(
+          `Events already exist for ${date}, returning from database...`
+        );
+        const dbResult = await getEventsFromDatabase(date);
+        if (dbResult.success) {
+          return res.json({
+            success: true,
+            events: dbResult.events,
+            cached: false,
+            fromDatabase: true,
+            date: date,
+            count: dbResult.count,
+            message: "Events retrieved from database (already scraped)",
+          });
+        }
+      }
+    } else {
+      // If force rescraping, delete existing events for this date
+      console.log(
+        `Force rescraping enabled, deleting existing events for ${date}...`
+      );
+      const deleteResult = await deleteEventsForDate(date);
+      if (deleteResult.success) {
+        console.log(`Deleted ${deleteResult.deleted} existing events`);
+      }
+    }
+
+    // Use the reusable helper function
+    const scrapeResult = await scrapeAndSaveEvents(date, {
+      includeDetails: includeDetails === "true",
+      categories: categories,
+      excludeSponsored: excludeSponsored === "true",
+      titleKeywords: titleKeywords,
+      costFilter: costFilter,
+      hasImages: hasImages === "true",
+    });
+
+    if (!scrapeResult.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to save events to database",
+        message: scrapeResult.saveError || scrapeResult.message,
+        scrapedEvents: scrapeResult.count,
+        saved: scrapeResult.saved,
+      });
+    }
+
+    res.json({
+      success: true,
+      events: scrapeResult.events,
+      cached: false,
+      fromDatabase: false,
+      date: date,
+      count: scrapeResult.count,
+      enhanced: scrapeResult.enhanced,
+      detailRequestsUsed: scrapeResult.detailRequestsUsed,
+      emojisGenerated: scrapeResult.emojisGenerated,
+      saved: scrapeResult.saved,
+      message: scrapeResult.message,
+    });
+  } catch (error) {
+    console.error(`Error in scrape-and-save for ${date}:`, error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to scrape and save events",
+      message: error.message,
+    });
+  }
+});
+
+// Get events from database (auto-scrape if not found)
+app.get("/api/events-db/:date", async (req, res) => {
+  const { date } = req.params; // Expected format: YYYY-MM-DD
+  const {
+    includeDetails = "true",
+    categories = "",
+    excludeSponsored = "false",
+    titleKeywords = "",
+    costFilter = "",
+    hasImages = "false",
+  } = req.query;
+
+  try {
+    console.log(`📖 Fetching events from database for ${date}...`);
+
+    // First, try to get events from database
+    const result = await getEventsFromDatabase(date);
+
+    if (!result.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to fetch events from database",
+        message: result.error,
+      });
+    }
+
+    // If events exist in database, return them
+    if (result.events && result.events.length > 0) {
+      console.log(`✅ Found ${result.count} events in database for ${date}`);
+      return res.json({
+        success: true,
+        events: result.events,
+        fromDatabase: true,
+        date: date,
+        count: result.count,
+        message: "Events retrieved from database",
+      });
+    }
+
+    // No events in database, auto-scrape them
+    console.log(`🚀 No events found in database for ${date}, auto-scraping...`);
+
+    // Use the reusable helper function
+    const autoScrapeResult = await scrapeAndSaveEvents(date, {
+      includeDetails: includeDetails === "true",
+      categories: categories,
+      excludeSponsored: excludeSponsored === "true",
+      titleKeywords: titleKeywords,
+      costFilter: costFilter,
+      hasImages: hasImages === "true",
+      progressPrefix: "Auto-scrape ",
+    });
+
+    if (!autoScrapeResult.success) {
+      // Still return the scraped events even if saving failed
+      return res.json({
+        success: true,
+        events: autoScrapeResult.events,
+        fromDatabase: false,
+        autoScraped: true,
+        date: date,
+        count: autoScrapeResult.count,
+        enhanced: autoScrapeResult.enhanced,
+        saved: autoScrapeResult.saved,
+        saveError: autoScrapeResult.saveError,
+        message: autoScrapeResult.message,
+      });
+    }
+
+    res.json({
+      success: true,
+      events: autoScrapeResult.events,
+      fromDatabase: false,
+      autoScraped: true,
+      date: date,
+      count: autoScrapeResult.count,
+      enhanced: autoScrapeResult.enhanced,
+      detailRequestsUsed: autoScrapeResult.detailRequestsUsed,
+      emojisGenerated: autoScrapeResult.emojisGenerated,
+      saved: autoScrapeResult.saved,
+      message: autoScrapeResult.message,
+    });
+  } catch (error) {
+    console.error(`Error in auto-scrape for ${date}:`, error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch/scrape events",
+      message: error.message,
+    });
+  }
+});
+
+// Get all places
+app.get("/api/places-sf", async (req, res) => {
+  const { limit, offset, orderBy, ascending } = req.query;
+
+  try {
+    // Parse and validate parameters
+    const options = {};
+
+    if (limit) {
+      const parsedLimit = parseInt(limit);
+      if (isNaN(parsedLimit) || parsedLimit <= 0) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid limit parameter",
+          message: "limit must be a positive integer",
+        });
+      }
+      options.limit = parsedLimit;
+    }
+
+    if (offset) {
+      const parsedOffset = parseInt(offset);
+      if (isNaN(parsedOffset) || parsedOffset < 0) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid offset parameter",
+          message: "offset must be a non-negative integer",
+        });
+      }
+      options.offset = parsedOffset;
+    }
+
+    if (orderBy) {
+      // Validate orderBy field (basic validation)
+      const allowedFields = [
+        "name",
+        "created_at",
+        "latitude",
+        "longitude",
+        "place_id",
+      ];
+      if (!allowedFields.includes(orderBy)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid orderBy parameter",
+          message: `orderBy must be one of: ${allowedFields.join(", ")}`,
+        });
+      }
+      options.orderBy = orderBy;
+    }
+
+    if (ascending !== undefined) {
+      options.ascending = ascending === "true" || ascending === "1";
+    }
+
+    console.log(`Fetching all places with options:`, options);
+
+    // Get all places from database
+    const result = await getAllPlaces(options);
+
+    if (!result.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to fetch places",
+        message: result.error,
+      });
+    }
+
+    res.json({
+      success: true,
+      places: result.places,
+      count: result.count,
+      options: options,
+    });
+  } catch (error) {
+    console.error("Error in all places endpoint:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch places",
+      message: error.message,
+    });
+  }
+});
+
+// Get nearby places
+app.get("/api/places-sf/nearby", async (req, res) => {
+  const { latitude, longitude, radius } = req.query;
+
+  try {
+    // Validate required parameters
+    if (!latitude || !longitude || !radius) {
+      return res.status(400).json({
+        success: false,
+        error: "Missing required parameters",
+        message: "latitude, longitude, and radius are required",
+      });
+    }
+
+    // Parse and validate parameters
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+    const radiusMeters = parseFloat(radius);
+
+    if (isNaN(lat) || isNaN(lng) || isNaN(radiusMeters)) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid parameter format",
+        message: "latitude, longitude, and radius must be valid numbers",
+      });
+    }
+
+    if (lat < -90 || lat > 90) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid latitude",
+        message: "Latitude must be between -90 and 90",
+      });
+    }
+
+    if (lng < -180 || lng > 180) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid longitude",
+        message: "Longitude must be between -180 and 180",
+      });
+    }
+
+    if (radiusMeters <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid radius",
+        message: "Radius must be greater than 0",
+      });
+    }
+
+    console.log(
+      `Finding places near ${lat}, ${lng} within ${radiusMeters}m...`
+    );
+
+    // Get nearby places from database
+    const result = await getNearbyPlaces(lat, lng, radiusMeters);
+
+    if (!result.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to fetch nearby places",
+        message: result.error,
+      });
+    }
+
+    res.json({
+      success: true,
+      places: result.places,
+      count: result.count,
+      searchParams: {
+        latitude: lat,
+        longitude: lng,
+        radius: radiusMeters,
+      },
+    });
+  } catch (error) {
+    console.error("Error in nearby places endpoint:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch nearby places",
       message: error.message,
     });
   }
@@ -467,6 +970,9 @@ app.get("/health", (req, res) => {
     environment: process.env.NODE_ENV || "development",
     version: "1.0.0",
     anthropicApiConfigured: !!process.env.ANTHROPIC_API_KEY,
+    supabaseConfigured: !!(
+      process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY
+    ),
   });
 });
 
@@ -481,6 +987,11 @@ app.get("/", (req, res) => {
       eventsByDate: "/api/events/:date",
       enhancedEvents: "/api/enhanced/events",
       enhancedEventsByDate: "/api/enhanced/events/:date",
+      scrapeAndSave: "POST /api/scrape-and-save/:date",
+      eventsFromDatabase: "/api/events-db/:date",
+      allPlaces: "/api/places-sf?limit=10&orderBy=name",
+      nearbyPlaces:
+        "/api/places-sf/nearby?latitude=37.7749&longitude=-122.4194&radius=1000",
       cacheStats: "/api/cache/stats",
       clearCache: "DELETE /api/cache",
     },
