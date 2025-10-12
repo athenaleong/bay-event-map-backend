@@ -172,8 +172,8 @@ async function mapEventToDatabase(event) {
   let addressToGeocode = null;
   if (event.address && event.address.trim() !== "") {
     addressToGeocode = event.address;
-  } else if (event.location && event.location.trim() !== "") {
-    addressToGeocode = event.location;
+  } else if (event.venue && event.venue.trim() !== "") {
+    addressToGeocode = event.venue;
   }
 
   // Geocode the address if available
@@ -190,22 +190,15 @@ async function mapEventToDatabase(event) {
     url: event.url || null,
     start_time: convertToLATime(event.startTime),
     end_time: convertToLATime(event.endTime),
-    location: event.location || null,
     cost: event.cost || null,
     image: event.image || null,
     categories: event.categories || [],
     source: event.source || "funcheap",
     venue: event.venue || null,
     address: event.address || null,
-    currency: event.currency || null,
     social_links: event.socialLinks || null,
     event_button_urls: event.eventButtonUrls || null,
-    sources: event.sources || null,
-    time_info: event.timeInfo || null,
-    cost_info: event.costInfo || null,
-    location_info: event.locationInfo || null,
     scraped_at: getCurrentLATime(),
-    has_detailed_info: event.hasDetailedInfo || false,
     latitude: coordinates ? coordinates.latitude : null,
     longitude: coordinates ? coordinates.longitude : null,
     emoji: event.emoji || null,
