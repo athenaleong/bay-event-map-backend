@@ -13,7 +13,9 @@ const {
   deleteEventsForDate,
   getNearbyPlaces,
   getAllPlaces,
+  getLiveEventsNearby,
 } = require("./database");
+const { recommendRoute } = require("./routeRecommender");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -961,6 +963,155 @@ app.get("/api/places-sf/nearby", async (req, res) => {
   }
 });
 
+// Get live events near a location
+app.get("/api/events-near-by", async (req, res) => {
+  const { lat, lon, limit, currentTime } = req.query;
+  console.log(req.query)
+
+  try {
+    // Validate required parameters
+    if (!lat || !lon || !limit || !currentTime) {
+      return res.status(400).json({
+        success: false,
+        error: "Missing required parameters",
+        message: "lat, lon, limit, and currentTime are required",
+      });
+    }
+
+    // Parse and validate parameters
+    const latitude = parseFloat(lat);
+    const longitude = parseFloat(lon);
+    const eventLimit = parseInt(limit);
+
+    if (isNaN(latitude) || isNaN(longitude) || isNaN(eventLimit)) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid parameter format",
+        message: "lat, lon, and limit must be valid numbers",
+      });
+    }
+
+    if (latitude < -90 || latitude > 90) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid latitude",
+        message: "Latitude must be between -90 and 90",
+      });
+    }
+
+    if (longitude < -180 || longitude > 180) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid longitude",
+        message: "Longitude must be between -180 and 180",
+      });
+    }
+
+    if (eventLimit <= 0) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid limit",
+        message: "Limit must be greater than 0",
+      });
+    }
+
+    // Validate currentTime format (should be ISO string)
+    const timeDate = new Date(currentTime);
+    if (isNaN(timeDate.getTime())) {
+      return res.status(400).json({
+        success: false,
+        error: "Invalid currentTime format",
+        message: "currentTime must be a valid ISO date string",
+      });
+    }
+
+    console.log(
+      `Finding live events near ${latitude}, ${longitude} at ${currentTime} (limit: ${eventLimit})`
+    );
+
+    // Get live events from database
+    const result = await getLiveEventsNearby(
+      latitude,
+      longitude,
+      eventLimit,
+      currentTime,
+      1000000
+    );
+
+    if (!result.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to fetch live events",
+        message: result.error,
+      });
+    }
+
+    res.json({
+      success: true,
+      events: result.events,
+      count: result.count,
+      searchParams: {
+        latitude: latitude,
+        longitude: longitude,
+        limit: eventLimit,
+        currentTime: currentTime,
+      },
+    });
+  } catch (error) {
+    console.error("Error in events-near-by endpoint:", error.message);
+    res.status(500).json({
+      success: false,
+      error: "Failed to fetch live events",
+      message: error.message,
+    });
+  }
+});
+
+// Recommend Route endpoint
+app.post("/api/recommendRoute", async (req, res) => {
+  try {
+    const {
+      lat,
+      lon,
+      locationName,
+      timeLimit,
+      intention,
+      currentTime,
+      radius = 400,
+    } = req.body;
+
+    const result = await recommendRoute({
+      lat,
+      lon,
+      locationName,
+      timeLimit,
+      intention,
+      currentTime,
+      radius,
+    });
+
+    if (!result.success) {
+      return res.status(result.status || 500).json({
+        success: false,
+        error: result.error,
+        message: result.message,
+      });
+    }
+
+    res.json({
+      success: true,
+      route: result.route,
+    });
+  } catch (error) {
+    console.error("Error in recommendRoute endpoint:", error);
+    res.status(500).json({
+      success: false,
+      error: "Internal Server Error",
+      message: error.message,
+    });
+  }
+});
+
 // Health check
 app.get("/health", (req, res) => {
   res.json({
@@ -989,9 +1140,12 @@ app.get("/", (req, res) => {
       enhancedEventsByDate: "/api/enhanced/events/:date",
       scrapeAndSave: "POST /api/scrape-and-save/:date",
       eventsFromDatabase: "/api/events-db/:date",
+      liveEventsNearby:
+        "/api/events-near-by?lat=37.7749&lon=-122.4194&limit=10&currentTime=2024-01-15T14:30:00-08:00",
       allPlaces: "/api/places-sf?limit=10&orderBy=name",
       nearbyPlaces:
         "/api/places-sf/nearby?latitude=37.7749&longitude=-122.4194&radius=1000",
+      recommendRoute: "POST /api/recommendRoute",
       cacheStats: "/api/cache/stats",
       clearCache: "DELETE /api/cache",
     },

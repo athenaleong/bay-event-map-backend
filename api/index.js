@@ -12,6 +12,7 @@ const {
   eventsExistForDate,
   deleteEventsForDate,
 } = require("../database");
+const { recommendRoute } = require("../routeRecommender");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -786,6 +787,28 @@ app.get("/api/events-db/:date", async (req, res) => {
   }
 });
 
+// Recommend Route endpoint
+app.post("/api/recommendRoute", async (req, res) => {
+  try {
+    const result = await recommendRoute(req.body);
+
+    if (!result.success) {
+      const statusCode =
+        result.error === "Invalid input parameters" ? 400 : 500;
+      return res.status(statusCode).json(result);
+    }
+
+    res.json(result);
+  } catch (error) {
+    console.error("Error in recommendRoute endpoint:", error);
+    res.status(500).json({
+      success: false,
+      error: "Internal server error",
+      message: error.message,
+    });
+  }
+});
+
 // Health check
 app.get("/health", (req, res) => {
   res.json({
@@ -814,6 +837,7 @@ app.get("/", (req, res) => {
       enhancedEventsByDate: "/api/enhanced/events/:date",
       scrapeAndSave: "POST /api/scrape-and-save/:date",
       eventsFromDatabase: "/api/events-db/:date",
+      recommendRoute: "POST /api/recommendRoute",
       cacheStats: "/api/cache/stats",
       clearCache: "DELETE /api/cache",
     },
