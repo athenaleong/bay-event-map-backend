@@ -1,0 +1,20 @@
+{
+  "url": "https://sf.funcheap.com/2025-world-of-dumplings-festival-at-sfs-ferry-building/",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "server": "nginx",
+    "date": "Sun, 12 Oct 2025 22:45:10 GMT",
+    "content-type": "text/html; charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "link": "<https://sf.funcheap.com/wp-json/>; rel=\"https://api.w.org/\", <https://sf.funcheap.com/wp-json/wp/v2/posts/1572926>; rel=\"alternate\"; title=\"JSON\"; type=\"application/json\", <https://sf.funcheap.com/?p=1572926>; rel=shortlink",
+    "vary": "Accept-Encoding, Cookie",
+    "last-modified": "Sun, 12 Oct 2025 21:56:22 GMT",
+    "x-presslabs-stats": "HIT; 2.548s; 23 queries; desktop; ttl 14400s; expires in 11472s",
+    "x-request-id": "cc1384a1501a50fc083e5d692f654acf"
+  },
+  "timestamp": "2025-10-12T22:45:10.376Z",
+  "contentLength": 169536,
+  "contentType": "text/html; charset=UTF-8"
+}

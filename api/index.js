@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const NodeCache = require("node-cache");
+const OpenAI = require("openai");
 const { FuncheapScraper } = require("../scraper");
 const { EnhancedFuncheapScraper } = require("../enhancedFuncheapScraper");
 const { generateEmojisForEvents } = require("../emojiGenerator");
@@ -24,6 +25,11 @@ app.set("trust proxy", 1);
 const cache = new NodeCache({ stdTTL: 3600 });
 const scraper = new FuncheapScraper();
 const enhancedScraper = new EnhancedFuncheapScraper();
+
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 // CORS configuration for production
 const corsOptions = {
@@ -79,6 +85,50 @@ const getDateRange = (startDate, days) => {
   }
 
   return dates;
+};
+
+/**
+ * Classify an event using OpenAI prompt
+ * @param {Object} event - Event object to classify
+ * @returns {Promise<string>} - Event type: 'compilation', 'standalone', or 'part-of-a-compilation'
+ */
+const classifyEvent = async (event) => {
+  try {
+    const response = await openai.responses.create({
+      prompt: {
+        id: "pmpt_68ec0010e0ec819383fa3109de9d1d6d0d6867f5f9275e7f",
+        version: "4",
+        variables: {
+          event_details: JSON.stringify(event, null, 2),
+        },
+      },
+    });
+
+    // Extract the event_type from the response
+    if (response && response.output_text) {
+      try {
+        const parsedOutput = JSON.parse(response.output_text);
+        if (parsedOutput && parsedOutput.event_type) {
+          return parsedOutput.event_type;
+        }
+      } catch (parseError) {
+        console.error(
+          `Failed to parse OpenAI response for event "${event.title}":`,
+          parseError
+        );
+      }
+    }
+
+    // Fallback to standalone if classification fails
+    console.warn(
+      `Failed to classify event "${event.title}", defaulting to standalone`
+    );
+    return "standalone";
+  } catch (error) {
+    console.error(`Error classifying event "${event.title}":`, error);
+    // Fallback to standalone if classification fails
+    return "standalone";
+  }
 };
 
 // Reusable function to scrape events and save to database
@@ -179,11 +229,36 @@ const scrapeAndSaveEvents = async (date, options = {}) => {
     }
   }
 
-  // Step 3: Save events to database
+  // Step 3: Classify events using OpenAI
   console.log(
-    `${progressPrefix}💾 Saving ${eventsWithEmojis.length} events to database...`
+    `${progressPrefix}🤖 Classifying ${eventsWithEmojis.length} events...`
   );
-  const saveResult = await saveEventsToDatabase(eventsWithEmojis);
+  const eventsWithClassification = [];
+  for (let i = 0; i < eventsWithEmojis.length; i++) {
+    const event = eventsWithEmojis[i];
+    console.log(
+      `${progressPrefix}  Classifying event ${i + 1}/${
+        eventsWithEmojis.length
+      }: ${event.title}`
+    );
+
+    const eventType = await classifyEvent(event);
+    eventsWithClassification.push({
+      ...event,
+      event_type: eventType,
+    });
+
+    // Add a small delay to avoid rate limiting
+    if (i < eventsWithEmojis.length - 1) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+  }
+
+  // Step 4: Save events to database
+  console.log(
+    `${progressPrefix}💾 Saving ${eventsWithClassification.length} events to database...`
+  );
+  const saveResult = await saveEventsToDatabase(eventsWithClassification);
 
   if (!saveResult.success) {
     console.error(
@@ -192,22 +267,23 @@ const scrapeAndSaveEvents = async (date, options = {}) => {
     );
     return {
       success: false,
-      events: eventsWithEmojis,
-      count: eventsWithEmojis.length,
+      events: eventsWithClassification,
+      count: eventsWithClassification.length,
       enhanced: includeDetails,
       saved: 0,
       saveError: saveResult.error,
       message: "Events scraped but failed to save to database",
-      detailRequestsUsed: eventsWithEmojis.filter((e) => e.hasDetailedInfo)
-        .length,
+      detailRequestsUsed: eventsWithClassification.filter(
+        (e) => e.hasDetailedInfo
+      ).length,
       emojisGenerated: includeDetails
-        ? eventsWithEmojis.filter((e) => e.emoji).length
+        ? eventsWithClassification.filter((e) => e.emoji).length
         : 0,
     };
   }
 
   console.log(
-    `${progressPrefix}✅ Successfully processed ${date}: scraped ${eventsWithEmojis.length}, saved ${saveResult.saved}`
+    `${progressPrefix}✅ Successfully processed ${date}: scraped ${eventsWithClassification.length}, saved ${saveResult.saved}`
   );
 
   return {
@@ -215,10 +291,11 @@ const scrapeAndSaveEvents = async (date, options = {}) => {
     events: saveResult.events,
     count: saveResult.saved,
     enhanced: includeDetails,
-    detailRequestsUsed: eventsWithEmojis.filter((e) => e.hasDetailedInfo)
-      .length,
+    detailRequestsUsed: eventsWithClassification.filter(
+      (e) => e.hasDetailedInfo
+    ).length,
     emojisGenerated: includeDetails
-      ? eventsWithEmojis.filter((e) => e.emoji).length
+      ? eventsWithClassification.filter((e) => e.emoji).length
       : 0,
     saved: saveResult.saved,
     message: `Successfully scraped and saved ${saveResult.saved} events`,

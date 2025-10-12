@@ -182,6 +182,8 @@ async function mapEventToDatabase(event) {
     coordinates = await geocodeAddress(addressToGeocode);
   }
 
+  console.log(event);
+
   return {
     title: event.title || "",
     description: event.description || null,
@@ -197,6 +199,7 @@ async function mapEventToDatabase(event) {
     address: event.address || null,
     currency: event.currency || null,
     social_links: event.socialLinks || null,
+    event_button_urls: event.eventButtonUrls || null,
     sources: event.sources || null,
     time_info: event.timeInfo || null,
     cost_info: event.costInfo || null,
@@ -206,6 +209,7 @@ async function mapEventToDatabase(event) {
     latitude: coordinates ? coordinates.latitude : null,
     longitude: coordinates ? coordinates.longitude : null,
     emoji: event.emoji || null,
+    event_type: event.event_type || "standalone",
   };
 }
 
@@ -238,54 +242,72 @@ async function saveEventsToDatabase(events) {
     console.log(`🗺️  Geocoding addresses for ${events.length} events...`);
     const dbEvents = await Promise.all(events.map(mapEventToDatabase));
 
-    // Insert events one by one to handle duplicates gracefully
-    const savedEvents = [];
-    const failedEvents = [];
-    let savedCount = 0;
-    let duplicateCount = 0;
-
-    for (const event of dbEvents) {
-      try {
-        const { data, error } = await supabase
-          .from("events")
-          .insert([event])
-          .select();
-
-        if (error) {
-          // Check if it's a duplicate key error
-          if (error.code === "23505") {
-            console.log(
-              `Skipping duplicate event: ${event.title} at ${event.start_time}`
-            );
-            duplicateCount++;
-            failedEvents.push({ event, error: "duplicate" });
-          } else {
-            console.error(`Failed to save event "${event.title}":`, error);
-            failedEvents.push({ event, error: error.message });
-          }
-        } else {
-          savedEvents.push(data[0]);
-          savedCount++;
-        }
-      } catch (err) {
-        console.error(`Error saving event "${event.title}":`, err);
-        failedEvents.push({ event, error: err.message });
-      }
-    }
+    // Separate events by type
+    const standaloneEvents = dbEvents.filter(
+      (event) => event.event_type === "standalone"
+    );
+    const partOfCompilationEvents = dbEvents.filter(
+      (event) => event.event_type === "part-of-a-compilation"
+    );
+    const compilationEvents = dbEvents.filter(
+      (event) => event.event_type === "compilation"
+    );
 
     console.log(
-      `Successfully saved ${savedCount} events to database (${duplicateCount} duplicates skipped, ${
-        failedEvents.length - duplicateCount
-      } other failures)`
+      `📊 Event classification: ${standaloneEvents.length} standalone, ${partOfCompilationEvents.length} part-of-compilation, ${compilationEvents.length} compilation`
+    );
+
+    // Save standalone events to events table
+    const standaloneResult = await saveEventsToTable(
+      standaloneEvents,
+      "events"
+    );
+
+    // Save part-of-compilation events to events table
+    const partOfCompilationResult = await saveEventsToTable(
+      partOfCompilationEvents,
+      "events"
+    );
+
+    // Save compilation events to compilation table
+    const compilationResult = await saveEventsToTable(
+      compilationEvents,
+      "compilation"
+    );
+
+    const totalSaved =
+      standaloneResult.saved +
+      partOfCompilationResult.saved +
+      compilationResult.saved;
+    const allSavedEvents = [
+      ...standaloneResult.events,
+      ...partOfCompilationResult.events,
+      ...compilationResult.events,
+    ];
+    const totalDuplicates =
+      standaloneResult.duplicates +
+      partOfCompilationResult.duplicates +
+      compilationResult.duplicates;
+    const totalFailures =
+      standaloneResult.failures +
+      partOfCompilationResult.failures +
+      compilationResult.failures;
+
+    console.log(
+      `Successfully saved ${totalSaved} events to database (${totalDuplicates} duplicates skipped, ${totalFailures} other failures)`
     );
 
     return {
       success: true, // Still return success even if some events failed
-      saved: savedCount,
-      events: savedEvents,
-      duplicates: duplicateCount,
-      failures: failedEvents.length - duplicateCount,
-      failedEvents: failedEvents,
+      saved: totalSaved,
+      events: allSavedEvents,
+      duplicates: totalDuplicates,
+      failures: totalFailures,
+      breakdown: {
+        standalone: standaloneResult,
+        partOfCompilation: partOfCompilationResult,
+        compilation: compilationResult,
+      },
     };
   } catch (error) {
     console.error("Error saving events to database:", error);
@@ -296,6 +318,73 @@ async function saveEventsToDatabase(events) {
       events: [],
     };
   }
+}
+
+/**
+ * Save events to a specific table
+ * @param {Array} events - Array of event objects
+ * @param {string} tableName - Name of the table to save to
+ * @returns {Promise<Object>} - Result object
+ */
+async function saveEventsToTable(events, tableName) {
+  if (!events || events.length === 0) {
+    return {
+      success: true,
+      saved: 0,
+      events: [],
+      duplicates: 0,
+      failures: 0,
+    };
+  }
+
+  const savedEvents = [];
+  const failedEvents = [];
+  let savedCount = 0;
+  let duplicateCount = 0;
+
+  for (const event of events) {
+    try {
+      const { data, error } = await supabase
+        .from(tableName)
+        .insert([event])
+        .select();
+
+      if (error) {
+        // Check if it's a duplicate key error
+        if (error.code === "23505") {
+          console.log(
+            `Skipping duplicate event in ${tableName}: ${event.title} at ${event.start_time}`
+          );
+          duplicateCount++;
+          failedEvents.push({ event, error: "duplicate" });
+        } else {
+          console.error(
+            `Failed to save event "${event.title}" to ${tableName}:`,
+            error
+          );
+          failedEvents.push({ event, error: error.message });
+        }
+      } else {
+        savedEvents.push(data[0]);
+        savedCount++;
+      }
+    } catch (err) {
+      console.error(
+        `Error saving event "${event.title}" to ${tableName}:`,
+        err
+      );
+      failedEvents.push({ event, error: err.message });
+    }
+  }
+
+  return {
+    success: true,
+    saved: savedCount,
+    events: savedEvents,
+    duplicates: duplicateCount,
+    failures: failedEvents.length - duplicateCount,
+    failedEvents: failedEvents,
+  };
 }
 
 /**
@@ -940,6 +1029,7 @@ async function exportEventsToCSV(outputPath = "events_export.csv") {
 
 module.exports = {
   saveEventsToDatabase,
+  saveEventsToTable,
   getEventsFromDatabase,
   eventsExistForDate,
   deleteEventsForDate,

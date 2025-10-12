@@ -127,22 +127,6 @@ class EventDetailScraper {
             }
           }
 
-          // Extract organizer information
-          if (eventData.organizer) {
-            const organizer = eventData.organizer;
-            details.organizer = organizer.name || organizer;
-            if (organizer.url) {
-              details.organizerUrl = organizer.url;
-            }
-          }
-
-          // Extract performer information
-          if (eventData.performer) {
-            details.performers = Array.isArray(eventData.performer)
-              ? eventData.performer.map((p) => p.name || p)
-              : [eventData.performer.name || eventData.performer];
-          }
-
           // Extract image
           if (eventData.image) {
             details.image = Array.isArray(eventData.image)
@@ -210,6 +194,9 @@ class EventDetailScraper {
 
     // Extract social links
     this.extractSocialLinks($, details);
+
+    // Extract event button URLs
+    this.extractEventButtonUrls($, details);
 
     // Extract event date from various sources
     this.extractEventDate($, details);
@@ -303,6 +290,23 @@ class EventDetailScraper {
 
     if (Object.keys(socialLinks).length > 0) {
       details.socialLinks = socialLinks;
+    }
+  }
+
+  extractEventButtonUrls($, details) {
+    const eventButtonUrls = [];
+
+    // Look for anchor tags with class "event__button"
+    $("a.event__button").each((i, el) => {
+      const href = $(el).attr("href");
+
+      if (href) {
+        eventButtonUrls.push(href);
+      }
+    });
+
+    if (eventButtonUrls.length > 0) {
+      details.eventButtonUrls = eventButtonUrls;
     }
   }
 

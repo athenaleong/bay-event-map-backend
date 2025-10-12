@@ -10,7 +10,7 @@ class EnhancedFuncheapScraper {
   async getEventsWithDetails(dateStr, options = {}) {
     const {
       includeDetails = false,
-      maxDetailRequests = 10,
+      maxDetailRequests = 500,
       detailFilter = null, // function to filter which events get detailed scraping
       onProgress = null, // callback for progress updates
     } = options;
@@ -99,64 +99,11 @@ class EnhancedFuncheapScraper {
   }
 
   mergeEventData(basicEvent, detailedEvent) {
-    // Create a comprehensive event object
-    const merged = {
-      // Basic listing data
-      ...basicEvent,
-
-      // Enhanced detail data (override basic data where available)
+    // Just use the detailed event data since it's always more complete
+    return {
       ...detailedEvent,
-
-      // Preserve both sources
-      sources: {
-        listing: basicEvent.source || "listing",
-        detail: detailedEvent.source || "detail",
-      },
-
-      // Merge time information intelligently
-      timeInfo: {
-        listingTime: basicEvent.startTime,
-        detailTime: detailedEvent.startTime,
-        listingEndTime: basicEvent.endTime,
-        detailEndTime: detailedEvent.endTime,
-        eventDate: detailedEvent.eventDate || basicEvent.date,
-      },
-
-      // Merge cost information
-      costInfo: {
-        listingCost: basicEvent.cost,
-        detailCost: detailedEvent.cost,
-        costDetails: detailedEvent.costDetails,
-      },
-
-      // Merge location information
-      locationInfo: {
-        listingLocation: basicEvent.location,
-        venue: detailedEvent.venue,
-        address: detailedEvent.address,
-        googleMapsUrl: detailedEvent.googleMapsUrl,
-      },
-
-      // Additional metadata
       scrapedAt: new Date().toISOString(),
-      hasDetailedInfo: true,
     };
-
-    // Use the most complete title
-    if (
-      detailedEvent.title &&
-      detailedEvent.title.length > (basicEvent.title || "").length
-    ) {
-      merged.title = detailedEvent.title;
-    }
-
-    // Use the most complete description
-    if (detailedEvent.description) {
-      merged.description = detailedEvent.description;
-      merged.descriptionHtml = detailedEvent.descriptionHtml;
-    }
-
-    return merged;
   }
 
   // Utility method to create smart detail filters
