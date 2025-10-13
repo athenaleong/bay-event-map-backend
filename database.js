@@ -168,20 +168,6 @@ async function mapEventToDatabase(event) {
     } -> Converted: ${convertToLATime(event.startTime)}`
   );
 
-  // Determine the address to geocode
-  let addressToGeocode = null;
-  if (event.address && event.address.trim() !== "") {
-    addressToGeocode = event.address;
-  } else if (event.venue && event.venue.trim() !== "") {
-    addressToGeocode = event.venue;
-  }
-
-  // Geocode the address if available
-  let coordinates = null;
-  if (addressToGeocode) {
-    coordinates = await geocodeAddress(addressToGeocode);
-  }
-
   console.log(event);
 
   return {
@@ -199,10 +185,11 @@ async function mapEventToDatabase(event) {
     social_links: event.socialLinks || null,
     event_button_urls: event.eventButtonUrls || null,
     scraped_at: getCurrentLATime(),
-    latitude: coordinates ? coordinates.latitude : null,
-    longitude: coordinates ? coordinates.longitude : null,
+    latitude: event.latitude || null, // Already geocoded
+    longitude: event.longitude || null, // Already geocoded
     emoji: event.emoji || null,
     event_type: event.event_type || "standalone",
+    event_source: "funcheap",
   };
 }
 
@@ -231,8 +218,8 @@ async function saveEventsToDatabase(events) {
       };
     }
 
-    // Map events to database schema with geocoding
-    console.log(`🗺️  Geocoding addresses for ${events.length} events...`);
+    // Map events to database schema (geocoding already done)
+    console.log(`📋 Mapping ${events.length} events to database schema...`);
     const dbEvents = await Promise.all(events.map(mapEventToDatabase));
 
     // Separate events by type
@@ -250,22 +237,22 @@ async function saveEventsToDatabase(events) {
       `📊 Event classification: ${standaloneEvents.length} standalone, ${partOfCompilationEvents.length} part-of-compilation, ${compilationEvents.length} compilation`
     );
 
-    // Save standalone events to events table
+    // Save standalone events to funcheap-event table
     const standaloneResult = await saveEventsToTable(
       standaloneEvents,
-      "events"
+      "funcheap-event"
     );
 
-    // Save part-of-compilation events to events table
+    // Save part-of-compilation events to funcheap-event table
     const partOfCompilationResult = await saveEventsToTable(
       partOfCompilationEvents,
-      "events"
+      "funcheap-event"
     );
 
-    // Save compilation events to compilation table
+    // Save compilation events to funcheap-event-compilation table
     const compilationResult = await saveEventsToTable(
       compilationEvents,
-      "compilation"
+      "funcheap-event-compilation"
     );
 
     const totalSaved =
@@ -435,7 +422,7 @@ async function getEventsFromDatabase(date) {
  * @param {string} date - Date in YYYY-MM-DD format (LA time)
  * @returns {Promise<boolean>} - Whether events exist for this date
  */
-async function eventsExistForDate(date) {
+async function eventsExistForDate(table, date) {
   try {
     if (!supabase) {
       return false;
@@ -446,7 +433,7 @@ async function eventsExistForDate(date) {
     const endOfDay = `${date}T23:59:59`;
 
     const { data, error } = await supabase
-      .from("events")
+      .from(table)
       .select("id")
       .gte("start_time", startOfDay)
       .lte("start_time", endOfDay)
@@ -1020,9 +1007,103 @@ async function exportEventsToCSV(outputPath = "events_export.csv") {
   }
 }
 
+/**
+ * Save enhanced events to the main event table
+ * @param {Array} events - Array of enhanced event objects
+ * @returns {Promise<Object>} - Result object with success status and data
+ */
+async function saveEnhancedEventsToEventTable(events) {
+  try {
+    if (!supabase) {
+      console.warn(
+        "Supabase client not initialized. Skipping enhanced event save."
+      );
+      return {
+        success: false,
+        error: "Database not configured",
+        saved: 0,
+        events: [],
+      };
+    }
+
+    if (!events || events.length === 0) {
+      return {
+        success: true,
+        saved: 0,
+        events: [],
+      };
+    }
+
+    console.log(
+      `💾 Saving ${events.length} enhanced events to main event table...`
+    );
+
+    const savedEvents = [];
+    const failedEvents = [];
+    let savedCount = 0;
+    let duplicateCount = 0;
+
+    for (const event of events) {
+      try {
+        const { data, error } = await supabase
+          .from("events")
+          .insert([event])
+          .select();
+
+        if (error) {
+          // Check if it's a duplicate key error
+          if (error.code === "23505") {
+            console.log(
+              `Skipping duplicate enhanced event: ${event.title} at ${event.start_time}`
+            );
+            duplicateCount++;
+            failedEvents.push({ event, error: "duplicate" });
+          } else {
+            console.error(
+              `Failed to save enhanced event "${event.title}":`,
+              error
+            );
+            failedEvents.push({ event, error: error.message });
+          }
+        } else {
+          savedEvents.push(data[0]);
+          savedCount++;
+        }
+      } catch (err) {
+        console.error(`Error saving enhanced event "${event.title}":`, err);
+        failedEvents.push({ event, error: err.message });
+      }
+    }
+
+    console.log(
+      `Successfully saved ${savedCount} enhanced events to main event table (${duplicateCount} duplicates skipped, ${
+        failedEvents.length - duplicateCount
+      } other failures)`
+    );
+
+    return {
+      success: true,
+      saved: savedCount,
+      events: savedEvents,
+      duplicates: duplicateCount,
+      failures: failedEvents.length - duplicateCount,
+      failedEvents: failedEvents,
+    };
+  } catch (error) {
+    console.error("Error saving enhanced events to main event table:", error);
+    return {
+      success: false,
+      error: error.message,
+      saved: 0,
+      events: [],
+    };
+  }
+}
+
 module.exports = {
   saveEventsToDatabase,
   saveEventsToTable,
+  saveEnhancedEventsToEventTable,
   getEventsFromDatabase,
   eventsExistForDate,
   deleteEventsForDate,
