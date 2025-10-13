@@ -1,0 +1,20 @@
+{
+  "url": "https://sf.funcheap.com/motown-on-mondays-dj-night-madrone-art-bar-231/",
+  "status": 200,
+  "statusText": "OK",
+  "headers": {
+    "server": "nginx",
+    "date": "Mon, 13 Oct 2025 17:42:13 GMT",
+    "content-type": "text/html; charset=UTF-8",
+    "transfer-encoding": "chunked",
+    "connection": "keep-alive",
+    "link": "<https://sf.funcheap.com/wp-json/>; rel=\"https://api.w.org/\", <https://sf.funcheap.com/wp-json/wp/v2/posts/1582535>; rel=\"alternate\"; title=\"JSON\"; type=\"application/json\", <https://sf.funcheap.com/?p=1582535>; rel=shortlink",
+    "vary": "Accept-Encoding, Cookie",
+    "last-modified": "Mon, 13 Oct 2025 16:39:51 GMT",
+    "x-presslabs-stats": "EXPIRED; 3.166s; 39 queries; desktop; ttl 14400s; expires in 10658s",
+    "x-request-id": "e6a4f379901204a7e8ad33e0da61eeef"
+  },
+  "timestamp": "2025-10-13T17:42:13.914Z",
+  "contentLength": 154106,
+  "contentType": "text/html; charset=UTF-8"
+}
