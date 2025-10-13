@@ -7,9 +7,8 @@ const OpenAI = require("openai");
 const { FuncheapScraper } = require("./scraper");
 const { EnhancedFuncheapScraper } = require("./enhancedFuncheapScraper");
 const { generateEmojisForEvents } = require("./emojiGenerator");
+const { scrapeAndSaveFuncheapEvents } = require("./funcheap");
 const {
-  saveEventsToDatabase,
-  saveEnhancedEventsToEventTable,
   getEventsFromDatabase,
   eventsExistForDate,
   deleteEventsForDate,
@@ -90,391 +89,6 @@ const getDateRange = (startDate, days) => {
   }
 
   return dates;
-};
-
-// Reusable function to scrape events and save to database
-/**
- * Classify an event using OpenAI prompt
- * @param {Object} event - Event object to classify
- * @returns {Promise<string>} - Event type: 'compilation', 'standalone', or 'part-of-a-compilation'
- */
-const classifyEvent = async (event) => {
-  try {
-    const response = await openai.responses.create({
-      prompt: {
-        id: "pmpt_68ec0010e0ec819383fa3109de9d1d6d0d6867f5f9275e7f",
-        version: "4",
-        variables: {
-          event_details: JSON.stringify(event, null, 2),
-        },
-      },
-    });
-
-    // Extract the event_type from the response
-    if (response && response.output_text) {
-      try {
-        const parsedOutput = JSON.parse(response.output_text);
-        if (parsedOutput && parsedOutput.event_type) {
-          return parsedOutput.event_type;
-        }
-      } catch (parseError) {
-        console.error(
-          `Failed to parse OpenAI response for event "${event.title}":`,
-          parseError
-        );
-      }
-    }
-
-    // Fallback to standalone if classification fails
-    console.warn(
-      `Failed to classify event "${event.title}", defaulting to standalone`
-    );
-    return "standalone";
-  } catch (error) {
-    console.error(`Error classifying event "${event.title}":`, error);
-    // Fallback to standalone if classification fails
-    return "standalone";
-  }
-};
-
-/**
- * Generate human-friendly event copy using OpenAI
- * @param {Object} event - Event object to enhance
- * @returns {Promise<Object>} - Enhanced event object with human-friendly copy
- */
-const generateHumanFriendlyEventCopy = async (event) => {
-  try {
-    const response = await openai.responses.create({
-      prompt: {
-        id: "pmpt_68ed704a7a088194b546caa4c299595f07a88fb8ac0cdb09",
-        version: "2",
-        variables: {
-          event_details: JSON.stringify(event, null, 2),
-        },
-      },
-    });
-
-    // Extract the enhanced event data from the response
-    if (response && response.output_text) {
-      try {
-        const parsedOutput = JSON.parse(response.output_text);
-        if (parsedOutput && parsedOutput.title) {
-          return {
-            title: parsedOutput.title,
-            description: parsedOutput.description,
-            cost: parsedOutput.cost,
-            rsvp_ticket_required: parsedOutput.rsvp_ticket_required,
-            emoji: parsedOutput.emoji,
-          };
-        }
-      } catch (parseError) {
-        console.error(
-          `Failed to parse OpenAI response for event "${event.title}":`,
-          parseError
-        );
-      }
-    }
-
-    // Fallback to original event data if enhancement fails
-    console.warn(
-      `Failed to generate human-friendly copy for event "${event.title}", using original data`
-    );
-    return {
-      title: event.title,
-      description: event.description,
-      cost: event.cost,
-      rsvp_ticket_required: false,
-      emoji: event.emoji || "🎉",
-    };
-  } catch (error) {
-    console.error(
-      `Error generating human-friendly copy for event "${event.title}":`,
-      error
-    );
-    // Fallback to original event data if enhancement fails
-    return {
-      title: event.title,
-      description: event.description,
-      cost: event.cost,
-      rsvp_ticket_required: false,
-      emoji: event.emoji || "🎉",
-    };
-  }
-};
-
-const scrapeAndSaveEvents = async (date, options = {}) => {
-  const {
-    includeDetails = true,
-    categories = "",
-    excludeSponsored = false,
-    titleKeywords = "",
-    costFilter = "",
-    hasImages = false,
-    progressPrefix = "",
-  } = options;
-
-  console.log(`${progressPrefix}🚀 Scraping and saving events for ${date}...`);
-
-  // Convert date format
-  const funcheapDate = formatDateForFuncheap(date);
-
-  // Build scraping options
-  const scrapingOptions = {
-    includeDetails: includeDetails,
-  };
-
-  // Add detail filter if specified
-  if (
-    categories ||
-    excludeSponsored ||
-    titleKeywords ||
-    costFilter ||
-    hasImages
-  ) {
-    const filterOptions = {
-      categories: categories
-        ? typeof categories === "string"
-          ? categories.split(",").map((c) => c.trim())
-          : categories
-        : [],
-      excludeSponsored: excludeSponsored,
-      titleKeywords: titleKeywords
-        ? typeof titleKeywords === "string"
-          ? titleKeywords.split(",").map((k) => k.trim())
-          : titleKeywords
-        : [],
-      costFilter: costFilter || null,
-      hasImages: hasImages,
-    };
-    scrapingOptions.detailFilter =
-      EnhancedFuncheapScraper.createDetailFilter(filterOptions);
-  }
-
-  // Add progress callback
-  scrapingOptions.onProgress = (progress) => {
-    console.log(
-      `  ${progressPrefix}Progress: ${progress.step} - ${progress.completed}/${
-        progress.total
-      }${progress.currentEvent ? ` (${progress.currentEvent})` : ""}`
-    );
-  };
-
-  // Step 1: Scrape events with enhanced details
-  console.log(`${progressPrefix}📋 Scraping enhanced events for ${date}...`);
-  const events = await enhancedScraper.getEventsWithDetails(
-    funcheapDate,
-    scrapingOptions
-  );
-
-  // Count events with non-null venues
-  let eventsWithVenues = events.filter((event) => event.venue != null).length;
-  let eventsWithAddresses = events.filter(
-    (event) => event.address != null
-  ).length;
-  console.log(
-    `${progressPrefix}📍 Found ${eventsWithVenues} events with venue information`
-  );
-  console.log(
-    `${progressPrefix}🏢 Found ${eventsWithAddresses} events with address information`
-  );
-
-  if (!events || events.length === 0) {
-    return {
-      success: true,
-      events: [],
-      count: 0,
-      message: "No events found for this date",
-      saved: 0,
-      enhanced: includeDetails,
-      detailRequestsUsed: 0,
-      emojisGenerated: 0,
-    };
-  }
-
-  // Step 2: Classify events immediately after scraping
-  console.log(`${progressPrefix}🤖 Classifying ${events.length} events...`);
-  const eventsWithClassification = [];
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    console.log(
-      `${progressPrefix}  Classifying event ${i + 1}/${events.length}: ${
-        event.title
-      }`
-    );
-
-    const eventType = await classifyEvent(event);
-    eventsWithClassification.push({
-      ...event,
-      event_type: eventType,
-    });
-
-    // Add a small delay to avoid rate limiting
-    if (i < events.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-  }
-
-  eventsWithVenues = eventsWithClassification.filter(
-    (event) => event.venue != null
-  ).length;
-  eventsWithAddresses = eventsWithClassification.filter(
-    (event) => event.address != null
-  ).length;
-  console.log(
-    `${progressPrefix}📍 Found ${eventsWithVenues} events with venue information`
-  );
-  console.log(
-    `${progressPrefix}🏢 Found ${eventsWithAddresses} events with address information`
-  );
-
-  // Step 3: Geocode events after classification
-  console.log(
-    `${progressPrefix}🗺️  Geocoding addresses for ${eventsWithClassification.length} events...`
-  );
-  const { geocodeAddress } = require("./database");
-  const eventsWithGeocoding = await Promise.all(
-    eventsWithClassification.map(async (event) => {
-      // Determine the address to geocode
-      let addressToGeocode = null;
-      if (event.address && event.address.trim() !== "") {
-        addressToGeocode = event.address;
-      } else if (event.venue && event.venue.trim() !== "") {
-        addressToGeocode = event.venue;
-      }
-
-      // Geocode the address if available
-      let coordinates = null;
-      if (addressToGeocode) {
-        coordinates = await geocodeAddress(addressToGeocode);
-      }
-
-      return {
-        ...event,
-        latitude: coordinates ? coordinates.latitude : null,
-        longitude: coordinates ? coordinates.longitude : null,
-      };
-    })
-  );
-
-  // Step 4: Save events to appropriate tables based on classification
-  console.log(
-    `${progressPrefix}💾 Saving ${eventsWithGeocoding.length} events to database...`
-  );
-  const saveResult = await saveEventsToDatabase(eventsWithGeocoding);
-
-  if (!saveResult.success) {
-    console.error(
-      `${progressPrefix}Failed to save events to database:`,
-      saveResult.error
-    );
-    return {
-      success: false,
-      events: eventsWithGeocoding,
-      count: eventsWithGeocoding.length,
-      enhanced: includeDetails,
-      saved: 0,
-      saveError: saveResult.error,
-      message: "Events scraped but failed to save to database",
-      detailRequestsUsed: eventsWithGeocoding.filter((e) => e.hasDetailedInfo)
-        .length,
-      emojisGenerated: 0,
-    };
-  }
-
-  // Step 5: Generate human-friendly copies for standalone and part-of-compilation events
-  const eventsForEnhancement = eventsWithGeocoding.filter(
-    (event) =>
-      event.event_type === "standalone" ||
-      event.event_type === "part-of-a-compilation"
-  );
-
-  let enhancedEvents = [];
-  if (eventsForEnhancement.length > 0) {
-    console.log(
-      `${progressPrefix}✨ Generating human-friendly copies for ${eventsForEnhancement.length} events...`
-    );
-
-    for (let i = 0; i < eventsForEnhancement.length; i++) {
-      const event = eventsForEnhancement[i];
-      console.log(
-        `${progressPrefix}  Enhancing event ${i + 1}/${
-          eventsForEnhancement.length
-        }: ${event.title}`
-      );
-
-      try {
-        const enhancedCopy = await generateHumanFriendlyEventCopy(event);
-
-        // Combine original event data with enhanced copy
-        const combinedEvent = {
-          // Enhanced copy data
-          title: enhancedCopy.title,
-          description: enhancedCopy.description,
-          cost: enhancedCopy.cost,
-          rsvp_ticket_required: enhancedCopy.rsvp_ticket_required,
-          emoji: enhancedCopy.emoji,
-
-          // Original event data
-          venue: event.venue,
-          address: event.address,
-          start_time: event.startTime,
-          end_time: event.endTime,
-          url: event.url,
-          latitude: event.latitude, // Already geocoded
-          longitude: event.longitude, // Already geocoded
-          event_urls: event.eventButtonUrls,
-          event_type: event.event_type,
-          event_source: "funcheap",
-
-          // Additional metadata
-          categories: event.categories,
-          image: event.image,
-          social_links: event.socialLinks,
-          scraped_at: new Date().toISOString(),
-        };
-
-        enhancedEvents.push(combinedEvent);
-
-        // Add a small delay to avoid rate limiting
-        if (i < eventsForEnhancement.length - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 200));
-        }
-      } catch (error) {
-        console.error(`Error enhancing event "${event.title}":`, error);
-        // Continue with other events even if one fails
-      }
-    }
-  }
-
-  // Step 6: Save enhanced events to main event table
-  let enhancedSaveResult = { success: true, saved: 0, events: [] };
-  if (enhancedEvents.length > 0) {
-    console.log(
-      `${progressPrefix}💾 Saving ${enhancedEvents.length} enhanced events to main event table...`
-    );
-    enhancedSaveResult = await saveEnhancedEventsToEventTable(enhancedEvents);
-  }
-
-  const totalSaved = saveResult.saved + enhancedSaveResult.saved;
-  console.log(
-    `${progressPrefix}✅ Successfully processed ${date}: scraped ${eventsWithGeocoding.length}, saved ${totalSaved} total events`
-  );
-
-  return {
-    success: true,
-    events: [...saveResult.events, ...enhancedSaveResult.events],
-    count: totalSaved,
-    enhanced: includeDetails,
-    detailRequestsUsed: eventsWithGeocoding.filter((e) => e.hasDetailedInfo)
-      .length,
-    emojisGenerated: enhancedEvents.length,
-    saved: totalSaved,
-    message: `Successfully scraped and saved ${totalSaved} events (${saveResult.saved} to funcheap tables, ${enhancedSaveResult.saved} to main event table)`,
-    breakdown: {
-      funcheapEvents: saveResult.saved,
-      enhancedEvents: enhancedSaveResult.saved,
-    },
-  };
 };
 
 // Routes
@@ -862,7 +476,7 @@ app.get("/api/enhanced/events", async (req, res) => {
 });
 
 // Scrape and save events to database
-app.post("/api/scrape-and-save/:date", async (req, res) => {
+app.post("/api/scrape-and-save-funcheap/:date", async (req, res) => {
   const { date } = req.params; // Expected format: YYYY-MM-DD
   const {
     includeDetails = "true",
@@ -907,7 +521,7 @@ app.post("/api/scrape-and-save/:date", async (req, res) => {
     }
 
     // Use the reusable helper function
-    const scrapeResult = await scrapeAndSaveEvents(date, {
+    const scrapeResult = await scrapeAndSaveFuncheapEvents(date, {
       includeDetails: includeDetails === "true",
       categories: categories,
       excludeSponsored: excludeSponsored === "true",
@@ -949,7 +563,7 @@ app.post("/api/scrape-and-save/:date", async (req, res) => {
   }
 });
 
-// Get events from database (auto-scrape if not found)
+// Get events from database only
 app.get("/api/events-db/:date", async (req, res) => {
   const { date } = req.params; // Expected format: YYYY-MM-DD
   const {
@@ -988,54 +602,24 @@ app.get("/api/events-db/:date", async (req, res) => {
       });
     }
 
-    // No events in database, auto-scrape them
-    console.log(`🚀 No events found in database for ${date}, auto-scraping...`);
-
-    // Use the reusable helper function
-    const autoScrapeResult = await scrapeAndSaveEvents(date, {
-      includeDetails: includeDetails === "true",
-      categories: categories,
-      excludeSponsored: excludeSponsored === "true",
-      titleKeywords: titleKeywords,
-      costFilter: costFilter,
-      hasImages: hasImages === "true",
-      progressPrefix: "Auto-scrape ",
-    });
-
-    if (!autoScrapeResult.success) {
-      // Still return the scraped events even if saving failed
-      return res.json({
-        success: true,
-        events: autoScrapeResult.events,
-        fromDatabase: false,
-        autoScraped: true,
-        date: date,
-        count: autoScrapeResult.count,
-        enhanced: autoScrapeResult.enhanced,
-        saved: autoScrapeResult.saved,
-        saveError: autoScrapeResult.saveError,
-        message: autoScrapeResult.message,
-      });
-    }
-
-    res.json({
+    // No events in database, return empty result
+    console.log(`📭 No events found in database for ${date}`);
+    return res.json({
       success: true,
-      events: autoScrapeResult.events,
-      fromDatabase: false,
-      autoScraped: true,
+      events: [],
+      fromDatabase: true,
       date: date,
-      count: autoScrapeResult.count,
-      enhanced: autoScrapeResult.enhanced,
-      detailRequestsUsed: autoScrapeResult.detailRequestsUsed,
-      emojisGenerated: autoScrapeResult.emojisGenerated,
-      saved: autoScrapeResult.saved,
-      message: autoScrapeResult.message,
+      count: 0,
+      message: "No events found in database for this date",
     });
   } catch (error) {
-    console.error(`Error in auto-scrape for ${date}:`, error.message);
+    console.error(
+      `Error fetching events from database for ${date}:`,
+      error.message
+    );
     res.status(500).json({
       success: false,
-      error: "Failed to fetch/scrape events",
+      error: "Failed to fetch events from database",
       message: error.message,
     });
   }
@@ -1386,7 +970,7 @@ app.get("/", (req, res) => {
       eventsByDate: "/api/events/:date",
       enhancedEvents: "/api/enhanced/events",
       enhancedEventsByDate: "/api/enhanced/events/:date",
-      scrapeAndSave: "POST /api/scrape-and-save/:date",
+      scrapeAndSaveFuncheap: "POST /api/scrape-and-save-funcheap/:date",
       eventsFromDatabase: "/api/events-db/:date",
       liveEventsNearby:
         "/api/events-near-by?lat=37.7749&lon=-122.4194&limit=10&currentTime=2024-01-15T14:30:00-08:00",
