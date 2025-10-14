@@ -429,15 +429,50 @@ async function eventsExistForDate(table, date) {
     }
 
     // Create LA time range for the given date
-    const startOfDay = `${date}T00:00:00`;
-    const endOfDay = `${date}T23:59:59`;
+    // We need to create proper LA timezone timestamps to match what's stored in the database
+    // Create timestamps that represent the start and end of the day in LA timezone
+    const startOfDay = `${date}T00:00:00-08:00`; // Start with PST (winter time)
+    const endOfDay = `${date}T23:59:59-08:00`; // End with PST (winter time)
+
+    // For summer time (PDT), we need to check if the date falls in DST period
+    // Let's create a more robust approach by checking the actual timezone offset
+    const testDate = new Date(`${date}T12:00:00`); // Noon on the given date
+    const laOffset = new Intl.DateTimeFormat("en", {
+      timeZone: "America/Los_Angeles",
+      timeZoneName: "longOffset",
+    }).formatToParts(testDate);
+
+    const offsetPart = laOffset.find((part) => part.type === "timeZoneName");
+    let offsetString = "-08:00"; // default to PST
+
+    if (offsetPart) {
+      const offsetText = offsetPart.value;
+      const offsetMatch = offsetText.match(/GMT([+-]\d+)/);
+      if (offsetMatch) {
+        const offsetHours = parseInt(offsetMatch[1]);
+        const offsetSign = offsetHours >= 0 ? "+" : "-";
+        const absOffsetHours = Math.abs(offsetHours);
+        offsetString = `${offsetSign}${absOffsetHours
+          .toString()
+          .padStart(2, "0")}:00`;
+      }
+    }
+
+    // Create the final timestamps with the correct timezone offset
+    const startOfDayFinal = `${date}T00:00:00${offsetString}`;
+    const endOfDayFinal = `${date}T23:59:59${offsetString}`;
+
+    console.log("start of day", startOfDayFinal);
+    console.log("end of day", endOfDayFinal);
 
     const { data, error } = await supabase
       .from(table)
       .select("id")
-      .gte("start_time", startOfDay)
-      .lte("start_time", endOfDay)
+      .gte("start_time", startOfDayFinal)
+      .lte("start_time", endOfDayFinal)
       .limit(1);
+
+    console.log(JSON.stringify(data));
 
     if (error) {
       console.error("Database query error:", error);

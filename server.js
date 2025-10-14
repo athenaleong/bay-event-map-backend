@@ -8,6 +8,7 @@ const { FuncheapScraper } = require("./scraper");
 const { EnhancedFuncheapScraper } = require("./enhancedFuncheapScraper");
 const { generateEmojisForEvents } = require("./emojiGenerator");
 const { scrapeAndSaveFuncheapEvents } = require("./funcheap");
+const { scrapeAndSaveDecenteredEvents } = require("./decentered");
 const {
   getEventsFromDatabase,
   eventsExistForDate,
@@ -563,6 +564,55 @@ app.post("/api/scrape-and-save-funcheap/:date", async (req, res) => {
   }
 });
 
+// Scrape and save Decentered Arts events to database
+app.post("/api/scrape-and-save-decentered/:date", async (req, res) => {
+  const { date } = req.params; // Expected format: YYYY-MM-DD
+
+  try {
+    console.log(`🚀 Scraping Decentered Arts events for ${date}...`);
+
+    // Use the Decentered Arts scraping function
+    const scrapeResult = await scrapeAndSaveDecenteredEvents(date, {
+      progressPrefix: "Decentered ",
+    });
+
+    if (!scrapeResult.success) {
+      return res.status(500).json({
+        success: false,
+        error: "Failed to scrape and save Decentered Arts events",
+        message: scrapeResult.error || scrapeResult.message,
+        scrapedEvents: scrapeResult.count,
+        saved: scrapeResult.saved,
+      });
+    }
+
+    res.json({
+      success: true,
+      events: scrapeResult.events,
+      cached: false,
+      fromDatabase: false,
+      date: date,
+      count: scrapeResult.count,
+      enhanced: scrapeResult.enhanced,
+      detailRequestsUsed: scrapeResult.detailRequestsUsed,
+      emojisGenerated: scrapeResult.emojisGenerated,
+      saved: scrapeResult.saved,
+      message: scrapeResult.message,
+      breakdown: scrapeResult.breakdown,
+    });
+  } catch (error) {
+    console.error(
+      `Error in scrape-and-save-decentered for ${date}:`,
+      error.message
+    );
+    res.status(500).json({
+      success: false,
+      error: "Failed to scrape and save Decentered Arts events",
+      message: error.message,
+    });
+  }
+});
+
 // Get events from database only
 app.get("/api/events-db/:date", async (req, res) => {
   const { date } = req.params; // Expected format: YYYY-MM-DD
@@ -971,6 +1021,7 @@ app.get("/", (req, res) => {
       enhancedEvents: "/api/enhanced/events",
       enhancedEventsByDate: "/api/enhanced/events/:date",
       scrapeAndSaveFuncheap: "POST /api/scrape-and-save-funcheap/:date",
+      scrapeAndSaveDecentered: "POST /api/scrape-and-save-decentered/:date",
       eventsFromDatabase: "/api/events-db/:date",
       liveEventsNearby:
         "/api/events-near-by?lat=37.7749&lon=-122.4194&limit=10&currentTime=2024-01-15T14:30:00-08:00",
