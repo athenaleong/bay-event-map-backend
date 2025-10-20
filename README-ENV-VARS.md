@@ -1,0 +1,68 @@
+# Environment Variables Setup
+
+This document explains how to set up the required environment variables for the Bay Event Map Backend.
+
+## Required Environment Variables
+
+### 1. CRON_SECRET
+**Purpose**: Secures the cron job endpoints from unauthorized access.
+
+**Value**: A secure random string (at least 16 characters)
+
+**Example**: `86c90dd3809e981e27f00167fb212dc9c8cec8a391faf6caef7f5604b2bee760`
+
+**How to set in Vercel**:
+1. Go to your Vercel project dashboard
+2. Navigate to **Settings → Environment Variables**
+3. Add new variable:
+   - **Name**: `CRON_SECRET`
+   - **Value**: `[your-secret-here]`
+   - **Environment**: Production (and Preview if needed)
+
+### 2. BASE_URL
+**Purpose**: Defines the base URL for internal API calls in cron jobs.
+
+**Value**: Your deployed application URL
+
+**Examples**:
+- Production: `https://your-app.vercel.app`
+- Preview: `https://your-app-git-branch.vercel.app`
+- Development: `http://localhost:3001`
+
+**How to set in Vercel**:
+1. Go to your Vercel project dashboard
+2. Navigate to **Settings → Environment Variables**
+3. Add new variable:
+   - **Name**: `BASE_URL`
+   - **Value**: `https://your-app.vercel.app`
+   - **Environment**: Production (and Preview if needed)
+
+## Other Environment Variables
+
+Make sure you also have these configured:
+- `SUPABASE_URL`
+- `SUPABASE_ANON_KEY`
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY` (if using)
+
+## Testing
+
+### Test Manual Cron Job
+```bash
+curl -X POST https://your-app.vercel.app/api/cron/daily-scrape \
+  -H "Authorization: YOUR_CRON_SECRET" \
+  -H "Content-Type: application/json"
+```
+
+### Test Without Authentication (should fail)
+```bash
+curl -X POST https://your-app.vercel.app/api/cron/daily-scrape
+# Expected: 401 Unauthorized
+```
+
+## Security Notes
+
+- Never commit `CRON_SECRET` to version control
+- Use different secrets for different environments
+- Rotate secrets periodically
+- Keep `BASE_URL` updated when deploying to different environments

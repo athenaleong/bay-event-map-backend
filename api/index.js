@@ -11,7 +11,6 @@ const {
   saveEventsToDatabase,
   getEventsFromDatabase,
   eventsExistForDate,
-  
   deleteEventsForDate,
 } = require("../database");
 const { recommendRoute } = require("../routeRecommender");
