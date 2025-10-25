@@ -47,18 +47,30 @@ Make sure you also have these configured:
 - `OPENAI_API_KEY`
 - `ANTHROPIC_API_KEY` (if using)
 
+## Cron Job Schedule
+
+- **Funcheap Scraper**: Runs daily at 12:00 AM PST (8:00 AM UTC)
+- **Decentered Arts Scraper**: Runs daily at 12:15 AM PST (8:15 AM UTC)
+
 ## Testing
 
-### Test Manual Cron Job
+### Test Manual Funcheap Cron Job
 ```bash
-curl -X POST https://your-app.vercel.app/api/cron/daily-scrape \
-  -H "Authorization: YOUR_CRON_SECRET" \
+curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap \
+  -H "Authorization: Bearer YOUR_CRON_SECRET" \
+  -H "Content-Type: application/json"
+```
+
+### Test Manual Decentered Arts Cron Job
+```bash
+curl -X POST https://your-app.vercel.app/api/cron/daily-decentered-art-scrap \
+  -H "Authorization: Bearer YOUR_CRON_SECRET" \
   -H "Content-Type: application/json"
 ```
 
 ### Test Without Authentication (should fail)
 ```bash
-curl -X POST https://your-app.vercel.app/api/cron/daily-scrape
+curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap
 # Expected: 401 Unauthorized
 ```
 

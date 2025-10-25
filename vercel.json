@@ -12,10 +12,19 @@
       "dest": "server.js"
     }
   ],
+  "functions": {
+    "server.js": {
+      "maxDuration": 800
+    }
+  },
   "crons": [
     {
-      "path": "/api/cron/daily-scrape",
+      "path": "/api/cron/daily-funcheap-scrap",
       "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/daily-decentered-art-scrap",
+      "schedule": "15 8 * * *"
     }
   ]
 } 
