@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "maxDuration": 800
+      }
     }
   ],
   "routes": [
@@ -12,11 +15,6 @@
       "dest": "server.js"
     }
   ],
-  "functions": {
-    "server.js": {
-      "maxDuration": 800
-    }
-  },
   "crons": [
     {
       "path": "/api/cron/daily-funcheap-scrap",
