@@ -55,6 +55,69 @@ const classifyEvent = async (event) => {
 };
 
 /**
+ * Classify multiple events in parallel batches
+ * @param {Array} events - Array of event objects to classify
+ * @param {number} batchSize - Number of events to process in parallel (default: 10)
+ * @param {string} progressPrefix - Prefix for progress logging
+ * @returns {Promise<Array>} - Array of events with classification added
+ */
+const classifyEventsInBatches = async (
+  events,
+  batchSize = 10,
+  progressPrefix = ""
+) => {
+  const eventsWithClassification = [];
+
+  for (let i = 0; i < events.length; i += batchSize) {
+    const batch = events.slice(i, i + batchSize);
+    const batchNumber = Math.floor(i / batchSize) + 1;
+    const totalBatches = Math.ceil(events.length / batchSize);
+
+    console.log(
+      `${progressPrefix}  Classifying batch ${batchNumber}/${totalBatches} (${batch.length} events)...`
+    );
+
+    // Process batch in parallel
+    const batchPromises = batch.map(async (event, index) => {
+      const globalIndex = i + index + 1;
+      console.log(
+        `${progressPrefix}    Classifying event ${globalIndex}/${events.length}: ${event.title}`
+      );
+
+      const eventType = await classifyEvent(event);
+      return {
+        ...event,
+        event_type: eventType,
+      };
+    });
+
+    try {
+      const batchResults = await Promise.all(batchPromises);
+      eventsWithClassification.push(...batchResults);
+
+      // Add a small delay between batches to avoid rate limiting
+      if (i + batchSize < events.length) {
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+    } catch (error) {
+      console.error(
+        `${progressPrefix}  Error processing batch ${batchNumber}:`,
+        error
+      );
+      // Add events with fallback classification
+      batch.forEach((event) => {
+        eventsWithClassification.push({
+          ...event,
+          event_type: "standalone", // fallback
+        });
+      });
+    }
+  }
+
+  return eventsWithClassification;
+};
+
+/**
  * Generate human-friendly event copy using OpenAI
  * @param {Object} event - Event object to enhance
  * @returns {Promise<Object>} - Enhanced event object with human-friendly copy
@@ -120,6 +183,95 @@ const generateHumanFriendlyEventCopy = async (event) => {
 };
 
 /**
+ * Enhance multiple events in parallel batches
+ * @param {Array} events - Array of event objects to enhance
+ * @param {number} batchSize - Number of events to process in parallel (default: 10)
+ * @param {string} progressPrefix - Prefix for progress logging
+ * @returns {Promise<Array>} - Array of enhanced events
+ */
+const enhanceEventsInBatches = async (
+  events,
+  batchSize = 10,
+  progressPrefix = ""
+) => {
+  const enhancedEvents = [];
+
+  for (let i = 0; i < events.length; i += batchSize) {
+    const batch = events.slice(i, i + batchSize);
+    const batchNumber = Math.floor(i / batchSize) + 1;
+    const totalBatches = Math.ceil(events.length / batchSize);
+
+    console.log(
+      `${progressPrefix}  Enhancing batch ${batchNumber}/${totalBatches} (${batch.length} events)...`
+    );
+
+    // Process batch in parallel
+    const batchPromises = batch.map(async (event, index) => {
+      const globalIndex = i + index + 1;
+      console.log(
+        `${progressPrefix}    Enhancing event ${globalIndex}/${events.length}: ${event.title}`
+      );
+
+      try {
+        const enhancedCopy = await generateHumanFriendlyEventCopy(event);
+
+        // Combine original event data with enhanced copy
+        return {
+          // Enhanced copy data
+          title: enhancedCopy.title,
+          description: enhancedCopy.description,
+          cost: enhancedCopy.cost,
+          rsvp_ticket_required: enhancedCopy.rsvp_ticket_required,
+          emoji: enhancedCopy.emoji,
+
+          // Original event data
+          venue: event.venue,
+          address: event.address,
+          start_time: event.startTime,
+          end_time: event.endTime,
+          url: event.url,
+          latitude: event.latitude, // Already geocoded
+          longitude: event.longitude, // Already geocoded
+          event_urls: event.eventButtonUrls,
+          event_type: event.event_type,
+          event_source: "funcheap",
+
+          // Additional metadata
+          categories: event.categories,
+          image: event.image,
+          social_links: event.socialLinks,
+          scraped_at: new Date().toISOString(),
+        };
+      } catch (error) {
+        console.error(`Error enhancing event "${event.title}":`, error);
+        // Return null for failed enhancements, we'll filter them out
+        return null;
+      }
+    });
+
+    try {
+      const batchResults = await Promise.all(batchPromises);
+      // Filter out null results (failed enhancements)
+      const validResults = batchResults.filter((result) => result !== null);
+      enhancedEvents.push(...validResults);
+
+      // Add a small delay between batches to avoid rate limiting
+      if (i + batchSize < events.length) {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+    } catch (error) {
+      console.error(
+        `${progressPrefix}  Error processing enhancement batch ${batchNumber}:`,
+        error
+      );
+      // Continue with other batches even if one fails
+    }
+  }
+
+  return enhancedEvents;
+};
+
+/**
  * Scrape and save Funcheap events with the new processing pipeline
  * @param {string} date - Date in YYYY-MM-DD format
  * @param {Object} options - Scraping options
@@ -134,6 +286,7 @@ const scrapeAndSaveFuncheapEvents = async (date, options = {}) => {
     costFilter = "",
     hasImages = false,
     progressPrefix = "",
+    batchSize = 10, // Number of events to process in parallel
   } = options;
 
   console.log(
@@ -146,6 +299,7 @@ const scrapeAndSaveFuncheapEvents = async (date, options = {}) => {
   // Build scraping options
   const scrapingOptions = {
     includeDetails: includeDetails,
+    batchSize: batchSize, // Pass batch size to enhanced scraper
   };
 
   // Add detail filter if specified
@@ -217,28 +371,15 @@ const scrapeAndSaveFuncheapEvents = async (date, options = {}) => {
     };
   }
 
-  // Step 2: Classify events immediately after scraping
-  console.log(`${progressPrefix}🤖 Classifying ${events.length} events...`);
-  const eventsWithClassification = [];
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
-    console.log(
-      `${progressPrefix}  Classifying event ${i + 1}/${events.length}: ${
-        event.title
-      }`
-    );
-
-    const eventType = await classifyEvent(event);
-    eventsWithClassification.push({
-      ...event,
-      event_type: eventType,
-    });
-
-    // Add a small delay to avoid rate limiting
-    if (i < events.length - 1) {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
-  }
+  // Step 2: Classify events immediately after scraping (in parallel batches)
+  console.log(
+    `${progressPrefix}🤖 Classifying ${events.length} events in batches of ${batchSize}...`
+  );
+  const eventsWithClassification = await classifyEventsInBatches(
+    events,
+    batchSize,
+    progressPrefix
+  );
 
   eventsWithVenues = eventsWithClassification.filter(
     (event) => event.venue != null
@@ -317,59 +458,13 @@ const scrapeAndSaveFuncheapEvents = async (date, options = {}) => {
   let enhancedEvents = [];
   if (eventsForEnhancement.length > 0) {
     console.log(
-      `${progressPrefix}✨ Generating human-friendly copies for ${eventsForEnhancement.length} events...`
+      `${progressPrefix}✨ Generating human-friendly copies for ${eventsForEnhancement.length} events in batches of ${batchSize}...`
     );
-
-    for (let i = 0; i < eventsForEnhancement.length; i++) {
-      const event = eventsForEnhancement[i];
-      console.log(
-        `${progressPrefix}  Enhancing event ${i + 1}/${
-          eventsForEnhancement.length
-        }: ${event.title}`
-      );
-
-      try {
-        const enhancedCopy = await generateHumanFriendlyEventCopy(event);
-
-        // Combine original event data with enhanced copy
-        const combinedEvent = {
-          // Enhanced copy data
-          title: enhancedCopy.title,
-          description: enhancedCopy.description,
-          cost: enhancedCopy.cost,
-          rsvp_ticket_required: enhancedCopy.rsvp_ticket_required,
-          emoji: enhancedCopy.emoji,
-
-          // Original event data
-          venue: event.venue,
-          address: event.address,
-          start_time: event.startTime,
-          end_time: event.endTime,
-          url: event.url,
-          latitude: event.latitude, // Already geocoded
-          longitude: event.longitude, // Already geocoded
-          event_urls: event.eventButtonUrls,
-          event_type: event.event_type,
-          event_source: "funcheap",
-
-          // Additional metadata
-          categories: event.categories,
-          image: event.image,
-          social_links: event.socialLinks,
-          scraped_at: new Date().toISOString(),
-        };
-
-        enhancedEvents.push(combinedEvent);
-
-        // Add a small delay to avoid rate limiting
-        if (i < eventsForEnhancement.length - 1) {
-          await new Promise((resolve) => setTimeout(resolve, 200));
-        }
-      } catch (error) {
-        console.error(`Error enhancing event "${event.title}":`, error);
-        // Continue with other events even if one fails
-      }
-    }
+    enhancedEvents = await enhanceEventsInBatches(
+      eventsForEnhancement,
+      batchSize,
+      progressPrefix
+    );
   }
 
   // Step 6: Save enhanced events to main event table
@@ -407,4 +502,6 @@ module.exports = {
   scrapeAndSaveFuncheapEvents,
   classifyEvent,
   generateHumanFriendlyEventCopy,
+  classifyEventsInBatches,
+  enhanceEventsInBatches,
 };

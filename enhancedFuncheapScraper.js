@@ -13,6 +13,7 @@ class EnhancedFuncheapScraper {
       maxDetailRequests = 500,
       detailFilter = null, // function to filter which events get detailed scraping
       onProgress = null, // callback for progress updates
+      batchSize = 10, // Number of events to process in parallel for detail retrieval
     } = options;
 
     try {
@@ -31,12 +32,12 @@ class EnhancedFuncheapScraper {
         return basicEvents;
       }
 
-      // Step 2: Enhance with detailed information
+      // Step 2: Enhance with detailed information (in parallel batches)
       console.log(
         `🔍 Enhancing ${Math.min(
           basicEvents.length,
           maxDetailRequests
-        )} events with detailed info...`
+        )} events with detailed info in batches of ${batchSize}...`
       );
 
       // Filter events for detail scraping
@@ -48,44 +49,12 @@ class EnhancedFuncheapScraper {
       // Limit the number of detail requests
       eventsToDetail = eventsToDetail.slice(0, maxDetailRequests);
 
-      const enhancedEvents = [];
-
-      for (let i = 0; i < eventsToDetail.length; i++) {
-        const event = eventsToDetail[i];
-
-        try {
-          if (event.url) {
-            console.log(`  📖 Getting details for: ${event.title}`);
-            const details = await this.detailScraper.scrapeEventDetails(
-              event.url
-            );
-
-            // Merge basic event data with detailed data
-            const enhancedEvent = this.mergeEventData(event, details);
-            enhancedEvents.push(enhancedEvent);
-
-            if (onProgress)
-              onProgress({
-                step: "details",
-                completed: i + 1,
-                total: eventsToDetail.length,
-                currentEvent: event.title,
-              });
-          } else {
-            // No URL available, just use basic data
-            enhancedEvents.push(event);
-          }
-        } catch (error) {
-          console.error(
-            `Failed to get details for ${event.title}: ${error.message}`
-          );
-          // Add the basic event even if detail scraping fails
-          enhancedEvents.push({
-            ...event,
-            detailScrapingError: error.message,
-          });
-        }
-      }
+      // Get details in parallel batches
+      const enhancedEvents = await this.getEventDetailsInBatches(
+        eventsToDetail,
+        batchSize,
+        onProgress
+      );
 
       // Add remaining events without details
       const remainingEvents = basicEvents.slice(eventsToDetail.length);
@@ -104,6 +73,91 @@ class EnhancedFuncheapScraper {
       ...detailedEvent,
       scrapedAt: new Date().toISOString(),
     };
+  }
+
+  /**
+   * Retrieve details for multiple events in parallel batches
+   * @param {Array} events - Array of events to get details for
+   * @param {number} batchSize - Number of events to process in parallel (default: 10)
+   * @param {Function} onProgress - Progress callback function
+   * @returns {Promise<Array>} - Array of events with details
+   */
+  async getEventDetailsInBatches(events, batchSize = 10, onProgress = null) {
+    const enhancedEvents = [];
+    let completedCount = 0;
+
+    for (let i = 0; i < events.length; i += batchSize) {
+      const batch = events.slice(i, i + batchSize);
+      const batchNumber = Math.floor(i / batchSize) + 1;
+      const totalBatches = Math.ceil(events.length / batchSize);
+
+      console.log(
+        `  📖 Getting details for batch ${batchNumber}/${totalBatches} (${batch.length} events)...`
+      );
+
+      // Process batch in parallel
+      const batchPromises = batch.map(async (event, index) => {
+        const globalIndex = i + index + 1;
+        console.log(
+          `    📖 Getting details for event ${globalIndex}/${events.length}: ${event.title}`
+        );
+
+        try {
+          if (event.url) {
+            const details = await this.detailScraper.scrapeEventDetails(
+              event.url
+            );
+            const enhancedEvent = this.mergeEventData(event, details);
+            return enhancedEvent;
+          } else {
+            // No URL available, just use basic data
+            return event;
+          }
+        } catch (error) {
+          console.error(
+            `Failed to get details for ${event.title}: ${error.message}`
+          );
+          // Add the basic event even if detail scraping fails
+          return {
+            ...event,
+            detailScrapingError: error.message,
+          };
+        }
+      });
+
+      try {
+        const batchResults = await Promise.all(batchPromises);
+        enhancedEvents.push(...batchResults);
+        completedCount += batch.length;
+
+        // Update progress
+        if (onProgress) {
+          onProgress({
+            step: "details",
+            completed: completedCount,
+            total: events.length,
+            currentEvent: `Batch ${batchNumber}/${totalBatches}`,
+          });
+        }
+
+        // Add a small delay between batches to avoid overwhelming the server
+        if (i + batchSize < events.length) {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+      } catch (error) {
+        console.error(`Error processing detail batch ${batchNumber}:`, error);
+        // Add events with fallback data
+        batch.forEach((event) => {
+          enhancedEvents.push({
+            ...event,
+            detailScrapingError: "Batch processing failed",
+          });
+        });
+        completedCount += batch.length;
+      }
+    }
+
+    return enhancedEvents;
   }
 
   // Utility method to create smart detail filters

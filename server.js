@@ -487,6 +487,7 @@ app.post("/api/scrape-and-save-funcheap/:date", async (req, res) => {
     costFilter = "",
     hasImages = "false",
     forceRescrape = "false", // Force re-scraping even if data exists
+    batchSize = "10", // Number of events to process in parallel
   } = req.query;
 
   try {
@@ -529,6 +530,7 @@ app.post("/api/scrape-and-save-funcheap/:date", async (req, res) => {
       titleKeywords: titleKeywords,
       costFilter: costFilter,
       hasImages: hasImages === "true",
+      batchSize: parseInt(batchSize) || 10,
     });
 
     if (!scrapeResult.success) {
@@ -553,6 +555,7 @@ app.post("/api/scrape-and-save-funcheap/:date", async (req, res) => {
       emojisGenerated: scrapeResult.emojisGenerated,
       saved: scrapeResult.saved,
       message: scrapeResult.message,
+      batchSize: parseInt(batchSize) || 10,
     });
   } catch (error) {
     console.error(`Error in scrape-and-save for ${date}:`, error.message);
