@@ -1035,8 +1035,18 @@ app.get("/api/cron/daily-scrape", async (req, res) => {
     console.log(`📅 Scraping events for California date: ${californiaDate}`);
 
     // Get base URL from environment variable or fallback to request
-    const baseUrl =
+    let baseUrl =
       process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+    // Ensure BASE_URL has protocol if it's missing
+    if (
+      baseUrl &&
+      !baseUrl.startsWith("http://") &&
+      !baseUrl.startsWith("https://")
+    ) {
+      baseUrl = `https://${baseUrl}`;
+    }
+
     console.log(`🌐 Using base URL: ${baseUrl}`);
 
     const results = {
@@ -1202,8 +1212,18 @@ app.post("/api/cron/daily-scrape", async (req, res) => {
     console.log(`📅 Scraping events for California date: ${californiaDate}`);
 
     // Get base URL from environment variable or fallback to request
-    const baseUrl =
+    let baseUrl =
       process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+    // Ensure BASE_URL has protocol if it's missing
+    if (
+      baseUrl &&
+      !baseUrl.startsWith("http://") &&
+      !baseUrl.startsWith("https://")
+    ) {
+      baseUrl = `https://${baseUrl}`;
+    }
+
     console.log(`🌐 Using base URL: ${baseUrl}`);
 
     const results = {
@@ -1216,7 +1236,7 @@ app.post("/api/cron/daily-scrape", async (req, res) => {
     try {
       console.log(`🔍 Calling funcheap scraper for ${californiaDate}...`);
       const funcheapResponse = await fetch(
-        `${baseUrl}/api/scrape-and-save-funcheap`,
+        `${baseUrl}/api/scrape-and-save-funcheap/${californiaDate}`,
         {
           method: "POST",
           headers: {

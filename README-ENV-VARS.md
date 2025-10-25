@@ -22,12 +22,14 @@ This document explains how to set up the required environment variables for the 
 ### 2. BASE_URL
 **Purpose**: Defines the base URL for internal API calls in cron jobs.
 
-**Value**: Your deployed application URL
+**Value**: Your deployed application URL (with or without protocol)
 
 **Examples**:
-- Production: `https://your-app.vercel.app`
-- Preview: `https://your-app-git-branch.vercel.app`
-- Development: `http://localhost:3001`
+- Production: `https://your-app.vercel.app` or `your-app.vercel.app`
+- Preview: `https://your-app-git-branch.vercel.app` or `your-app-git-branch.vercel.app`
+- Development: `http://localhost:3001` or `localhost:3001`
+
+**Note**: If you don't include `https://` or `http://`, the system will automatically add `https://` for you.
 
 **How to set in Vercel**:
 1. Go to your Vercel project dashboard
