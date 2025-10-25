@@ -47,10 +47,12 @@ Make sure you also have these configured:
 - `OPENAI_API_KEY`
 - `ANTHROPIC_API_KEY` (if using)
 
-## Cron Job Schedule
+## Cron Job Schedule (GitHub Actions)
 
 - **Funcheap Scraper**: Runs daily at 12:00 AM PST (8:00 AM UTC)
 - **Decentered Arts Scraper**: Runs daily at 12:15 AM PST (8:15 AM UTC)
+
+**Note**: Cron jobs are now handled by GitHub Actions instead of Vercel. See `README-GITHUB-ACTIONS.md` for setup instructions.
 
 ## Testing
 

@@ -11,15 +11,5 @@
       "src": "/(.*)",
       "dest": "server.js"
     }
-  ],
-  "crons": [
-    {
-      "path": "/api/cron/daily-funcheap-scrap",
-      "schedule": "0 8 * * *"
-    },
-    {
-      "path": "/api/cron/daily-decentered-art-scrap",
-      "schedule": "15 8 * * *"
-    }
   ]
 } 
