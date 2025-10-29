@@ -1145,7 +1145,7 @@ app.post("/api/cron/daily-funcheap-scrap", async (req, res) => {
   try {
     // Verify cron job authentication
     const authHeader = req.headers.authorization;
-    const cronSecret = process.env.CRON_SECRET;
+    const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
 
     if (!cronSecret) {
       console.error("❌ CRON_SECRET environment variable not set");
