@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "🕛 Starting Funcheap scraper at $(date)"
           
-          response=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.BASE_URL }}/api/cron/daily-funcheap-scrap" \
+          response=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.BASE_URL }}/api/cron/daily-funcheap-scrap-one-week-ahead" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json")
           
@@ -56,7 +56,7 @@ jobs:
         run: |
           echo "🕛 Starting Decentered Arts scraper at $(date)"
           
-          response=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.BASE_URL }}/api/cron/daily-decentered-art-scrap" \
+          response=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.BASE_URL }}/api/cron/daily-decentered-art-scrap-one-week-ahead" \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
             -H "Content-Type: application/json")
           

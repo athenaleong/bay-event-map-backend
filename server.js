@@ -997,149 +997,11 @@ app.post("/api/recommendRoute", async (req, res) => {
   }
 });
 
-// Daily cron job endpoint for scraping Funcheap events
-// Calls funcheap scraper for current California date
-app.get("/api/cron/daily-funcheap-scrap", async (req, res) => {
-  const startTime = Date.now();
-
-  try {
-    // Verify cron job authentication
-    const authHeader = req.headers.authorization;
-    const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
-
-    if (!cronSecret) {
-      console.error("❌ CRON_SECRET environment variable not set");
-      return res.status(500).json({
-        success: false,
-        error: "Cron authentication not configured",
-        message: "CRON_SECRET environment variable is not set",
-      });
-    }
-
-    if (!authHeader || authHeader !== cronSecret) {
-      console.error("❌ Invalid cron job authentication");
-      return res.status(401).json({
-        success: false,
-        error: "Unauthorized",
-        message: "Invalid or missing cron authentication",
-      });
-    }
-
-    console.log("🕛 Daily cron job started at", new Date().toISOString());
-
-    // Get current date in California timezone (PST/PDT)
-    const californiaDate = new Date().toLocaleDateString("en-CA", {
-      timeZone: "America/Los_Angeles",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-
-    console.log(
-      `📅 Scraping Funcheap events for California date: ${californiaDate}`
-    );
-
-    // Get base URL from environment variable or fallback to request
-    let baseUrl =
-      process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
-
-    // Ensure BASE_URL has protocol if it's missing
-    if (
-      baseUrl &&
-      !baseUrl.startsWith("http://") &&
-      !baseUrl.startsWith("https://")
-    ) {
-      baseUrl = `https://${baseUrl}`;
-    }
-
-    console.log(`🌐 Using base URL: ${baseUrl}`);
-
-    // Call funcheap scraper
-    let result = null;
-    let error = null;
-
-    try {
-      console.log(`🔍 Calling funcheap scraper for ${californiaDate}...`);
-      const funcheapResponse = await fetch(
-        `${baseUrl}/api/scrape-and-save-funcheap/${californiaDate}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (funcheapResponse.ok) {
-        result = await funcheapResponse.json();
-        console.log(
-          `✅ Funcheap scraper completed: ${result.count || 0} events, ${
-            result.saved || 0
-          } saved`
-        );
-      } else {
-        const errorText = await funcheapResponse.text();
-        error = `Funcheap scraper failed: ${funcheapResponse.status} - ${errorText}`;
-        console.error(
-          `❌ Funcheap scraper failed: ${funcheapResponse.status} - ${errorText}`
-        );
-      }
-    } catch (err) {
-      error = `Funcheap scraper error: ${err.message}`;
-      console.error(`❌ Funcheap scraper error:`, err);
-    }
-
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
-
-    if (error) {
-      console.log(
-        `❌ Daily Funcheap cron job failed in ${executionTime}s: ${error}`
-      );
-      return res.status(500).json({
-        success: false,
-        error: "Daily Funcheap scraping failed",
-        message: error,
-        timestamp: new Date().toISOString(),
-        executionTimeSeconds: executionTime,
-        californiaDate: californiaDate,
-      });
-    }
-
-    console.log(
-      `✅ Daily Funcheap cron job completed in ${executionTime}s. Events: ${
-        result.count || 0
-      }, Saved: ${result.saved || 0}`
-    );
-
-    res.json({
-      success: true,
-      message: "Daily Funcheap scraping completed successfully",
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-      californiaDate: californiaDate,
-      result: result,
-      summary: {
-        totalEvents: result.count || 0,
-        totalSaved: result.saved || 0,
-        source: "funcheap",
-      },
-    });
-  } catch (error) {
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
-    console.error(`❌ Daily cron job failed after ${executionTime}s:`, error);
-    res.status(500).json({
-      success: false,
-      error: "Daily scraping failed",
-      message: error.message,
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-    });
-  }
-});
-
-// Manual Funcheap cron job trigger endpoint (for testing)
+// Cron job endpoint for scraping Funcheap events
+// Calls funcheap scraper for California date 6 days in advance (week ahead)
+// Used by GitHub Actions and manual triggers
 // Requires CRON_SECRET in Authorization header
-app.post("/api/cron/daily-funcheap-scrap", async (req, res) => {
+app.post("/api/cron/daily-funcheap-scrap-one-week-ahead", async (req, res) => {
   const startTime = Date.now();
 
   try {
@@ -1165,21 +1027,35 @@ app.post("/api/cron/daily-funcheap-scrap", async (req, res) => {
       });
     }
 
-    console.log(
-      "🕛 Manual Funcheap cron job triggered at",
-      new Date().toISOString()
-    );
+    console.log("🕛 Funcheap cron job triggered at", new Date().toISOString());
 
-    // Get current date in California timezone (PST/PDT)
-    const californiaDate = new Date().toLocaleDateString("en-CA", {
+    // Get current date in California timezone (PST/PDT) and add 6 days (week in advance)
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat("en-CA", {
       timeZone: "America/Los_Angeles",
       year: "numeric",
       month: "2-digit",
       day: "2-digit",
     });
 
+    // Get current California date components
+    const parts = formatter.formatToParts(now);
+    const year = parseInt(parts.find((p) => p.type === "year").value);
+    const month = parseInt(parts.find((p) => p.type === "month").value) - 1; // 0-indexed
+    const day = parseInt(parts.find((p) => p.type === "day").value);
+
+    // Create date in California timezone and add 6 days
+    const californiaDateObj = new Date(year, month, day);
+    californiaDateObj.setDate(californiaDateObj.getDate() + 6);
+
+    const californiaDate = californiaDateObj.toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
     console.log(
-      `📅 Scraping Funcheap events for California date: ${californiaDate}`
+      `📅 Scraping Funcheap events for California date (6 days in advance): ${californiaDate}`
     );
 
     // Get base URL from environment variable or fallback to request
@@ -1235,33 +1111,29 @@ app.post("/api/cron/daily-funcheap-scrap", async (req, res) => {
     const executionTime = Math.round((Date.now() - startTime) / 1000);
 
     if (error) {
-      console.log(
-        `❌ Manual Funcheap cron job failed in ${executionTime}s: ${error}`
-      );
+      console.log(`❌ Funcheap cron job failed in ${executionTime}s: ${error}`);
       return res.status(500).json({
         success: false,
-        error: "Manual Funcheap scraping failed",
+        error: "Funcheap scraping failed",
         message: error,
         timestamp: new Date().toISOString(),
         executionTimeSeconds: executionTime,
         californiaDate: californiaDate,
-        triggeredBy: "manual",
       });
     }
 
     console.log(
-      `✅ Manual Funcheap cron job completed in ${executionTime}s. Events: ${
+      `✅ Funcheap cron job completed in ${executionTime}s. Events: ${
         result.count || 0
       }, Saved: ${result.saved || 0}`
     );
 
     res.json({
       success: true,
-      message: "Manual Funcheap scraping completed successfully",
+      message: "Funcheap scraping completed successfully",
       timestamp: new Date().toISOString(),
       executionTimeSeconds: executionTime,
       californiaDate: californiaDate,
-      triggeredBy: "manual",
       result: result,
       summary: {
         totalEvents: result.count || 0,
@@ -1283,298 +1155,338 @@ app.post("/api/cron/daily-funcheap-scrap", async (req, res) => {
 });
 
 // Daily cron job endpoint for scraping Decentered Arts events
-// Calls decentered scraper for current California date
-app.get("/api/cron/daily-decentered-art-scrap", async (req, res) => {
-  const startTime = Date.now();
-
-  try {
-    // Verify cron job authentication
-    const authHeader = req.headers.authorization;
-    const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
-
-    if (!cronSecret) {
-      console.error("❌ CRON_SECRET environment variable not set");
-      return res.status(500).json({
-        success: false,
-        error: "Cron authentication not configured",
-        message: "CRON_SECRET environment variable is not set",
-      });
-    }
-
-    if (!authHeader || authHeader !== cronSecret) {
-      console.error("❌ Invalid cron job authentication");
-      return res.status(401).json({
-        success: false,
-        error: "Unauthorized",
-        message: "Invalid or missing cron authentication",
-      });
-    }
-
-    console.log(
-      "🕛 Daily Decentered Arts cron job started at",
-      new Date().toISOString()
-    );
-
-    // Get current date in California timezone (PST/PDT)
-    const californiaDate = new Date().toLocaleDateString("en-CA", {
-      timeZone: "America/Los_Angeles",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-
-    console.log(
-      `📅 Scraping Decentered Arts events for California date: ${californiaDate}`
-    );
-
-    // Get base URL from environment variable or fallback to request
-    let baseUrl =
-      process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
-
-    // Ensure BASE_URL has protocol if it's missing
-    if (
-      baseUrl &&
-      !baseUrl.startsWith("http://") &&
-      !baseUrl.startsWith("https://")
-    ) {
-      baseUrl = `https://${baseUrl}`;
-    }
-
-    console.log(`🌐 Using base URL: ${baseUrl}`);
-
-    // Call decentered scraper
-    let result = null;
-    let error = null;
+// Calls decentered scraper for California date 6 days in advance (week ahead)
+app.get(
+  "/api/cron/daily-decentered-art-scrap-one-week-ahead",
+  async (req, res) => {
+    const startTime = Date.now();
 
     try {
-      console.log(`🔍 Calling decentered scraper for ${californiaDate}...`);
-      const decenteredResponse = await fetch(
-        `${baseUrl}/api/scrape-and-save-decentered/${californiaDate}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Verify cron job authentication
+      const authHeader = req.headers.authorization;
+      const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
 
-      if (decenteredResponse.ok) {
-        result = await decenteredResponse.json();
-        console.log(
-          `✅ Decentered scraper completed: ${result.count || 0} events, ${
-            result.saved || 0
-          } saved`
-        );
-      } else {
-        const errorText = await decenteredResponse.text();
-        error = `Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`;
-        console.error(
-          `❌ Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`
-        );
+      if (!cronSecret) {
+        console.error("❌ CRON_SECRET environment variable not set");
+        return res.status(500).json({
+          success: false,
+          error: "Cron authentication not configured",
+          message: "CRON_SECRET environment variable is not set",
+        });
       }
-    } catch (err) {
-      error = `Decentered scraper error: ${err.message}`;
-      console.error(`❌ Decentered scraper error:`, err);
-    }
 
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
+      if (!authHeader || authHeader !== cronSecret) {
+        console.error("❌ Invalid cron job authentication");
+        return res.status(401).json({
+          success: false,
+          error: "Unauthorized",
+          message: "Invalid or missing cron authentication",
+        });
+      }
 
-    if (error) {
       console.log(
-        `❌ Daily Decentered Arts cron job failed in ${executionTime}s: ${error}`
+        "🕛 Daily Decentered Arts cron job started at",
+        new Date().toISOString()
       );
-      return res.status(500).json({
+
+      // Get current date in California timezone (PST/PDT) and add 6 days (week in advance)
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Los_Angeles",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+
+      // Get current California date components
+      const parts = formatter.formatToParts(now);
+      const year = parseInt(parts.find((p) => p.type === "year").value);
+      const month = parseInt(parts.find((p) => p.type === "month").value) - 1; // 0-indexed
+      const day = parseInt(parts.find((p) => p.type === "day").value);
+
+      // Create date in California timezone and add 6 days
+      const californiaDateObj = new Date(year, month, day);
+      californiaDateObj.setDate(californiaDateObj.getDate() + 6);
+
+      const californiaDate = californiaDateObj.toLocaleDateString("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+
+      console.log(
+        `📅 Scraping Decentered Arts events for California date (6 days in advance): ${californiaDate}`
+      );
+
+      // Get base URL from environment variable or fallback to request
+      let baseUrl =
+        process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+      // Ensure BASE_URL has protocol if it's missing
+      if (
+        baseUrl &&
+        !baseUrl.startsWith("http://") &&
+        !baseUrl.startsWith("https://")
+      ) {
+        baseUrl = `https://${baseUrl}`;
+      }
+
+      console.log(`🌐 Using base URL: ${baseUrl}`);
+
+      // Call decentered scraper
+      let result = null;
+      let error = null;
+
+      try {
+        console.log(`🔍 Calling decentered scraper for ${californiaDate}...`);
+        const decenteredResponse = await fetch(
+          `${baseUrl}/api/scrape-and-save-decentered/${californiaDate}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (decenteredResponse.ok) {
+          result = await decenteredResponse.json();
+          console.log(
+            `✅ Decentered scraper completed: ${result.count || 0} events, ${
+              result.saved || 0
+            } saved`
+          );
+        } else {
+          const errorText = await decenteredResponse.text();
+          error = `Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`;
+          console.error(
+            `❌ Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`
+          );
+        }
+      } catch (err) {
+        error = `Decentered scraper error: ${err.message}`;
+        console.error(`❌ Decentered scraper error:`, err);
+      }
+
+      const executionTime = Math.round((Date.now() - startTime) / 1000);
+
+      if (error) {
+        console.log(
+          `❌ Daily Decentered Arts cron job failed in ${executionTime}s: ${error}`
+        );
+        return res.status(500).json({
+          success: false,
+          error: "Daily Decentered Arts scraping failed",
+          message: error,
+          timestamp: new Date().toISOString(),
+          executionTimeSeconds: executionTime,
+          californiaDate: californiaDate,
+        });
+      }
+
+      console.log(
+        `✅ Daily Decentered Arts cron job completed in ${executionTime}s. Events: ${
+          result.count || 0
+        }, Saved: ${result.saved || 0}`
+      );
+
+      res.json({
+        success: true,
+        message: "Daily Decentered Arts scraping completed successfully",
+        timestamp: new Date().toISOString(),
+        executionTimeSeconds: executionTime,
+        californiaDate: californiaDate,
+        result: result,
+        summary: {
+          totalEvents: result.count || 0,
+          totalSaved: result.saved || 0,
+          source: "decentered",
+        },
+      });
+    } catch (error) {
+      const executionTime = Math.round((Date.now() - startTime) / 1000);
+      console.error(
+        `❌ Daily Decentered Arts cron job failed after ${executionTime}s:`,
+        error
+      );
+      res.status(500).json({
         success: false,
         error: "Daily Decentered Arts scraping failed",
-        message: error,
+        message: error.message,
         timestamp: new Date().toISOString(),
         executionTimeSeconds: executionTime,
-        californiaDate: californiaDate,
       });
     }
-
-    console.log(
-      `✅ Daily Decentered Arts cron job completed in ${executionTime}s. Events: ${
-        result.count || 0
-      }, Saved: ${result.saved || 0}`
-    );
-
-    res.json({
-      success: true,
-      message: "Daily Decentered Arts scraping completed successfully",
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-      californiaDate: californiaDate,
-      result: result,
-      summary: {
-        totalEvents: result.count || 0,
-        totalSaved: result.saved || 0,
-        source: "decentered",
-      },
-    });
-  } catch (error) {
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
-    console.error(
-      `❌ Daily Decentered Arts cron job failed after ${executionTime}s:`,
-      error
-    );
-    res.status(500).json({
-      success: false,
-      error: "Daily Decentered Arts scraping failed",
-      message: error.message,
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-    });
   }
-});
+);
 
-// Manual Decentered Arts cron job trigger endpoint (for testing)
+// Cron job endpoint for scraping Decentered Arts events
+// Calls decentered scraper for California date 6 days in advance (week ahead)
+// Used by GitHub Actions and manual triggers
 // Requires CRON_SECRET in Authorization header
-app.post("/api/cron/daily-decentered-art-scrap", async (req, res) => {
-  const startTime = Date.now();
-
-  try {
-    // Verify cron job authentication
-    const authHeader = req.headers.authorization;
-    const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
-
-    if (!cronSecret) {
-      console.error("❌ CRON_SECRET environment variable not set");
-      return res.status(500).json({
-        success: false,
-        error: "Cron authentication not configured",
-        message: "CRON_SECRET environment variable is not set",
-      });
-    }
-
-    if (!authHeader || authHeader !== cronSecret) {
-      console.error("❌ Invalid cron job authentication");
-      return res.status(401).json({
-        success: false,
-        error: "Unauthorized",
-        message: "Invalid or missing cron authentication",
-      });
-    }
-
-    console.log(
-      "🕛 Manual Decentered Arts cron job triggered at",
-      new Date().toISOString()
-    );
-
-    // Get current date in California timezone (PST/PDT)
-    const californiaDate = new Date().toLocaleDateString("en-CA", {
-      timeZone: "America/Los_Angeles",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-
-    console.log(
-      `📅 Scraping Decentered Arts events for California date: ${californiaDate}`
-    );
-
-    // Get base URL from environment variable or fallback to request
-    let baseUrl =
-      process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
-
-    // Ensure BASE_URL has protocol if it's missing
-    if (
-      baseUrl &&
-      !baseUrl.startsWith("http://") &&
-      !baseUrl.startsWith("https://")
-    ) {
-      baseUrl = `https://${baseUrl}`;
-    }
-
-    console.log(`🌐 Using base URL: ${baseUrl}`);
-
-    // Call decentered scraper
-    let result = null;
-    let error = null;
+app.post(
+  "/api/cron/daily-decentered-art-scrap-one-week-ahead",
+  async (req, res) => {
+    const startTime = Date.now();
 
     try {
-      console.log(`🔍 Calling decentered scraper for ${californiaDate}...`);
-      const decenteredResponse = await fetch(
-        `${baseUrl}/api/scrape-and-save-decentered/${californiaDate}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // Verify cron job authentication
+      const authHeader = req.headers.authorization;
+      const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
 
-      if (decenteredResponse.ok) {
-        result = await decenteredResponse.json();
-        console.log(
-          `✅ Decentered scraper completed: ${result.count || 0} events, ${
-            result.saved || 0
-          } saved`
-        );
-      } else {
-        const errorText = await decenteredResponse.text();
-        error = `Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`;
-        console.error(
-          `❌ Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`
-        );
+      if (!cronSecret) {
+        console.error("❌ CRON_SECRET environment variable not set");
+        return res.status(500).json({
+          success: false,
+          error: "Cron authentication not configured",
+          message: "CRON_SECRET environment variable is not set",
+        });
       }
-    } catch (err) {
-      error = `Decentered scraper error: ${err.message}`;
-      console.error(`❌ Decentered scraper error:`, err);
-    }
 
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
+      if (!authHeader || authHeader !== cronSecret) {
+        console.error("❌ Invalid cron job authentication");
+        return res.status(401).json({
+          success: false,
+          error: "Unauthorized",
+          message: "Invalid or missing cron authentication",
+        });
+      }
 
-    if (error) {
       console.log(
-        `❌ Manual Decentered Arts cron job failed in ${executionTime}s: ${error}`
+        "🕛 Decentered Arts cron job triggered at",
+        new Date().toISOString()
       );
-      return res.status(500).json({
-        success: false,
-        error: "Manual Decentered Arts scraping failed",
-        message: error,
+
+      // Get current date in California timezone (PST/PDT) and add 6 days (week in advance)
+      const now = new Date();
+      const formatter = new Intl.DateTimeFormat("en-CA", {
+        timeZone: "America/Los_Angeles",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+
+      // Get current California date components
+      const parts = formatter.formatToParts(now);
+      const year = parseInt(parts.find((p) => p.type === "year").value);
+      const month = parseInt(parts.find((p) => p.type === "month").value) - 1; // 0-indexed
+      const day = parseInt(parts.find((p) => p.type === "day").value);
+
+      // Create date in California timezone and add 6 days
+      const californiaDateObj = new Date(year, month, day);
+      californiaDateObj.setDate(californiaDateObj.getDate() + 6);
+
+      const californiaDate = californiaDateObj.toLocaleDateString("en-CA", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+
+      console.log(
+        `📅 Scraping Decentered Arts events for California date (6 days in advance): ${californiaDate}`
+      );
+
+      // Get base URL from environment variable or fallback to request
+      let baseUrl =
+        process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+
+      // Ensure BASE_URL has protocol if it's missing
+      if (
+        baseUrl &&
+        !baseUrl.startsWith("http://") &&
+        !baseUrl.startsWith("https://")
+      ) {
+        baseUrl = `https://${baseUrl}`;
+      }
+
+      console.log(`🌐 Using base URL: ${baseUrl}`);
+
+      // Call decentered scraper
+      let result = null;
+      let error = null;
+
+      try {
+        console.log(`🔍 Calling decentered scraper for ${californiaDate}...`);
+        const decenteredResponse = await fetch(
+          `${baseUrl}/api/scrape-and-save-decentered/${californiaDate}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (decenteredResponse.ok) {
+          result = await decenteredResponse.json();
+          console.log(
+            `✅ Decentered scraper completed: ${result.count || 0} events, ${
+              result.saved || 0
+            } saved`
+          );
+        } else {
+          const errorText = await decenteredResponse.text();
+          error = `Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`;
+          console.error(
+            `❌ Decentered scraper failed: ${decenteredResponse.status} - ${errorText}`
+          );
+        }
+      } catch (err) {
+        error = `Decentered scraper error: ${err.message}`;
+        console.error(`❌ Decentered scraper error:`, err);
+      }
+
+      const executionTime = Math.round((Date.now() - startTime) / 1000);
+
+      if (error) {
+        console.log(
+          `❌ Decentered Arts cron job failed in ${executionTime}s: ${error}`
+        );
+        return res.status(500).json({
+          success: false,
+          error: "Decentered Arts scraping failed",
+          message: error,
+          timestamp: new Date().toISOString(),
+          executionTimeSeconds: executionTime,
+          californiaDate: californiaDate,
+        });
+      }
+
+      console.log(
+        `✅ Decentered Arts cron job completed in ${executionTime}s. Events: ${
+          result.count || 0
+        }, Saved: ${result.saved || 0}`
+      );
+
+      res.json({
+        success: true,
+        message: "Decentered Arts scraping completed successfully",
         timestamp: new Date().toISOString(),
         executionTimeSeconds: executionTime,
         californiaDate: californiaDate,
-        triggeredBy: "manual",
+        result: result,
+        summary: {
+          totalEvents: result.count || 0,
+          totalSaved: result.saved || 0,
+          source: "decentered",
+        },
+      });
+    } catch (error) {
+      const executionTime = Math.round((Date.now() - startTime) / 1000);
+      console.error(
+        `❌ Decentered Arts cron job failed after ${executionTime}s:`,
+        error
+      );
+      res.status(500).json({
+        success: false,
+        error: "Decentered Arts scraping failed",
+        message: error.message,
+        timestamp: new Date().toISOString(),
+        executionTimeSeconds: executionTime,
       });
     }
-
-    console.log(
-      `✅ Manual Decentered Arts cron job completed in ${executionTime}s. Events: ${
-        result.count || 0
-      }, Saved: ${result.saved || 0}`
-    );
-
-    res.json({
-      success: true,
-      message: "Manual Decentered Arts scraping completed successfully",
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-      californiaDate: californiaDate,
-      triggeredBy: "manual",
-      result: result,
-      summary: {
-        totalEvents: result.count || 0,
-        totalSaved: result.saved || 0,
-        source: "decentered",
-      },
-    });
-  } catch (error) {
-    const executionTime = Math.round((Date.now() - startTime) / 1000);
-    console.error(
-      `❌ Manual Decentered Arts cron job failed after ${executionTime}s:`,
-      error
-    );
-    res.status(500).json({
-      success: false,
-      error: "Manual Decentered Arts scraping failed",
-      message: error.message,
-      timestamp: new Date().toISOString(),
-      executionTimeSeconds: executionTime,
-    });
   }
-});
+);
 
 // Health check
 app.get("/health", (req, res) => {
@@ -1605,14 +1517,12 @@ app.get("/", (req, res) => {
       scrapeAndSaveFuncheap: "POST /api/scrape-and-save-funcheap/:date",
       scrapeAndSaveDecentered: "POST /api/scrape-and-save-decentered/:date",
       eventsFromDatabase: "/api/events-db/:date",
-      funcheapCron:
-        "GET /api/cron/daily-funcheap-scrap (scheduled, requires CRON_SECRET, uses BASE_URL)",
       funcheapManual:
-        "POST /api/cron/daily-funcheap-scrap (manual trigger, requires CRON_SECRET, uses BASE_URL)",
+        "POST /api/cron/daily-funcheap-scrap-one-week-ahead (requires CRON_SECRET, uses BASE_URL)",
       decenteredCron:
-        "GET /api/cron/daily-decentered-art-scrap (scheduled, requires CRON_SECRET, uses BASE_URL)",
+        "GET /api/cron/daily-decentered-art-scrap-one-week-ahead (requires CRON_SECRET, uses BASE_URL)",
       decenteredManual:
-        "POST /api/cron/daily-decentered-art-scrap (manual trigger, requires CRON_SECRET, uses BASE_URL)",
+        "POST /api/cron/daily-decentered-art-scrap-one-week-ahead (requires CRON_SECRET, uses BASE_URL)",
       liveEventsNearby:
         "/api/events-near-by?lat=37.7749&lon=-122.4194&limit=10&currentTime=2024-01-15T14:30:00-08:00",
       allPlaces: "/api/places-sf?limit=10&orderBy=name",

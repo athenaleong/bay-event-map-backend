@@ -58,21 +58,21 @@ Make sure you also have these configured:
 
 ### Test Manual Funcheap Cron Job
 ```bash
-curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap \
+curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap-one-week-ahead \
   -H "Authorization: Bearer YOUR_CRON_SECRET" \
   -H "Content-Type: application/json"
 ```
 
 ### Test Manual Decentered Arts Cron Job
 ```bash
-curl -X POST https://your-app.vercel.app/api/cron/daily-decentered-art-scrap \
+curl -X POST https://your-app.vercel.app/api/cron/daily-decentered-art-scrap-one-week-ahead \
   -H "Authorization: Bearer YOUR_CRON_SECRET" \
   -H "Content-Type: application/json"
 ```
 
 ### Test Without Authentication (should fail)
 ```bash
-curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap
+curl -X POST https://your-app.vercel.app/api/cron/daily-funcheap-scrap-one-week-ahead
 # Expected: 401 Unauthorized
 ```
 
