@@ -1322,6 +1322,21 @@ async function exportEventsToGCS() {
       };
     }
 
+    // Filter events to only include public-safe fields
+    const filteredEvents = result.events.map((event) => ({
+      title: event.title,
+      description: event.description,
+      cost: event.cost,
+      emoji: event.emoji,
+      venue: event.venue,
+      address: event.address,
+      start_time: event.start_time,
+      end_time: event.end_time,
+      latitude: event.latitude,
+      longitude: event.longitude,
+      event_urls: event.event_urls,
+    }));
+
     // Create export data with metadata
     const exportData = {
       export_info: {
@@ -1330,11 +1345,11 @@ async function exportEventsToGCS() {
           start: startDate,
           end: endDate,
         },
-        total_events: result.events.length,
+        total_events: filteredEvents.length,
         export_source: "supabase_events_table",
         description: "Events from today to 7 days ahead (California time)",
       },
-      events: result.events,
+      events: filteredEvents,
     };
 
     // Convert to JSON
@@ -1384,12 +1399,12 @@ async function exportEventsToGCS() {
     const gcsUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
 
     console.log(
-      `✅ Successfully exported ${result.events.length} events to GCS: ${gcsUrl}`
+      `✅ Successfully exported ${filteredEvents.length} events to GCS: ${gcsUrl}`
     );
 
     return {
       success: true,
-      exported: result.events.length,
+      exported: filteredEvents.length,
       gcsUrl: gcsUrl,
       gcsBucket: bucketName,
       gcsFileName: fileName,
@@ -1397,7 +1412,7 @@ async function exportEventsToGCS() {
         start: startDate,
         end: endDate,
       },
-      events: result.events,
+      events: filteredEvents,
     };
   } catch (error) {
     console.error("Error exporting events to Google Cloud Storage:", error);
