@@ -16,6 +16,7 @@ const {
   getNearbyPlaces,
   getAllPlaces,
   getLiveEventsNearby,
+  exportEventsToS3,
 } = require("./database");
 const { recommendRoute } = require("./routeRecommender");
 
@@ -1488,6 +1489,98 @@ app.post(
   }
 );
 
+// Cron job endpoint for exporting events to Google Cloud Storage
+// Exports events from today to 7 days ahead to JSON and uploads to GCS
+// Used by GitHub Actions and manual triggers
+// Requires CRON_SECRET in Authorization header
+app.post("/api/cron/daily-gcs-export", async (req, res) => {
+  const startTime = Date.now();
+
+  try {
+    // Verify cron job authentication
+    const authHeader = req.headers.authorization;
+    const cronSecret = `Bearer ${process.env.CRON_SECRET}`;
+
+    if (!cronSecret) {
+      console.error("❌ CRON_SECRET environment variable not set");
+      return res.status(500).json({
+        success: false,
+        error: "Cron authentication not configured",
+        message: "CRON_SECRET environment variable is not set",
+      });
+    }
+
+    if (!authHeader || authHeader !== cronSecret) {
+      console.error("❌ Invalid cron job authentication");
+      return res.status(401).json({
+        success: false,
+        error: "Unauthorized",
+        message: "Invalid or missing cron authentication",
+      });
+    }
+
+    console.log(
+      "🕛 GCS export cron job triggered at",
+      new Date().toISOString()
+    );
+
+    // Call the GCS export function
+    const result = await exportEventsToS3();
+
+    const executionTime = Math.round((Date.now() - startTime) / 1000);
+
+    if (!result.success) {
+      console.log(
+        `❌ GCS export cron job failed in ${executionTime}s: ${result.error}`
+      );
+      return res.status(500).json({
+        success: false,
+        error: "GCS export failed",
+        message: result.error,
+        timestamp: new Date().toISOString(),
+        executionTimeSeconds: executionTime,
+      });
+    }
+
+    console.log(
+      `✅ GCS export cron job completed in ${executionTime}s. Events: ${
+        result.exported || 0
+      }`
+    );
+
+    res.json({
+      success: true,
+      message: "GCS export completed successfully",
+      timestamp: new Date().toISOString(),
+      executionTimeSeconds: executionTime,
+      result: {
+        exported: result.exported,
+        s3Url: result.s3Url,
+        s3Bucket: result.s3Bucket,
+        s3Key: result.s3Key,
+        dateRange: result.dateRange,
+      },
+      summary: {
+        totalEvents: result.exported || 0,
+        s3Location: result.s3Url,
+      },
+    });
+  } catch (error) {
+    const executionTime = Math.round((Date.now() - startTime) / 1000);
+    console.error(
+      `❌ GCS export cron job failed after ${executionTime}s:`,
+      error
+    );
+    res.status(500).json({
+      success: false,
+      error: "GCS export cron job failed",
+      message: error.message,
+      timestamp: new Date().toISOString(),
+      executionTimeSeconds: executionTime,
+    });
+  }
+});
+
 // Health check
 app.get("/health", (req, res) => {
   res.json({
@@ -1523,6 +1616,8 @@ app.get("/", (req, res) => {
         "GET /api/cron/daily-decentered-art-scrap-one-week-ahead (requires CRON_SECRET, uses BASE_URL)",
       decenteredManual:
         "POST /api/cron/daily-decentered-art-scrap-one-week-ahead (requires CRON_SECRET, uses BASE_URL)",
+      gcsExport:
+        "POST /api/cron/daily-gcs-export (requires CRON_SECRET, exports today to +7 days to GCS)",
       liveEventsNearby:
         "/api/events-near-by?lat=37.7749&lon=-122.4194&limit=10&currentTime=2024-01-15T14:30:00-08:00",
       allPlaces: "/api/places-sf?limit=10&orderBy=name",

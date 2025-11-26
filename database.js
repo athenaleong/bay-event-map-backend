@@ -1,7 +1,58 @@
 const { createClient } = require("@supabase/supabase-js");
+const { Storage } = require("@google-cloud/storage");
 
 // Initialize Supabase client
 let supabase = null;
+
+// Initialize Google Cloud Storage client
+let gcsClient = null;
+
+function initializeGCS() {
+  // Google Cloud Storage can authenticate via:
+  // 1. Service account key JSON (recommended for production)
+  // 2. Application Default Credentials (for local development with gcloud CLI)
+
+  const projectId = process.env.GCS_PROJECT_ID;
+  const keyFilename = process.env.GCS_KEY_FILE; // Path to service account key JSON file
+  const credentials = process.env.GCS_CREDENTIALS; // JSON string of service account key
+
+  if (!projectId) {
+    console.warn(
+      "GCS_PROJECT_ID not found in environment variables. Google Cloud Storage operations will be disabled."
+    );
+    return null;
+  }
+
+  try {
+    // If credentials JSON string is provided (recommended for serverless)
+    if (credentials) {
+      const credentialsObj = JSON.parse(credentials);
+      return new Storage({
+        projectId,
+        credentials: credentialsObj,
+      });
+    }
+
+    // If key file path is provided
+    if (keyFilename) {
+      return new Storage({
+        projectId,
+        keyFilename,
+      });
+    }
+
+    // Otherwise, use Application Default Credentials
+    console.log(
+      "Using Application Default Credentials for Google Cloud Storage"
+    );
+    return new Storage({ projectId });
+  } catch (error) {
+    console.error("Error initializing Google Cloud Storage:", error.message);
+    return null;
+  }
+}
+
+gcsClient = initializeGCS();
 
 function initializeSupabase() {
   const supabaseUrl = process.env.SUPABASE_URL;
@@ -1135,6 +1186,232 @@ async function saveEnhancedEventsToEventTable(events) {
   }
 }
 
+/**
+ * Get events from database for a date range (in LA time)
+ * @param {string} startDate - Start date in YYYY-MM-DD format (LA time)
+ * @param {string} endDate - End date in YYYY-MM-DD format (LA time)
+ * @returns {Promise<Object>} - Result object with events
+ */
+async function getEventsForDateRange(startDate, endDate) {
+  try {
+    if (!supabase) {
+      return {
+        success: false,
+        error: "Database not configured",
+        events: [],
+      };
+    }
+
+    // Create LA time range for the given dates
+    const startOfRange = `${startDate}T00:00:00`;
+    const endOfRange = `${endDate}T23:59:59`;
+
+    console.log(
+      `🔍 Querying events from ${startOfRange} to ${endOfRange} (LA time)`
+    );
+
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .gte("start_time", startOfRange)
+      .lte("start_time", endOfRange)
+      .order("start_time", { ascending: true });
+
+    if (error) {
+      console.error("Database query error:", error);
+      return {
+        success: false,
+        error: error.message,
+        events: [],
+      };
+    }
+
+    return {
+      success: true,
+      events: data || [],
+      count: data?.length || 0,
+    };
+  } catch (error) {
+    console.error("Error fetching events from database:", error);
+    return {
+      success: false,
+      error: error.message,
+      events: [],
+    };
+  }
+}
+
+/**
+ * Export events for today to 7 days ahead and upload to Google Cloud Storage
+ * @returns {Promise<Object>} - Result object with export status
+ */
+async function exportEventsToGCS() {
+  try {
+    if (!supabase) {
+      return {
+        success: false,
+        error: "Database not configured",
+        exported: 0,
+      };
+    }
+
+    if (!gcsClient) {
+      return {
+        success: false,
+        error: "Google Cloud Storage client not configured",
+        exported: 0,
+      };
+    }
+
+    console.log("🔄 Starting Google Cloud Storage export process...");
+
+    // Get current date in California timezone
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat("en-CA", {
+      timeZone: "America/Los_Angeles",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    const parts = formatter.formatToParts(now);
+    const year = parseInt(parts.find((p) => p.type === "year").value);
+    const month = parseInt(parts.find((p) => p.type === "month").value) - 1; // 0-indexed
+    const day = parseInt(parts.find((p) => p.type === "day").value);
+
+    // Create start date (today in California)
+    const startDateObj = new Date(year, month, day);
+    const startDate = startDateObj.toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    // Create end date (7 days from today in California)
+    const endDateObj = new Date(startDateObj);
+    endDateObj.setDate(endDateObj.getDate() + 7);
+    const endDate = endDateObj.toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+
+    console.log(
+      `📅 Exporting events from ${startDate} to ${endDate} (California time)`
+    );
+
+    // Get events from database for the date range
+    const result = await getEventsForDateRange(startDate, endDate);
+
+    if (!result.success) {
+      console.error("Failed to fetch events:", result.error);
+      return {
+        success: false,
+        error: result.error,
+        exported: 0,
+      };
+    }
+
+    if (!result.events || result.events.length === 0) {
+      console.log("No events found for the date range");
+      return {
+        success: true,
+        exported: 0,
+        message: "No events found for the date range",
+        gcsUrl: null,
+      };
+    }
+
+    // Create export data with metadata
+    const exportData = {
+      export_info: {
+        timestamp: getCurrentLATime(),
+        date_range: {
+          start: startDate,
+          end: endDate,
+        },
+        total_events: result.events.length,
+        export_source: "supabase_events_table",
+        description: "Events from today to 7 days ahead (California time)",
+      },
+      events: result.events,
+    };
+
+    // Convert to JSON
+    const jsonData = JSON.stringify(exportData, null, 2);
+
+    // Upload to Google Cloud Storage
+    const bucketName = process.env.GCS_BUCKET_NAME;
+    const fileName = process.env.GCS_FILE_NAME || "events/weekly-events.json";
+
+    if (!bucketName) {
+      return {
+        success: false,
+        error: "GCS_BUCKET_NAME environment variable not set",
+        exported: 0,
+      };
+    }
+
+    console.log(`⬆️  Uploading to GCS: gs://${bucketName}/${fileName}`);
+
+    // Get bucket and file reference
+    const bucket = gcsClient.bucket(bucketName);
+    const file = bucket.file(fileName);
+
+    // Upload file
+    await file.save(jsonData, {
+      contentType: "application/json",
+      metadata: {
+        cacheControl: "public, max-age=0, must-revalidate", // Always check for fresh version
+      },
+    });
+
+    // Make file public (works with uniform bucket-level access)
+    try {
+      await file.makePublic();
+      console.log("✅ File made public");
+    } catch (publicError) {
+      console.warn(
+        "⚠️  Could not make file public automatically:",
+        publicError.message
+      );
+      console.warn(
+        "   Make sure to grant 'Storage Object Viewer' role to 'allUsers' on your bucket"
+      );
+    }
+
+    // Construct public URL
+    const gcsUrl = `https://storage.googleapis.com/${bucketName}/${fileName}`;
+
+    console.log(
+      `✅ Successfully exported ${result.events.length} events to GCS: ${gcsUrl}`
+    );
+
+    return {
+      success: true,
+      exported: result.events.length,
+      gcsUrl: gcsUrl,
+      gcsBucket: bucketName,
+      gcsFileName: fileName,
+      dateRange: {
+        start: startDate,
+        end: endDate,
+      },
+      events: result.events,
+    };
+  } catch (error) {
+    console.error("Error exporting events to Google Cloud Storage:", error);
+    return {
+      success: false,
+      error: error.message,
+      exported: 0,
+    };
+  }
+}
+
+// Keep S3 name for backward compatibility
+const exportEventsToS3 = exportEventsToGCS;
+
 module.exports = {
   saveEventsToDatabase,
   saveEventsToTable,
@@ -1150,4 +1427,7 @@ module.exports = {
   getLiveEventsNearby,
   exportEventsToJSON,
   exportEventsToCSV,
+  getEventsForDateRange,
+  exportEventsToGCS,
+  exportEventsToS3, // Alias for backward compatibility
 };

@@ -1,26 +1,38 @@
 name: Daily Event Scraping
 
+# Required GitHub Secrets:
+# - BASE_URL: Your backend URL (e.g., https://your-backend.vercel.app)
+# - CRON_SECRET: Secret for authenticating cron jobs
+# - GCS_PROJECT_ID: Google Cloud project ID
+# - GCS_BUCKET_NAME: Google Cloud Storage bucket name
+# - GCS_CREDENTIALS: Service account JSON credentials
+# - GCS_FILE_NAME: Optional, defaults to events/weekly-events.json
+
 on:
   schedule:
     # Funcheap scraper - runs daily at 12:00 AM PST (8:00 AM UTC)
     - cron: '0 8 * * *'
     # Decentered Arts scraper - runs daily at 12:15 AM PST (8:15 AM UTC)  
     - cron: '15 8 * * *'
+    # GCS export - runs daily at 12:30 AM PST (8:30 AM UTC)
+    - cron: '30 8 * * *'
   workflow_dispatch: # Allow manual triggering
     inputs:
       scraper:
         description: 'Which scraper to run'
         required: true
-        default: 'both'
+        default: 'all'
         type: choice
         options:
+        - all
         - both
         - funcheap
         - decentered
+        - gcs-export
 
 jobs:
   funcheap-scraper:
-    if: github.event_name == 'schedule' || github.event.inputs.scraper == 'both' || github.event.inputs.scraper == 'funcheap'
+    if: github.event_name == 'schedule' || github.event.inputs.scraper == 'all' || github.event.inputs.scraper == 'both' || github.event.inputs.scraper == 'funcheap'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -48,7 +60,7 @@ jobs:
           fi
 
   decentered-scraper:
-    if: github.event_name == 'schedule' || github.event.inputs.scraper == 'both' || github.event.inputs.scraper == 'decentered'
+    if: github.event_name == 'schedule' || github.event.inputs.scraper == 'all' || github.event.inputs.scraper == 'both' || github.event.inputs.scraper == 'decentered'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -75,12 +87,45 @@ jobs:
             exit 1
           fi
 
+  gcs-export:
+    if: github.event_name == 'schedule' || github.event.inputs.scraper == 'all' || github.event.inputs.scraper == 'gcs-export'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Export Events to Google Cloud Storage
+        run: |
+          echo "🕛 Starting GCS export at $(date)"
+          
+          response=$(curl -s -w "\n%{http_code}" -X POST "${{ secrets.BASE_URL }}/api/cron/daily-gcs-export" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            -H "Content-Type: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n -1)
+          
+          echo "📊 Response Status: $http_code"
+          echo "📋 Response Body: $body"
+          
+          if [ "$http_code" -eq 200 ] || [ "$http_code" -eq 207 ]; then
+            echo "✅ GCS export completed successfully"
+            echo "$body" | jq '.summary // {}'
+          else
+            echo "❌ GCS export failed with status $http_code"
+            echo "$body"
+            exit 1
+          fi
+
   notify-completion:
-    needs: [funcheap-scraper, decentered-scraper]
-    if: always() && github.event_name == 'schedule'
+    needs: [funcheap-scraper, decentered-scraper, gcs-export]
+    if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Notify Completion
         run: |
           echo "📅 Daily scraping workflow completed at $(date)"
           echo "🔍 Check the individual job results above for details"
+          echo ""
+          echo "Job statuses:"
+          echo "  - Funcheap scraper: ${{ needs.funcheap-scraper.result }}"
+          echo "  - Decentered scraper: ${{ needs.decentered-scraper.result }}"
+          echo "  - GCS export: ${{ needs.gcs-export.result }}"
