@@ -55,7 +55,7 @@ async function generateEventEmoji(title, description = "") {
       max_tokens: 4096,
       temperature: 1,
       system:
-        "given the name and description of an event, choose an emoji that describes the event. the emoji will be used as an icon marker. avoid using faces and hearts, use descriptive and fun emoji. \n\n\nOutput following this example, do not output anything else:\n🌈\n",
+        "given the name and description of an event, choose an emoji that describes the event. the emoji will be used as an icon marker. avoid using faces and hearts, use descriptive and fun emoji. Do not use 😂 or 🤣 \n\n\nOutput following this example, do not output anything else:\n🌈\n",
       messages: [
         {
           role: "user",
